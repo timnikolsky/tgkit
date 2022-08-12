@@ -1,6 +1,3 @@
-<br />  
-
-<img src="https://i.imgur.com/XSMraWh.png#gh-light-mode-only" width="384" alt="discord.js"/>
 <img src="https://i.imgur.com/NzHUvon.png#gh-dark-mode-only" width="384" alt="discord.js"/>
 
 ---
