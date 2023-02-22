@@ -14,39 +14,10 @@
   </a>
 </p>
 
+## ⚠️ Warning
+
+**This library is under development!** It doesn't yet cover Telegram Bot API 100% and may contain bugs. Library API may change at any time. Use it in production at your own risk.
+
 ## About
 
 TeleScript is a developer-friendly wrapper for [Telegram Bot API](https://core.telegram.org/bots/api)
-
-## Installation
-
-Using npm:
-```sh
-npm i telescript
-yarn add telescript
-pnpm add telescript
-```
-
-## Quick Examples
-
-### Ping-Pong
-```ts
-import { Client } from 'telescript'
-
-const client = new Client()
-
-client.on('messageCreate', async (message) => {
-    if(message.text === '/ping') {
-        await message.reply('Pong!')
-    }
-})
-
-client.login(process.env.TOKEN)
-client.startPolling()
-```
-
-### Inline Keyboard
-<!-- TODO -->
-```ts
-...
-```
