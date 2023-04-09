@@ -38,15 +38,15 @@ TeleScript is a developer-friendly wrapper for [Telegram Bot API](https://core.t
 import { Client } from 'telescript'
 
 const client = new Client({
-	// Create bot and get token via @botfather
-	token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-sDzP'
+    // Create bot and get token via @botfather
+    token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-sDzP'
 })
 
 client.on('message', async (message) => {
-	if (message.text.startsWith('/start')) {
-		await message.chat.sendMessage('Hello World! I\'m a brand new TeleScript bot')
-		await message.chat.sendMessage('✌️')
-	}
+    if (message.text.startsWith('/start')) {
+        await message.chat.sendMessage('Hello World! I\'m a brand new TeleScript bot')
+        await message.chat.sendMessage('✌️')
+    }
 })
 
 client.polling.start()
