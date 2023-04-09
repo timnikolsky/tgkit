@@ -1,9 +1,9 @@
-import Client from '../client/Client';
+import Client from '../client/Client'
 
 export default class Base {
-    client: Client
+	client: Client
 
-    constructor(client: Client) {
-        this.client = client
-    }
+	constructor(client: Client) {
+		this.client = client
+	}
 }

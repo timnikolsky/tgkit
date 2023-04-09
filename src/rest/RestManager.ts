@@ -1,19 +1,31 @@
-import Client from '../client/Client';
-import axios from 'axios';
+import Client from '../client/Client'
+import TelegramBotAPIError from '../errors/TeleScriptError'
 
 export default class RestManager {
-    client: Client
+	client: Client
 
-    constructor(client: Client) {
-        this.client = client
-    }
+	constructor(client: Client) {
+		this.client = client
+	}
 
-    async request(method: string, params?: object) {
-        try {
-            const response = await axios.post(`https://api.telegram.org/bot${this.client.token}/${method}`, params)
-            return response.data.result
-        } catch (error) {
-            console.error(error)
-        }
-    }
+	async request(method: string, params?: object): Promise<any> {
+		try {
+			const res = await fetch(`https://api.telegram.org/bot${this.client.token}/${method}`, {
+				method: 'POST',
+				body: JSON.stringify(params),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const data = await res.json()
+			if(!data.ok) {
+				throw new TelegramBotAPIError(data.description)
+			}
+			return data.result
+		} catch (error: any) {
+			console.log(error)
+			// TODO
+			// throw new TeleScriptError(error.response.data.description)
+		}
+	}
 }

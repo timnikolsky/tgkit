@@ -1,4 +1,4 @@
-import { InlineKeyboardMarkupData, KeyboardButtonData, KeyboardButtonPollType, PollType, ReplyKeyboardMarkupData } from 'typings'
+import { InlineKeyboardMarkupData } from '../../types'
 import InlineKeyboardButton from './InlineKeyboardButton'
 
 /** 
@@ -6,21 +6,21 @@ import InlineKeyboardButton from './InlineKeyboardButton'
  * @see {@link https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating}
 */
 export default class InlineKeyboardMarkup {
-    /** Array of button rows, each represented by an Array of InlineKeyboardButton objects */
-    inlineKeyboard: InlineKeyboardButton[][]
+	/** Array of button rows, each represented by an Array of InlineKeyboardButton objects */
+	inlineKeyboard: InlineKeyboardButton[][]
 
-    constructor(data: InlineKeyboardMarkupData = {}) {
-        this.inlineKeyboard = data.inlineKeyboard ?? []
-    }
+	constructor(data: InlineKeyboardMarkupData = {}) {
+		this.inlineKeyboard = data.inlineKeyboard ?? []
+	}
 
-    setKeyboard(inlineKeyboard: InlineKeyboardButton[][]) {
-        this.inlineKeyboard = inlineKeyboard
-        return this
-    }
+	setKeyboard(inlineKeyboard: InlineKeyboardButton[][]) {
+		this.inlineKeyboard = inlineKeyboard
+		return this
+	}
 
-    toJSON() {
-        return {
-            inline_keyboard: this.inlineKeyboard.map(row => row.map(row => row.toJSON())),
-        }
-    }
+	toJSON(): object {
+		return {
+			inline_keyboard: this.inlineKeyboard.map(row => row.map(row => row.toJSON())),
+		}
+	}
 }
