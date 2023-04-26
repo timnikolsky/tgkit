@@ -18,11 +18,10 @@
   </a>
 </p>
 
-## ⚠️ Warning
-
-**This library is under development!** It doesn't yet cover Telegram Bot API 100% and may contain bugs. Library API may change at any time. Use it in production at your own risk.
-
 ## About
+
+> **Warning**
+> **This library is under development!** It doesn't yet cover Telegram Bot API 100% and may contain bugs. Library API may change at any time. Use it in production at your own risk.
 
 TeleScript is a developer-friendly wrapper for [Telegram Bot API](https://core.telegram.org/bots/api)
 
