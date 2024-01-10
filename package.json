@@ -1,5 +1,5 @@
 {
-  "name": "telescript",
+  "name": "tgkit",
   "version": "0.1.0",
   "description": "A JavaScript library for interacting with Telegram Bot API",
   "scripts": {
@@ -14,11 +14,11 @@
     "/types"
   ],
   "type": "module",
-  "repository": "sadnesszephyr/telescript",
-  "homepage": "https://github.com/sadnesszephyr/telescript#readme",
+  "repository": "sadnesszephyr/tgkit",
+  "homepage": "https://github.com/sadnesszephyr/tgkit#readme",
   "author": "sandesszephyr",
   "license": "MIT",
-  "bugs": "https://github.com/sadnesszephyr/telescript/issues",
+  "bugs": "https://github.com/sadnesszephyr/tgkit/issues",
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "@types/node": "^18.13.0",

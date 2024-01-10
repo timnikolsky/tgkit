@@ -1,5 +1,5 @@
 import Client from '../client/Client'
-import TelegramBotAPIError from '../errors/TeleScriptError'
+import TelegramBotAPIError from '../errors/TgKitError'
 
 export default class RestManager {
 	client: Client
