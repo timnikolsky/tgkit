@@ -131,9 +131,14 @@ export default class Client extends EventEmitter {
 		// this.ws.createServer('/', 443, '127.0.0.1')
 	}
 
+	/**
+	 * Receive incoming updates using long polling.
+	 * You can get all updates in events if you are using `client.polling.start()`
+	 */
 	async getUpdates() {
 		return await this.rest.request('getUpdates')
 	}
+	
 
 	// Methods
 
@@ -148,8 +153,10 @@ export default class Client extends EventEmitter {
 
 	/**
 	 * Use this method to log out from the cloud Bot API server before launching the bot locally.
-	 * You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates.
-	 * After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes.
+	 * You **must** log out the bot before running it locally,
+	 * otherwise there is no guarantee that the bot will receive updates.
+	 * After a successful call, you can immediately log in on a local server,
+	 * but will not be able to log in back to the cloud Bot API server for 10 minutes.
 	 */
 	async logOut(): Promise<void> {
 		await this.rest.request('logOut')
@@ -157,7 +164,8 @@ export default class Client extends EventEmitter {
 
 	/**
 	 * Use this method to close the bot instance before moving it from one local server to another.
-	 * You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart.
+	 * You need to delete the webhook before calling this method to ensure
+	 * that the bot isn't launched again after server restart.
 	 * The method will return error 429 in the first 10 minutes after the bot is launched.
 	 */
 	async close(): Promise<void> {
@@ -166,7 +174,8 @@ export default class Client extends EventEmitter {
 	
 	/**
 	 * Send text messages.
-	 * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+	 * @param chatId Unique identifier for the target chat or username of the target channel
+	 *               (in the format `@channelusername`)
 	 * @param text Text of the message to be sent, 1-4096 characters after entities parsing
 	 * @param options The options to provide
 	 * @returns The sent message
@@ -197,13 +206,20 @@ export default class Client extends EventEmitter {
 	/**
 	 * Forward messages of any kind.
      * Service messages can't be forwarded.
-	 * @param fromChatId Unique identifier for the chat where the original message was sent (in the format `@channelusername`)
+	 * @param fromChatId Unique identifier for the chat where the original message was sent
+	 *                   (in the format `@channelusername`)
 	 * @param messageId Message identifier in the chat specified in `fromChatId`
-     * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param chatId Unique identifier for the target chat or username of the target channel
+	 *               (in the format `@channelusername`)
 	 * @param options The options to provide
 	 * @returns The sent message
      */
-	async forwardMessage(fromChatId: ChatId, messageId: number, chatId: ChatId, options?: MessageForwardOptions): Promise<Message> {
+	async forwardMessage(
+		fromChatId: ChatId,
+		messageId: number,
+		chatId: ChatId,
+		options?: MessageForwardOptions
+	): Promise<Message> {
 		const messageData = await this.rest.request('forwardMessage', {
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
@@ -221,8 +237,13 @@ export default class Client extends EventEmitter {
 	 * Service messages and invoice messages can't be copied.
 	 * A quiz poll can be copied only if the value of the field 'correctOptionId' is known to the bot.
 	 * The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message.
-	 **/
-	async copyMessage(fromChatId: ChatId, messageId: number, chatId: ChatId, options?: MessageCopyOptions): Promise<number> {
+	 */
+	async copyMessage(
+		fromChatId: ChatId,
+		messageId: number,
+		chatId: ChatId,
+		options?: MessageCopyOptions
+	): Promise<number> {
 		const messageCopiedId = await this.rest.request('copyMessage', {
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
@@ -407,7 +428,7 @@ export default class Client extends EventEmitter {
 				title: 'title' in media ? media.title : undefined,
 				supports_streaming: 'supportsStreaming' in media ? media.supportsStreaming : undefined,
 				disable_content_type_detection: 'disableContentTypeDetection' in media ? media.disableContentTypeDetection : undefined,
-				has_spoiler: 'hasSpoiler' in media ? media.hasSpoiler : undefined,
+				has_spoiler: 'hasSpoiler' in media ? media.hasSpoiler : undefined
 			})),
 			disable_notification: options?.disableNotification,
 			protect_content: options?.protectContent,
@@ -490,7 +511,8 @@ export default class Client extends EventEmitter {
 
 	/** 
 	 * Send phone contacts.
-	 * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+	 * @param chatId Unique identifier for the target chat or username
+	 *               of the target channel(in the format `@channelusername`)
 	 * @param contact Contact info
 	 * @param options The options to provide
 	 * @returns The sent message
@@ -1058,6 +1080,11 @@ export default class Client extends EventEmitter {
 		})
 	}
 
+	/**
+	 * Get the current value of the bot's menu button in a private chat, or the default menu button.
+	 * 
+	 * @param chatId Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
+	 */
 	async getChatMenuButton(chatId?: ChatId): Promise<MenuButton> {
 		const menuButtonData = await this.rest.request('getChatMenuButton', {
 			chat_id: chatId
@@ -1080,6 +1107,10 @@ export default class Client extends EventEmitter {
 		}
 	}
 
+	/**
+	 * Change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot.
+	 * @param rights Object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
+	 */
 	async setMyDefaultAdministratorRights(
 		rights: ChatAdministratorRights,
 		options?: MyDefaultAdministratorRightsSetOptions
@@ -1102,6 +1133,9 @@ export default class Client extends EventEmitter {
 		})
 	}
 
+	/**
+	 * Get default administrator rights of the bot in channels.
+	 */
 	async getMyDefaultAdministratorRights(
 		options?: MyDefaultAdministratorRightsSetOptions
 	): Promise<ChatAdministratorRights> {
@@ -1199,7 +1233,7 @@ export default class Client extends EventEmitter {
 					: undefined,
 				has_spoiler: 'hasSpoiler' in media ? media.hasSpoiler : undefined
 			},
-			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON(),
+			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON()
 		})
 	}
 
@@ -1224,7 +1258,7 @@ export default class Client extends EventEmitter {
 					: undefined,
 				has_spoiler: 'hasSpoiler' in media ? media.hasSpoiler : undefined
 			},
-			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON(),
+			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON()
 		})
 	}
 
@@ -1411,6 +1445,18 @@ export default class Client extends EventEmitter {
 			name
 		})
 	}
+
+	// TODO
+	// async answerInlineQuery(inlineQueryId: string, results: InlineQueryResult[], options: InlineQueryAnswerOptions) {
+	// 	await this.rest.request('answerInlineQuery', {
+	// 		inline_query_id: inlineQueryId,
+	// 		results: ...,
+	// 		cache_time: options.cacheTime,
+	// 		is_personal: options.isPesonal,
+	// 		next_offset: options.nextOffset,
+	// 		button: options.button
+	// 	})
+	// }
  
 	async answerWebAppQuery(webAppQueryId: string, result: InlineQueryResult) {
 		await this.rest.request('answerWebAppQuery', {
@@ -1565,7 +1611,7 @@ export default class Client extends EventEmitter {
 	// TODO Fix event handlers type error
 
 	on<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void) {
-		// @ts-expect-error
+		// @ts-expect-error  
 		return super.on(event, listener)
 	}
 

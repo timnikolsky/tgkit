@@ -10,7 +10,7 @@ export default class MenuButtonCommands extends MenuButton {
 	/**
 	 * Description of the Web App that will be launched when the user presses the button.
 	 * The Web App will be able to send an arbitrary message on behalf of the user using the method *\<Client>.answerWebAppQuery*.
-	 **/
+	 */
 	webApp: WebAppInfo
 
 

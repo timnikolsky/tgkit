@@ -32,7 +32,7 @@ TeleScript is a developer-friendly wrapper for [Telegram Bot API](https://core.t
 * Lightweight
 * Object-oriented, has predictable abstractions and [Typescript](https://typescriptlang.org/) type defentitions included
 
-## Example 
+## Example
 
 ```ts
 import { Client } from 'telescript'

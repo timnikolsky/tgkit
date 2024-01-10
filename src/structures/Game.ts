@@ -4,7 +4,7 @@ import Base from './Base'
 import MessageEntity from './MessageEntity'
 import PhotoSize from './PhotoSize'
 
-export class Game extends Base {
+export default class Game extends Base {
 	/** Title of the game */
 	title: string
 
@@ -19,7 +19,7 @@ export class Game extends Base {
 	 * Can be automatically edited to include current high scores for the game
 	 * when the bot calls `<Client>.setGameScore()`, or manually edited as a regular message.
 	 * 0-4096 characters.
-	 **/
+	 */
 	text?: string
 
 	/** Special entities that appear in *text*, such as usernames, URLs, bot commands, etc. */

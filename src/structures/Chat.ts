@@ -35,7 +35,7 @@ import {
 	TextMessageSendOptions,
 	VenueMessageSendOptions,
 	VenueOptions,
-	VideoMessageSendOptions,
+	VideoMessageSendOptions
 } from '../../types'
 import { BotCommandScopeType, ChatAction } from '../utils/enums'
 import Client from '../client/Client'
@@ -63,7 +63,7 @@ export default class Chat extends Base {
 	/**
 	 * Chat photo.
 	 * Returned only in `<Client>.getChat()`.
-	 **/
+	 */
 	photo?: ChatPhoto
 	/**
 	 * The list of all active chat usernames;
@@ -124,7 +124,8 @@ export default class Chat extends Base {
 	 */
 	permissions?: ChatPermissions
 	/**
-	 * For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user; in seconds.
+	 * For supergroups, the minimum allowed delay between consecutive messages
+	 * sent by each unpriviledged user; in seconds.
 	 * Returned only in `<Client>.getChat()`.
 	 */
 	slowModeDelay?: number
@@ -134,7 +135,8 @@ export default class Chat extends Base {
 	 */
 	messageAutoDeleteTime?: number
 	/**
-	 * *true*, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.
+	 * *true*, if aggressive anti-spam checks are enabled in the supergroup.
+	 * The field is only available to chat administrators.
 	 * Returned only in `<Client>.getChat()`.
 	 */
 	hasAggresiveAntiSpamEnabled?: boolean
@@ -184,7 +186,7 @@ export default class Chat extends Base {
 			smallFileId: data.photo.small_file_id,
 			smallFileUniqueId: data.photo.small_file_unique_id,
 			bigFileId: data.photo.big_file_id,
-			bigFileUniqueId: data.photo.big_file_unique_id,
+			bigFileUniqueId: data.photo.big_file_unique_id
 		}
 		this.activeUsernames = data.active_usernames
 		this.emojiStatusCustomEmojiId = data.emoji_status_custom_emoji_id
@@ -204,7 +206,7 @@ export default class Chat extends Base {
 			canAddWebPagePreviews: data.can_add_web_page_previews,
 			canChangeInfo: data.can_change_info,
 			canInviteUsers: data.can_invite_users,
-			canPinMessages: data.can_pin_messages,
+			canPinMessages: data.can_pin_messages
 		}
 		this.slowModeDelay = data.slow_mode_delay
 		this.messageAutoDeleteTime = data.message_auto_delete_time
@@ -441,9 +443,9 @@ export default class Chat extends Base {
 		return this.client.setMyCommands(commands, {
 			scope: {
 				type: BotCommandScopeType.Chat,
-				chatId: this.id,
+				chatId: this.id
 			},
-			languageCode: options?.languageCode,
+			languageCode: options?.languageCode
 		})
 	}
 
@@ -451,9 +453,9 @@ export default class Chat extends Base {
 		return this.client.deleteMyCommands({
 			scope: {
 				type: BotCommandScopeType.Chat,
-				chatId: this.id,
+				chatId: this.id
 			},
-			languageCode: options?.languageCode,
+			languageCode: options?.languageCode
 		})
 	}
 
@@ -461,9 +463,9 @@ export default class Chat extends Base {
 		return this.client.getMyCommands({
 			scope: {
 				type: BotCommandScopeType.Chat,
-				chatId: this.id,
+				chatId: this.id
 			},
-			languageCode: options?.languageCode,
+			languageCode: options?.languageCode
 		})
 	}
     

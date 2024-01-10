@@ -10,10 +10,16 @@ export default class Sticker extends Base {
 	/** Identifier for this file, which can be used to download or reuse the file */
 	fileId: string
 
-	/** Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
+	/**
+	 * Unique identifier for this file, which is supposed to be the same over time and for different bots.
+	 * Can't be used to download or reuse the file.
+	 */
 	fileUniqueId: string
 
-	/** Type of the sticker. The type of the sticker is independent from its format, which is determined by the fields `isAnimated` and `isVideo`. */
+	/**
+	 * Type of the sticker. The type of the sticker is independent from its format,
+	 * which is determined by the fields `isAnimated` and `isVideo`.
+	 */
 	type: StickerType
 
 	/** Sticker width */

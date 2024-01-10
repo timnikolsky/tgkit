@@ -1,4 +1,4 @@
-import { ChatMemberAdministratorPermissions, } from '../../types'
+import { ChatMemberAdministratorPermissions } from '../../types'
 import Client from '../client/Client'
 import ChatMember from './ChatMember'
 

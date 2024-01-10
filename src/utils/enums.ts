@@ -1,5 +1,8 @@
 export enum BotCommandScopeType {
-    /** Represents the default scope of bot commands. Default commands are used if no commands with a narrower scope are specified for the user. */
+    /**
+	 * Represents the default scope of bot commands.
+	 * Default commands are used if no commands with a narrower scope are specified for the user.
+	 */
     Default = 'default',
     /** Represents the scope of bot commands, covering all private chats. */
     AllPrivateChats = 'allPrivateChats',
@@ -25,21 +28,45 @@ export enum MenuButtonType {
 }
 
 export enum PassportElementErrorSource {
-    /** Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field's value changes. */
+    /**
+	 * Represents an issue in one of the data fields that was provided by the user.
+	 * The error is considered resolved when the field's value changes
+	 */
     Data = 'data',
-    /** Represents an issue with the front side of a document. The error is considered resolved when the file with the front side of the document changes. */
+    /**
+	 * Represents an issue with the front side of a document.
+	 * The error is considered resolved when the file with the front side of the document changes.
+	 */
     FrontSide = 'frontSide',
-    /** Represents an issue with the reverse side of a document. The error is considered resolved when the file with reverse side of the document changes. */
+    /**
+	 * Represents an issue with the reverse side of a document.
+	 * The error is considered resolved when the file with reverse side of the document changes.
+	 */
     ReverseSide = 'reverseSide',
-    /** Represents an issue with the selfie with a document. The error is considered resolved when the file with the selfie changes. */
+    /**
+	 * Represents an issue with the selfie with a document.
+	 * The error is considered resolved when the file with the selfie changes.
+	 */
     Selfie = 'selfie',
-    /** Represents an issue with a document scan. The error is considered resolved when the file with the document scan changes. */
+    /**
+	 * Represents an issue with a document scan.
+	 * The error is considered resolved when the file with the document scan changes.
+	 */
     File = 'file',
-    /** Represents an issue with a list of scans. The error is considered resolved when the list of files containing the scans changes. */
+    /**
+	 * Represents an issue with a list of scans.
+	 * The error is considered resolved when the list of files containing the scans changes.
+	 */
     Files = 'files',
-    /** Represents an issue with one of the files that constitute the translation of a document. The error is considered resolved when the file changes. */
+    /**
+	 * Represents an issue with one of the files that constitute the translation of a document. 
+	 * The error is considered resolved when the file changes.
+	 */
     TranslationFile = 'translationFile',
-    /** Represents an issue with the translated version of a document. The error is considered resolved when a file with the document translation change. */
+    /**
+	 * Represents an issue with the translated version of a document.
+	 * The error is considered resolved when a file with the document translation change.
+	 */
     TranslationFiles = 'translationFiles',
     /** Represents an issue in an unspecified place. The error is considered resolved when new data is added. */
     Unspecified = 'unspecified'

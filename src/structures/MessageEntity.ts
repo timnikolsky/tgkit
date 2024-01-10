@@ -9,7 +9,7 @@ export default class MessageEntity extends Base {
 	/**
      * Type of the entity
      * @see {@link https://core.telegram.org/bots/api#messageentity}
-     * */
+     */
 	type: MessageEntityType
 
 	/** Offset in UTF-16 code units to the start of the entity */
@@ -27,9 +27,13 @@ export default class MessageEntity extends Base {
 	/** For 'pre' only, the programming language of the entity text */
 	language?: string
 
-	/** For 'customEmoji' only, unique identifier of the custom emoji. Use `<Client>.getCustomEmojiStickers` to get full information about the sticker */
+	/** 
+	 * For 'customEmoji' only, unique identifier of the custom emoji.
+	 * Use `<Client>.getCustomEmojiStickers` to get full information about the sticker.
+	 */
 	customEmojiId?: string
 
+	// TODO: make user-constructable
 	constructor(client: Client, data: any) {
 		super(client)
 
@@ -48,7 +52,7 @@ export default class MessageEntity extends Base {
 			offset: this.offset,
 			length: this.length,
 			url: this.url,
-			user: this.user?.toJSON(),
+			user: this.user?.id,
 			language: this.language,
 			customEmojiId: this.customEmojiId
 		}

@@ -1,4 +1,5 @@
-import { InlineKeyboardButtonData, WebAppInfo } from '../../types'
+import { InlineKeyboardButtonData, WebAppInfo, LoginUrl } from '../../types'
+import CallbackGame from './CallbackGame'
 
 /** Represents one button of an inline keyboard. You must use exactly one of the optional fields. */
 export default class InlineKeyboardButton {
@@ -8,30 +9,48 @@ export default class InlineKeyboardButton {
 	/** HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<userId> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings. */
 	url?: string
 
-	/** An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget. */
-	// loginUrl?: LoginUrl
+	/**
+	 * An HTTP URL used to automatically authorize the user.
+	 * Can be used as a replacement for the Telegram Login Widget.
+	 */
+	loginUrl?: LoginUrl
 
 	/** Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes */
 	callbackData?: string
 
-	/** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. */
+	/**
+	 * Description of the Web App that will be launched when the user presses the button. The Web App will be able to
+	 * send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private
+	 * chats between a user and the bot.
+	 */
 	webApp?: WebAppInfo
 
-	/** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's username will be inserted. */
+	/**
+	 * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the
+	 * bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's
+	 * username will be inserted.
+	 */
 	switchInlineQuery?: string
 
-	/** If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted. */
+	/**
+	 * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's
+	 * input field. Can be empty, in which case only the bot's username will be inserted.
+	 */
 	switchInlineQueryCurrentChat?: string
 
 	/** Description of the game that will be launched when the user presses the button. */
-	// callbackGame?: CallbackGame
+	callbackGame?: CallbackGame
 
-	/** Specify *true*, to send a Pay button. NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages. */
+	/** 
+	 * Specify *true*, to send a Pay button. NOTE: This type of button must always be the first button in the first row
+	 * and can only be used in invoice messages.
+	 */
 	pay?: boolean
 
-	constructor(data: InlineKeyboardButtonData = {}) {
+	constructor(data: InlineKeyboardButtonData) {
 		this.text = data.text,
 		this.url = data.url
+		this.loginUrl = data.loginUrl
 		this.callbackData = data.callbackData
 		this.webApp = data.webApp
 		this.switchInlineQuery = data.switchInlineQuery
@@ -49,10 +68,10 @@ export default class InlineKeyboardButton {
 		return this
 	}
 
-	// setLoginUrl(loginUrl: null) {
-	//     this.loginUrl = loginUrl
-	//     return this
-	// }
+	setLoginUrl(loginUrl: LoginUrl) {
+		this.loginUrl = loginUrl
+		return this
+	}
 
 	setCallbackData(callbackData: string) {
 		this.callbackData = callbackData
@@ -88,7 +107,12 @@ export default class InlineKeyboardButton {
 		return {
 			text: this.text,
 			url: this.url,
-			// login_url: null,
+			login_url: this.loginUrl && {
+				url: this.loginUrl.url,
+				forward_text: this.loginUrl.forwardText,
+				bot_username: this.loginUrl.botUsername,
+				request_write_access: this.loginUrl.requestWriteAccess
+			},
 			callback_data: this.callbackData,
 			switch_inline_query: this.switchInlineQuery,
 			switch_inline_query_current_chat: this.switchInlineQueryCurrentChat,

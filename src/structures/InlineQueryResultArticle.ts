@@ -64,7 +64,7 @@ export default class InlineQueryResultArticle extends InlineQueryResult {
 				disable_web_page_preview:
 					'disableWebPagePreview' in this.inputMessageContent 
 						? this.inputMessageContent.disableWebPagePreview
-						: undefined,
+						: undefined
 			},
 			reply_markup: this.replyMarkup?.toJSON(),
 			hide_url: this.hideUrl,

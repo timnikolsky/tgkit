@@ -1,24 +1,26 @@
 import Client from 'client/Client'
+import { ChatId, MessageAutoDeleteTimerChanged, MessageCopyOptions, MessageForwardOptions, SuccessfulPayment } from '../../types'
+import Animation from './Animation'
+import Audio from './Audio'
 import Base from './Base'
 import Chat from './Chat'
-import MessageEntity from './MessageEntity'
-import User from './User'
-import Audio from './Audio'
+import Contact from './Contact'
+import Dice from './Dice'
 import Document from './Document'
+import Game from './Game'
+import InlineKeyboardMarkup from './InlineKeyboardMarkup'
+import Location from './Location'
+import MessageEntity from './MessageEntity'
 import PhotoSize from './PhotoSize'
+import Poll from './Poll'
+import Sticker from './Sticker'
+import User from './User'
+import Venue from './Venue'
 import Video from './Video'
 import VideoNote from './VideoNote'
 import Voice from './Voice'
-import Contact from './Contact'
-import Dice from './Dice'
-import Poll from './Poll'
-import Venue from './Venue'
-import InlineKeyboardMarkup from './InlineKeyboardMarkup'
-import Location from './Location'
-import { ChatId, MessageCopyOptions, MessageForwardOptions } from '../../types'
-import Animation from './Animation'
-import Sticker from './Sticker'
-import { Game } from './Game'
+import UserShared from './UserShared'
+import ChatShared from './ChatShared'
 
 /** Represents a message */
 export default class Message extends Base {
@@ -139,14 +141,6 @@ export default class Message extends Base {
 	/** Message is a location, information about the location */
 	location?: Location
 
-	/** Specified message was pinned. */
-	pinnedMessage?: Message
-
-	/** Message is an invoice for a payment, information about the invoice. */
-	// invoice?: Invoice
-
-	/** The domain name of the website on which the user has logged in */
-	connectedWebsite: string
 
 	/** Telegram Passport data */
 	// TODO Add passport data
@@ -154,13 +148,131 @@ export default class Message extends Base {
 
 	/** Inline keyboard attached to the message. `loginUrl` buttons are represented as ordinary `url` buttons. */
 	replyMarkup?: InlineKeyboardMarkup
+	
+	// Service messages
+
+	/**
+	 * Service message.
+	 * 
+	 * New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+	 */
+	newChatMembers?: User[]
+
+	/** 
+	 * Service message.
+	 * 
+	 * A member was removed from the group, information about them (this member may be the bot itself)
+	 */
+	leftChatMember?: User[]
+
+	/** 
+	 * Service message.
+	 * 
+	 * A chat title was changed to this value
+	 */
+	newChatTitle?: string
+
+	/** 
+	 * Service message.
+	 * 
+	 * A chat photo was change to this value
+	 */
+	newChatPhoto?: PhotoSize[]
+
+	/** 
+	 * Service message.
+	 * 
+	 * The chat photo was deleted
+	 */
+	deleteChatPhoto?: boolean
+
+	/** 
+	 * Service message.
+	 * 
+	 * The group has been created
+	 */
+	groupChatCreated?: boolean
+
+	/** 
+	 * Service message.
+	 * 
+	 * The supergroup has been created.
+	 * 
+	 * This field can't be received in a message coming through updates,
+	 * because bot can't be a member of a supergroup when it is created.
+	 * It can only be found in `replyToMessage` if someone replies
+	 * to a very first message in a directly created supergroup.
+	 */
+	superGroupChatCreated?: boolean
+
+	/** 
+	 * Service message.
+	 * 
+	 * The channel has been created.
+	 * 
+	 * This field can't be received in a message coming through updates,
+	 * because bot can't be a member of a supergroup when it is created.
+	 * It can only be found in `replyToMessage` if someone replies
+	 * to a very first message in a directly created supergroup.
+	 */
+	channelChatCreated?: boolean
+
+	messageAutoDeleteTimerChanged?: MessageAutoDeleteTimerChanged
+
+	migrateToChatId?: number
+
+	migrateFromChatId?: number
+
+	/** Specified message was pinned. */
+	pinnedMessage?: Message
+
+	/** Message is an invoice for a payment, information about the invoice. */
+	// invoice?: Invoice
+
+	successfulPayment?: SuccessfulPayment
+
+	userShared?: UserShared
+
+	chatShared?: ChatShared
+
+	/** The domain name of the website on which the user has logged in */
+	connectedWebsite: string
+
+	// writeAccessAllowed?: WriteAccessAlowed
+
+	// // TODO: is that a service message?
+	// passportData: PassportData
+	
+	// ProximityAlertTriggered?: ProximityAlertTriggered
+
+	// ForumTopicCreated?: ForumTopicCreated
+
+	// ForumTopicEdited?: 	ForumTopicEdited
+	
+	// ForumTopicClosed?: ForumTopicClosed
+
+	// ForumTopicReopened?: 	ForumTopicReopened
+
+	// GeneralForumTopicHidden?: 	GeneralForumTopicHidden
+
+	// GeneralForumTopicUnhidden
+
+	// VideoChatScheduled
+
+	// VideoChatStarted
+
+	// VideoChatEnded
+
+	// VideoChatParticipantsInvited
+
+	// WebAppData
 
 	constructor(client: Client, data: any) {
 		super(client)
 
 		this.id = data.message_id
 		this.threadId = data.thread_id
-		this.sender = data.user && new User(client, data.from)
+		this.sender = data.from && new User(client, data.from)
 		this.senderChat = data.sender_chat && new Chat(client, data.sender_chat)
 		this.date = new Date(data.date * 1000)
 		this.chat = new Chat(client, data.chat)
@@ -179,7 +291,9 @@ export default class Message extends Base {
 		this.mediaGroupId = data.media_group_id
 		this.authorSignature = data.author_signature
 		this.text = data.text
-		this.entities = data.entities && data.entities.map((entityData: any) => new MessageEntity(this.client, entityData))
+		this.entities = data.entities && data.entities.map(
+			(entityData: any) => new MessageEntity(this.client, entityData)
+		)
 		this.animation = data.animation && new Animation(this.client, data.animation)
 		this.audio = data.audio && new Audio(this.client, data.audio)
 		this.document = data.document && new Document(this.client, data.document)
@@ -215,8 +329,9 @@ export default class Message extends Base {
      * Copy message of any kind.
      * Service messages and invoice messages can't be copied.
      * A quiz poll can be copied only if the value of the field 'correctOptionId' is known to the bot.
-     * The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message.
-     **/
+     * The method is analogous to the method forwardMessage,
+	 * but the copied message doesn't have a link to the original message.
+     */
 	async copy(chatId: number | string, options?: MessageCopyOptions) {
 		await this.client.rest.request('copyMessage', {
 			chat_id: chatId,

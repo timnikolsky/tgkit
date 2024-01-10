@@ -8,7 +8,7 @@ export default class ClientUser extends User {
 	/**
      * *true*, if privacy mode is disabled for the bot
      * @see {@link https://core.telegram.org/bots/api#privacy-mode}
-     **/
+     */
 	canReadAllGroupMessages: boolean
 
 	/** *true*, if the bot supports inline queries */
@@ -21,9 +21,5 @@ export default class ClientUser extends User {
 		this.canJoinGroups = data.can_join_groups
 		this.canReadAllGroupMessages = data.can_read_all_group_messages
 		this.supportsInlineQueries = data.supports_inline_queries
-	}
-
-	toString() {
-		return '@' + this.username
 	}
 }

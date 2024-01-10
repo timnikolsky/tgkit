@@ -19,7 +19,9 @@ export default class ChatInviteLink extends Base {
 	/** Point in time when the link will expire or has been expired */
 	expireDate: Date
 
-	/** Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999 */
+	/** Maximum number of users that can be members of the chat 
+	 * simultaneously after joining the chat via this invite link; 1-99999
+	 */
 	memberLimit: number
 
 	/** Number of pending join requests created using this link */

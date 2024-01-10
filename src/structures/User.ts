@@ -1,10 +1,8 @@
 import Client from '../client/Client'
 import Base from './Base'
 
+/** Represents a Telegram user or bot. */
 export default class User extends Base {
-	toJSON(): object {
-		throw new Error('Method not implemented.')
-	}
 	/** Unique identifier for this user or bot */
 	id: number
 
@@ -23,7 +21,7 @@ export default class User extends Base {
 	/**
      * IETF language tag of the user's language
      * @see {@link https://en.wikipedia.org/wiki/IETF_language_tag}
-     * */
+     */
 	languageCode?: string
 
 	/** *true*, if this user is a Telegram Premium user */
@@ -31,15 +29,6 @@ export default class User extends Base {
 
 	/** *true*, if this user added the bot to the attachment menu */
 	addedToAttachmentMenu?: boolean
-
-	/** *true*, if the bot can be invited to groups. Returned only in getMe. */
-	canJoinGroups?: boolean
-
-	/** *true*, if privacy mode is disabled for the bot. Returned only in getMe. */
-	canReadAllGroupMessages?: boolean
-
-	/** *true*, if the bot supports inline queries. Returned only in getMe. */
-	supportsInlineQueries?: boolean
 
 	constructor(client: Client, data: any) {
 		super(client)
@@ -52,12 +41,15 @@ export default class User extends Base {
 		this.languageCode = data.language_code
 		this.isPremium = data.is_premium
 		this.addedToAttachmentMenu = data.added_to_attachment_menu
-		this.canJoinGroups = data.can_join_groups
-		this.canReadAllGroupMessages = data.can_read_all_group_messages
-		this.supportsInlineQueries = data.supports_inline_queries
 	}
 
 	toString() {
 		return '@' + this.username
+	}
+
+	toJSON() {
+		return {
+			id: this.id
+		}
 	}
 }

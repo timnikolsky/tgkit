@@ -20,7 +20,7 @@ export default class InlineKeyboardMarkup {
 
 	toJSON(): object {
 		return {
-			inline_keyboard: this.inlineKeyboard.map(row => row.map(row => row.toJSON())),
+			inline_keyboard: this.inlineKeyboard.map(row => row.map(row => row.toJSON()))
 		}
 	}
 }

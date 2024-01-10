@@ -3,7 +3,7 @@ import Base from './Base'
 import User from './User'
 
 /** Represents one row of the high scores table for a game. */
-export class GameHighScore extends Base {
+export default class GameHighScore extends Base {
 	/** Position in high score table for the game */
 	position: number
 	/** User */

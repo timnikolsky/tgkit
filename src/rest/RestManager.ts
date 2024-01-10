@@ -8,7 +8,19 @@ export default class RestManager {
 		this.client = client
 	}
 
-	async request(method: string, params?: object): Promise<any> {
+	async request(method: string, params?: Record<string, any>): Promise<any> {
+		// const formData = new FormData()
+
+		// for (const param in params) {
+		// 	if (typeof params[param] === 'object') {
+		// 		formData.append(param, JSON.stringify(params[param]))
+		// 	} else {
+		// 		formData.append(param, params[param])
+		// 	}
+		// 	console.log(param)
+		// 	console.log(params[param])
+		// }
+
 		try {
 			const res = await fetch(`https://api.telegram.org/bot${this.client.token}/${method}`, {
 				method: 'POST',
@@ -18,14 +30,14 @@ export default class RestManager {
 				}
 			})
 			const data = await res.json()
+
 			if(!data.ok) {
 				throw new TelegramBotAPIError(data.description)
 			}
+
 			return data.result
 		} catch (error: any) {
-			console.log(error)
-			// TODO
-			// throw new TeleScriptError(error.response.data.description)
+			throw new Error(error.response.data.description)
 		}
 	}
 }

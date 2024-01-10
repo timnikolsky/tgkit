@@ -7,7 +7,10 @@ export default class Document extends Base {
 	/** Identifier for this file, which can be used to download or reuse the file */
 	fileId: string
 
-	/** Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
+	/**
+	 * Unique identifier for this file, which is supposed to be the same over time and for different bots.
+	 * Can't be used to download or reuse the file.
+	 */
 	fileUniqueId: string
 
 	/** Document thumbnail as defined by sender */
