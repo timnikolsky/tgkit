@@ -12,13 +12,19 @@ export default class Location extends Base {
 	/** The radius of uncertainty for the location, measured in meters; 0-1500 */
 	horizontalAccuracy: number
 
-	/** Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only. */
+	/**
+	 * Time relative to the message sending date, during which the location can be updated; in seconds.
+	 * For active live locations only.
+	 */
 	livePeriod?: number
 
 	/** The direction in which user is moving, in degrees; 1-360. For active live locations only. */
 	heading?: number
 
-	/** Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only. */
+	/**
+	 * Maximum distance for proximity alerts about approaching another chat member, in meters.
+	 * For sent live locations only.
+	 */
 	proximityAlertRadius?: number
     
 	constructor(client: Client, data: any) {

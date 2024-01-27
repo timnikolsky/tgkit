@@ -236,7 +236,8 @@ export default class Client extends EventEmitter {
 	 * Copy message of any kind.
 	 * Service messages and invoice messages can't be copied.
 	 * A quiz poll can be copied only if the value of the field 'correctOptionId' is known to the bot.
-	 * The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message.
+	 * The method is analogous to the method forwardMessage, but the copied message doesn't have a link
+	 * to the original message.
 	 */
 	async copyMessage(
 		fromChatId: ChatId,
@@ -458,31 +459,40 @@ export default class Client extends EventEmitter {
 		return new Message(this, messageData)
 	}
 
-	// async editMessageLiveLocation(chatId: ChatId, messageId: number, latitude: number, longitude: number, options?: LocationMessageSendOptions) {
-	//     const messageData = await this.rest.request('sendVideo', {
-	//         chat_id: chatId,
-	// 		   message_thread_id: options?.forumTopicId,
-	//         latitude,
-	//         longitude,
-	//         horizontal_accuracy: options?.horizontalAccuracy,
-	//         live_period: options?.livePeriod,
-	//         heading: options?.heading,
-	//         proximity_alert_radius: options?.proximityAlertRadius,
-	//         disable_notification: options?.disableNotification,
-	//         protect_content: options?.protectContent,
-	//         reply_to_message_id: options?.replyToMessageId,
-	//         allow_sending_without_reply: options?.allowSendingWithoutReply,
-	//         reply_markup: options?.replyMarkup?.toJSON()
-	//     })
-
-	//     return new Message(this, messageData)
+	// TODO
+	// async editMessageLiveLocation(
+	// 	chatId: ChatId,
+	// 	messageId: number,
+	// 	latitude: number,
+	// 	longitude: number,
+	// 	options?:
+	// 	LocationMessageSendOptions
+	// ) {
+	// 	const messageData = await this.rest.request('sendVideo', {
+	// 		chat_id: chatId,
+	// 		message_thread_id: options?.forumTopicId,
+	// 		latitude,
+	// 		longitude,
+	// 		horizontal_accuracy: options?.horizontalAccuracy,
+	// 		live_period: options?.livePeriod,
+	// 		heading: options?.heading,
+	// 		proximity_alert_radius: options?.proximityAlertRadius,
+	// 		disable_notification: options?.disableNotification,
+	// 		protect_content: options?.protectContent,
+	// 		reply_to_message_id: options?.replyToMessageId,
+	// 		allow_sending_without_reply: options?.allowSendingWithoutReply,
+	// 		reply_markup: options?.replyMarkup?.toJSON()
+	// 	})
+	//
+	// 	return new Message(this, messageData)
 	// }
 
 	// async stopMessageLiveLocation(chatId: ChatId, messageId: number, options?: LocationMessageSendOptions) {
 
 	/** 
 	 * Send information about a venue.
-	 * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+	 * @param chatId Unique identifier for the target chat or username
+	 *               of the target channel (in the format `@channelusername`)
 	 * @param venue Venue coordinates and info
 	 * @param options The options to provide
 	 * @returns The sent message
@@ -537,7 +547,8 @@ export default class Client extends EventEmitter {
 
 	/** 
 	 * Send a native poll.
-	 * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+	 * @param chatId Unique identifier for the target chat or username
+	 *               of the target channel (in the format `@channelusername`)
 	 * @param poll Poll configuration
 	 * @param options The options to provide
 	 * @returns The sent message
@@ -571,7 +582,8 @@ export default class Client extends EventEmitter {
 
 	/** 
 	 * Send an animated emoji that will display a random value.
-	 * @param chatId Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+	 * @param chatId Unique identifier for the target chat or username
+	 *               of the target channel (in the format `@channelusername`)
 	 * @param emoji Emoji on which the dice throw animation is based.
 	 * @param options The options to provide
 	 * @returns The sent message
@@ -658,7 +670,9 @@ export default class Client extends EventEmitter {
 	}
 
 	/**
-	 * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass *false* for all boolean parameters to demote a user.
+	 * Use this method to promote or demote a user in a supergroup or a channel.
+	 * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+	 * Pass *false* for all boolean parameters to demote a user.
 	 */
 	async promoteChatMember(chatId: ChatId, userId: number, options?: ChatMemberPromoteOptions) {
 		await this.rest.request('restrictChatMember', {
@@ -1016,8 +1030,10 @@ export default class Client extends EventEmitter {
 	/**
 	 * Change the bot's description, which is shown in the chat with the bot if the chat is empty
 	 * 
-	 * @param description New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
-	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.
+	 * @param description New bot description; 0-512 characters.
+	 *                    Pass an empty string to remove the dedicated description for the given language.
+	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the description
+	 *                     will be applied to all users for whose language there is no dedicated description.
 	 */
 	async setMyDescription(description?: string, languageCode?: string) {
 		await this.rest.request('setMyDescription', {
@@ -1041,10 +1057,13 @@ export default class Client extends EventEmitter {
 	}
 
 	/**
-	 * Change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot
+	 * Change the bot's short description, which is shown on the bot's profile page
+	 * and is sent together with the link when users share the bot
 	 * 
-	 * @param description New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
-	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.
+	 * @param description New short description for the bot; 0-120 characters.
+	 *                    Pass an empty string to remove the dedicated short description for the given language.
+	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the short description
+	 *                     will be applied to all users for whose language there is no dedicated short description.
 	 */
 	async setMyShortDescription(shortDescription?: string, languageCode?: string) {
 		await this.rest.request('setMyShortDescription', {
@@ -1070,7 +1089,8 @@ export default class Client extends EventEmitter {
 	/**
 	 * Change the bot's menu button in a private chat, or the default menu button.
 	 * 
-	 * @param chatId Unique identifier for the target private chat. If not specified, default bot's menu button will be changed
+	 * @param chatId Unique identifier for the target private chat.
+	 *               If not specified, default bot's menu button will be changed
 	 * @param menuButton Bot's new menu button. Defaults to *MenuButtonDefault*.
 	 */
 	async setChatMenuButton(chatId?: ChatId, menuButton?: MenuButton) {
@@ -1083,7 +1103,8 @@ export default class Client extends EventEmitter {
 	/**
 	 * Get the current value of the bot's menu button in a private chat, or the default menu button.
 	 * 
-	 * @param chatId Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
+	 * @param chatId Unique identifier for the target private chat.
+	 *               If not specified, default bot's menu button will be returned
 	 */
 	async getChatMenuButton(chatId?: ChatId): Promise<MenuButton> {
 		const menuButtonData = await this.rest.request('getChatMenuButton', {
@@ -1108,8 +1129,12 @@ export default class Client extends EventEmitter {
 	}
 
 	/**
-	 * Change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot.
-	 * @param rights Object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
+	 * Change the default administrator rights requested by the bot
+	 * when it's added as an administrator to groups or channels.
+	 * These rights will be suggested to users, but they are free to modify the list before adding the bot.
+	 * 
+	 * @param rights Object describing new default administrator rights.
+	 *               If not specified, the default administrator rights will be cleared.
 	 */
 	async setMyDefaultAdministratorRights(
 		rights: ChatAdministratorRights,

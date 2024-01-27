@@ -1,32 +1,19 @@
 {
-  "name": "tgkit",
-  "version": "0.1.0",
-  "description": "A JavaScript library for interacting with Telegram Bot API",
-  "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "lint": "eslint ./src/**"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "/dist",
-    "/types"
-  ],
-  "type": "module",
-  "repository": "sadnesszephyr/tgkit",
-  "homepage": "https://github.com/sadnesszephyr/tgkit#readme",
-  "author": "sandesszephyr",
-  "license": "MIT",
-  "bugs": "https://github.com/sadnesszephyr/tgkit/issues",
-  "devDependencies": {
-    "@changesets/cli": "^2.26.0",
-    "@types/node": "^18.13.0",
-    "@typescript-eslint/eslint-plugin": "^5.51.0",
-    "@typescript-eslint/parser": "^5.51.0",
-    "eslint": "^8.34.0",
-    "prettier": "2.8.4",
-    "tsup": "^6.6.3",
-    "typescript": "^4.6.2"
-  }
+	"name": "tgkit-project",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint"
+	},
+	"main": "index.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@tgkit/eslint-config": "workspace:*",
+		"eslint": "^8.56.0",
+		"turbo": "^1.11.3"
+	}
 }

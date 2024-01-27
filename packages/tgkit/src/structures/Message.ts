@@ -30,10 +30,20 @@ export default class Message extends Base {
 	/** Unique identifier of a message thread to which the message belongs; for supergroups only */
 	threadId?: number
 
-	/** Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat. */
+	/**
+	 * Sender of the message; empty for messages sent to channels.
+	 * For backward compatibility, the field contains a fake sender user in non-channel chats,
+	 * if the message was sent on behalf of a chat.
+	 */
 	sender?: User
 
-	/** Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field `author` contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat. */
+	/**
+	 * Sender of the message, sent on behalf of a chat.
+	 * For example, the channel itself for channel posts, the supergroup itself for messages from anonymous
+	 * group administrators, the linked channel for messages automatically forwarded to the discussion group.
+	 * For backward compatibility, the field `author` contains a fake sender user in non-channel chats,
+	 * if the message was sent on behalf of a chat. 
+	 */
 	senderChat?: Chat
 
 	/** Date the message was sent */
@@ -45,16 +55,25 @@ export default class Message extends Base {
 	/** For forwarded messages, sender of the original message */
 	forwardFrom?: User
 
-	/** For messages forwarded from channels or from anonymous administrators, information about the original sender chat */
+	/**
+	 * For messages forwarded from channels or from anonymous administrators,
+	 * information about the original sender chat
+	 */
 	forwardFromChat?: Chat
 
 	/** For messages forwarded from channels, identifier of the original message in the channel */
 	forwardFromMessageId?: number
 
-	/** For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present */
+	/**
+	 * For forwarded messages that were originally sent in channels or by an anonymous chat administrator,
+	 * signature of the message sender if present
+	 */
 	forwardSignature?: string
 
-	/** Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages */
+	/**
+	 * Sender's name for messages forwarded from users
+	 * who disallow adding a link to their account in forwarded messages
+	 */
 	forwardSenderName?: string
 
 	/** For forwarded messages, date the original message was sent in Unix time */
@@ -66,7 +85,10 @@ export default class Message extends Base {
 	/** *true*, if the message is a channel post that was automatically forwarded to the connected discussion group */
 	isAutomaticForward?: boolean
 
-	/** For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply. */
+	/**
+	 * For replies, the original message. Note that the Message object in this field
+	 * will not contain further `replyToMessage` properties even if it itself is a reply.
+	 */
 	replyToMessage?: Message
 
 	/** Bot through which the message was sent */
@@ -81,7 +103,10 @@ export default class Message extends Base {
 	/** The unique identifier of a media message group this message belongs to */
 	mediaGroupId?: string
 
-	/** Signature of the post author for messages in channels, or the custom title of an anonymous group administrator */
+	/**
+	 * Signature of the post author for messages in channels,
+	 * or the custom title of an anonymous group administrator
+	 */
 	authorSignature?: string
 
 	/** For text messages, the actual UTF-8 text of the message */
@@ -90,7 +115,10 @@ export default class Message extends Base {
 	/** For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text */
 	entities?: MessageEntity[]
 
-	/** Message is an animation, information about the animation. For backward compatibility, when this field is set, the `document` field will also be set */
+	/**
+	 * Message is an animation, information about the animation.
+	 * For backward compatibility, when this field is set, the `document` field will also be set
+	 */
 	animation?: Animation
 
 	/** Message is an audio file, information about the file */
@@ -117,7 +145,10 @@ export default class Message extends Base {
 	/** Caption for the animation, audio, document, photo, video or voice */
 	caption?: string
 
-	/** For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption */
+	/**
+	 * For messages with a caption, special entities like usernames,
+	 * URLs, bot commands, etc. that appear in the caption
+	 */
 	captionEntities?: MessageEntity[]
 
 	/** *true*, if the message media is covered by a spoiler animation */
@@ -135,7 +166,10 @@ export default class Message extends Base {
 	/** Message is a native poll, information about the poll */
 	poll?: Poll
 
-	/** Message is a venue, information about the venue. For backward compatibility, when this field is set, the `location` field will also be set */
+	/**
+	 * Message is a venue, information about the venue.
+	 * For backward compatibility, when this property is set, the `location` field will also be set
+	 */
 	venue?: Venue
 
 	/** Message is a location, information about the location */
@@ -154,7 +188,8 @@ export default class Message extends Base {
 	/**
 	 * Service message.
 	 * 
-	 * New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+	 * New members that were added to the group or supergroup and information about them
+	 * (the bot itself may be one of these members)
 	 */
 	newChatMembers?: User[]
 

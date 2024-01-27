@@ -1,9 +1,10 @@
+/** @type {import("eslint").Linter.Config} */
 module.exports = {
 	env: {
 		es2021: true,
 		node: true
 	},
-	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'eslint-config-turbo'],
 	overrides: [],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -11,7 +12,7 @@ module.exports = {
 		sourceType: 'module'
 	},
 	ignorePatterns: ['./node_modules/**', './dist/**'],
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'turbo'],
 	rules: {
 		'indent': [
 			'error',
@@ -53,6 +54,9 @@ module.exports = {
 		'object-curly-newline': ['error', { consistent: true }],
 		'array-bracket-spacing': ['error', 'never'],
 		'array-bracket-newline': ['error', 'consistent'],
-		'quote-props': ['error', 'consistent-as-needed']
+		'quote-props': ['error', 'consistent-as-needed'],
+		'turbo/no-undeclared-env-vars': ['error', {
+			allowList: ['TELEGRAM_TOKEN']
+		}]
 	}
 }

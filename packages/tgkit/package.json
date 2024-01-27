@@ -1,0 +1,29 @@
+{
+  "name": "tgkit",
+  "version": "0.1.0",
+  "description": "A JavaScript library for interacting with Telegram Bot API",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "lint": "eslint ./src/**"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist",
+    "/types"
+  ],
+  "type": "module",
+  "repository": "sadnesszephyr/tgkit",
+  "homepage": "https://github.com/sadnesszephyr/tgkit#readme",
+  "author": "sandesszephyr",
+  "license": "MIT",
+  "bugs": "https://github.com/sadnesszephyr/tgkit/issues",
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "eslint": "^8.56.0",
+    "@tgkit/eslint-config": "workspace:*",
+    "tsup": "^6.6.3",
+    "typescript": "^4.6.2"
+  }
+}
