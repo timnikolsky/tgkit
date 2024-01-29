@@ -1,4 +1,4 @@
-import Client from 'client/Client'
+import Client from '../client/Client'
 import { ChatId, MessageAutoDeleteTimerChanged, MessageCopyOptions, MessageForwardOptions, SuccessfulPayment } from '../../types'
 import Animation from './Animation'
 import Audio from './Audio'

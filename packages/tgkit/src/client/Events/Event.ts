@@ -1,4 +1,4 @@
-import Client from 'client/Client'
+import Client from '../Client'
 
 export default class TelegramEvent {
 	client: Client
