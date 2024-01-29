@@ -1,7 +1,7 @@
 import MenuButton from './MenuButton'
 import { toSnakeCase } from '../utils/converters'
 import { MenuButtonWebAppOptions, WebAppInfo } from '../../types'
-import { MenuButtonType } from 'utils/enums'
+import { MenuButtonType } from '../utils/enums'
 
 export default class MenuButtonCommands extends MenuButton {
 	/** Text on the button */
