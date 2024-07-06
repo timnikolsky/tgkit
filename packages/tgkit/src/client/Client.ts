@@ -42,8 +42,10 @@ import {
 	MessageCopyOptions,
 	MessageEditCaptionOptions,
 	MessageEditMediaOptions,
+	MessageEditReplyMarkupOptions,
 	MessageEditTextOptions,
 	MessageForwardOptions,
+	MessageReactionSetOptons,
 	MyCommandsDeleteOptions,
 	MyCommandsGetOptions,
 	MyCommandsSetOptions,
@@ -54,10 +56,14 @@ import {
 	PollOptions,
 	PollStopOptions,
 	PreCheckoutQueryAnswerOptions,
+	Reaction,
 	ShippingQueryAnswerOptions,
+	StarTransactions,
+	StarTransactionsGetOptions,
 	StickerSendOptions,
 	StickerSetCreateOptions,
 	TextMessageSendOptions,
+	UserChatBoosts,
 	UserProfilePhotos,
 	UserProfilePhotosGetOptions,
 	VenueMessageSendOptions,
@@ -71,7 +77,7 @@ import EventManager from './Events/EventManager'
 import PollingManager from './PollingManager'
 import PhotoSize from '../structures/PhotoSize'
 import File from '../structures/File'
-import { dateToUnix } from '../utils/converters'
+import { dateToUnix, toCamelCase, unixToDate } from '../utils/converters'
 import BotCommand from '../structures/BotCommand'
 import InlineKeyboardMarkup from '../structures/InlineKeyboardMarkup'
 import Poll from '../structures/Poll'
@@ -91,12 +97,14 @@ import ForumTopic from '../structures/ForumTopic'
 import InlineQueryResult from '../structures/InlineQueryResult'
 import { toSnakeCase } from '../utils/converters'
 import { EventEmitter } from 'events'
-import { ChatAction, StickerFormat } from '../utils/enums'
+import { ChatAction, ReactionType, StickerFormat } from '../utils/enums'
 import MenuButton from '../structures/MenuButton'
 import MenuButtonDefault from '../structures/MenuButtonDefault'
 import MenuButtonWebApp from '../structures/MenuButtonWebApp'
 import MenuButtonCommands from '../structures/MenuButtonCommands'
 import ChatInviteLink from '../structures/ChatInviteLink'
+import BusinessConnection from 'structures/BusinessConnection'
+import StarTransaction from 'structures/StarTransaction'
 
 export default class Client extends EventEmitter {
 	options: ClientOptions
@@ -115,20 +123,6 @@ export default class Client extends EventEmitter {
 		this.polling = new PollingManager(this, options.polling)
 		this.eventManager = new EventManager(this)
 		this.webhook = new WebhookManager(this, options.webhook)
-	}
-
-	async login(token = this.token) {
-		if (!token || typeof token !== 'string') {
-			throw new TelegramBotAPIError('TOKEN_INVALID')
-		}
-
-		this.token = token
-
-		if (!this.options.webhook) {
-			this.polling.start()
-		}
-
-		// this.ws.createServer('/', 443, '127.0.0.1')
 	}
 
 	/**
@@ -173,7 +167,7 @@ export default class Client extends EventEmitter {
 	}
 	
 	/**
-	 * Send text messages.
+	 * Send text message.
 	 * @param chatId Unique identifier for the target chat or username of the target channel
 	 *               (in the format `@channelusername`)
 	 * @param text Text of the message to be sent, 1-4096 characters after entities parsing
@@ -182,11 +176,12 @@ export default class Client extends EventEmitter {
      * 
      * @example
      * // Send basic message
-     * const message = await client.sendMessage('@sadnesszephyr', 'Hello!')
+     * const message = await client.sendMessage('@timnikolsky', 'Hello!')
      * console.log(`Sent message with content: ${message.text}`)
 	 */
 	async sendMessage(chatId: ChatId, text: string, options?: TextMessageSendOptions): Promise<Message> {
 		const messageData = await this.rest.request('sendMessage', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			text,
@@ -204,7 +199,7 @@ export default class Client extends EventEmitter {
 	}
 
 	/**
-	 * Forward messages of any kind.
+	 * Forward message of any kind.
      * Service messages can't be forwarded.
 	 * @param fromChatId Unique identifier for the chat where the original message was sent
 	 *                   (in the format `@channelusername`)
@@ -265,6 +260,7 @@ export default class Client extends EventEmitter {
 
 	async sendPhoto(chatId: ChatId, photo: InputFile, options?: PhotoMessageSendOptions) {
 		const messageData = await this.rest.request('sendPhoto', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			photo,
@@ -285,6 +281,7 @@ export default class Client extends EventEmitter {
 
 	async sendAudio(chatId: ChatId, audio: InputFile, options?: AudioMessageSendOptions) {
 		const messageData = await this.rest.request('sendAudio', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			audio,
@@ -308,6 +305,7 @@ export default class Client extends EventEmitter {
 
 	async sendDocument(chatId: ChatId, document: InputFile, options?: DocumentMessageSendOptions) {
 		const messageData = await this.rest.request('sendDocument', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			document,
@@ -328,6 +326,7 @@ export default class Client extends EventEmitter {
 
 	async sendVideo(chatId: ChatId, video: InputFile, options?: VideoMessageSendOptions) {
 		const messageData = await this.rest.request('sendVideo', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			video,
@@ -352,6 +351,7 @@ export default class Client extends EventEmitter {
 
 	async sendAnimation(chatId: ChatId, animation: InputFile, options?: AnimationMessageSendOptions) {
 		const messageData = await this.rest.request('sendAnimation', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			animation,
@@ -375,6 +375,7 @@ export default class Client extends EventEmitter {
 
 	async sendVoice(chatId: ChatId, voice: InputFile, options?: VoiceMessageSendOptions) {
 		const messageData = await this.rest.request('sendVoice', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			voice,
@@ -393,6 +394,7 @@ export default class Client extends EventEmitter {
 
 	async sendVideoNote(chatId: ChatId, videoNote: InputFile, options?: VideoNoteMessageSendOptions) {
 		const messageData = await this.rest.request('sendVideoNote', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			video_note: videoNote,
@@ -413,6 +415,7 @@ export default class Client extends EventEmitter {
 		options?: MediaGroupMessageSendOptions
 	) {
 		const messagesData = await this.rest.request('sendMediaGroup', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			media: media.map((media) => ({
@@ -441,6 +444,7 @@ export default class Client extends EventEmitter {
 
 	async sendLocation(chatId: ChatId, latitude: number, longitude: number, options?: LocationMessageSendOptions) {
 		const messageData = await this.rest.request('sendLocation', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			latitude,
@@ -499,6 +503,7 @@ export default class Client extends EventEmitter {
 	 */
 	async sendVenue(chatId: ChatId, venue: VenueOptions, options?: VenueMessageSendOptions) {
 		const messageData = await this.rest.request('sendVenue', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			latitude: venue.latitude,
@@ -529,6 +534,7 @@ export default class Client extends EventEmitter {
 	 */
 	async sendContact(chatId: ChatId, contact: ContactOptions, options?: ContactMessageSendOptions) {
 		const messageData = await this.rest.request('sendContact', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			phone_number: contact.phoneNumber,
@@ -555,6 +561,7 @@ export default class Client extends EventEmitter {
 	 */
 	async sendPoll(chatId: ChatId, poll: PollOptions, options?: PollMessageSendOptions) {
 		const messageData = await this.rest.request('sendPoll', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			question: poll.question,
@@ -590,6 +597,7 @@ export default class Client extends EventEmitter {
 	 */
 	async sendDice(chatId: ChatId, emoji?: DiceEmoji, options?: DiceMessageSendOptions) {
 		const messageData = await this.rest.request('sendDice', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			dice: emoji,
@@ -605,9 +613,33 @@ export default class Client extends EventEmitter {
 
 	async sendChatAction(chatId: ChatId, action: ChatAction, options?: ChatActionSendOptions) {
 		await this.rest.request('sendChatAction', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
 			action: toSnakeCase(action)
+		})
+	}
+
+	async setMessageReaction(chatId: ChatId, messageId: number, reaction?: Reaction[], options?: MessageReactionSetOptons) {
+		const reactionData = reaction?.map((r) => {
+			if (r.type === ReactionType.Emoji) {
+				return {
+					type: toSnakeCase(r.type),
+					emoji: r.emoji
+				}
+			} else if (r.type === ReactionType.CustomEmoji) {
+				return {
+					type: toSnakeCase(r.type),
+					custom_emoji_id: r.customEmojiId
+				}
+			}
+		})
+
+		await this.rest.request('setMessageReaction', {
+			chat_id: chatId,
+			message_id: messageId,
+			reaction: reactionData,
+			is_big: options?.isBig
 		})
 	}
 
@@ -830,13 +862,12 @@ export default class Client extends EventEmitter {
 		})
 	}
 
-	async getChat(chatId: ChatId) {
-		return new Chat(
-			this,
-			await this.rest.request('getChat', {
-				chat_id: chatId
-			})
-		)
+	async getChat(chatId: ChatId): Promise<Chat<true>> {
+		const chatData = await this.rest.request('getChat', {
+			chat_id: chatId
+		})
+
+		return new Chat(this, chatData)
 	}
 
 	async getChatAdministrators(chatId: ChatId) {
@@ -975,6 +1006,12 @@ export default class Client extends EventEmitter {
 		})
 	}
 
+	async unpinAllGeneralForumTopicMessages(chatId: ChatId) {
+		await this.rest.request('unpinAllGeneralForumTopicMessages', {
+			chat_id: chatId
+		})
+	}
+
 	async answerCallbackQuery(callbackQueryId: string, options?: CallbackQueryAnswerOptions) {
 		await this.rest.request('answerCallbackQuery', {
 			callback_query_id: callbackQueryId,
@@ -983,6 +1020,33 @@ export default class Client extends EventEmitter {
 			url: options?.url,
 			cache_time: options?.cacheTime
 		})
+	}
+
+	async getUserChatBoosts(chatId: ChatId, userId: number): Promise<UserChatBoosts> {
+		const userChatBoostsData = await this.rest.request('getUserChatBoosts', {
+			chat_id: chatId,
+			user_id: userId
+		})
+
+		return {
+			boosts: userChatBoostsData.boosts.map(
+				(boostData: any) => ({
+					boostId: boostData.boost_id,
+					addDate: unixToDate(boostData.add_date),
+					expirationDate: unixToDate(boostData.expiration_date),
+					// TODO
+					source: boostData.source
+				})
+			)
+		}
+	}
+
+	async getBusinessConnection(businessConnectionId: string) {
+		const businessConnectionData = await this.rest.request('getBusinessConnection', {
+			business_connection_id: businessConnectionId
+		})
+
+		return new BusinessConnection(this, businessConnectionData)
 	}
 
 	async setMyCommands(commands: BotCommand[], options?: MyCommandsSetOptions) {
@@ -1025,6 +1089,35 @@ export default class Client extends EventEmitter {
 		})
 
 		return myCommandsData
+	}
+
+	/**
+	 * Change the bot's name
+	 * 
+	 * @param name New bot name; 0-64 characters.
+	 *             Pass an empty string to remove the dedicated name for the given language.
+	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the name
+	 *                     will be shown to all users for whose language there is no dedicated name.
+	 */
+	async setMyName(name?: string, languageCode?: string) {
+		await this.rest.request('setMyName', {
+			name,
+			language_code: languageCode
+		})
+	}
+
+	/**
+	 * Get the current bot name for the given user language
+	 * 
+	 * @param languageCode A two-letter ISO 639-1 language code or an empty string
+	 * @returns Bot's name
+	 */
+	async getMyName(languageCode?: string) {
+		const nameData = await this.rest.request('getMyName', {
+			language_code: languageCode
+		})
+
+		return nameData.name
 	}
 
 	/**
@@ -1185,6 +1278,7 @@ export default class Client extends EventEmitter {
 
 	async editMessageText(chatId: ChatId, messageId: number, text: string, options?: MessageEditTextOptions) {
 		const messageData = await this.rest.request('editMessageText', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
 			text,
@@ -1196,8 +1290,9 @@ export default class Client extends EventEmitter {
 		return new Message(this, messageData)
 	}
 
-	async editInlineMesageText(inlineMessageId: string, text: string, options?: MessageEditTextOptions) {
+	async editInlineMessageText(inlineMessageId: string, text: string, options?: MessageEditTextOptions) {
 		await this.rest.request('editMessageText', {
+			business_connection_id: options?.businessConnectionId,
 			inline_message_id: inlineMessageId,
 			text,
 			parse_mode: options?.parseMode,
@@ -1213,6 +1308,7 @@ export default class Client extends EventEmitter {
 		options?: MessageEditCaptionOptions
 	) {
 		const messageData = await this.rest.request('editMessageCaption', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
 			caption: caption ?? undefined,
@@ -1223,12 +1319,13 @@ export default class Client extends EventEmitter {
 		return new Message(this, messageData)
 	}
 
-	async editInlineMesageCaption(
+	async editInlineMessageCaption(
 		inlineMessageId: string,
 		caption: string | null,
 		options?: MessageEditCaptionOptions
 	) {
 		await this.rest.request('editMessageCaption', {
+			business_connection_id: options?.businessConnectionId,
 			inline_message_id: inlineMessageId,
 			caption: caption ?? undefined,
 			parse_mode: options?.parseMode,
@@ -1238,6 +1335,7 @@ export default class Client extends EventEmitter {
 
 	async editMessageMedia(chatId: ChatId, messageId: number, media: InputMedia, options?: MessageEditMediaOptions) {
 		await this.rest.request('editMessageMedia', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
 			media: {
@@ -1262,8 +1360,9 @@ export default class Client extends EventEmitter {
 		})
 	}
 
-	async editInlineMesageMedia(inlineMessageId: string, media: InputMedia, options?: MessageEditMediaOptions) {
+	async editInlineMessageMedia(inlineMessageId: string, media: InputMedia, options?: MessageEditMediaOptions) {
 		await this.rest.request('editMessageMedia', {
+			business_connection_id: options?.businessConnectionId,
 			inline_message_id: inlineMessageId,
 			media: {
 				type: media.type,
@@ -1287,8 +1386,15 @@ export default class Client extends EventEmitter {
 		})
 	}
 
-	async editMessageReplyMarkup(chatId: ChatId, messageId: number, replyMarkup: InlineKeyboardMarkup) {
+	// editMessageLiveLocation
+	// editInlineMessageLiveLocation
+
+	// stopMessageLiveLocation
+	// stopInlineMessageLiveLocation
+
+	async editMessageReplyMarkup(chatId: ChatId, messageId: number, replyMarkup: InlineKeyboardMarkup, options?: MessageEditReplyMarkupOptions) {
 		const messageData = await this.rest.request('editMessageReplyMarkup', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
 			reply_markup: replyMarkup.toJSON()
@@ -1297,8 +1403,9 @@ export default class Client extends EventEmitter {
 		return new Message(this, messageData)
 	}
 
-	async editInlineMesageReplyMarkup(inlineMessageId: string, replyMarkup: InlineKeyboardMarkup) {
+	async editInlineMessageReplyMarkup(inlineMessageId: string, replyMarkup: InlineKeyboardMarkup, options?: MessageEditReplyMarkupOptions) {
 		await this.rest.request('editMessageReplyMarkup', {
+			business_connection_id: options?.businessConnectionId,
 			inline_message_id: inlineMessageId,
 			reply_markup: replyMarkup.toJSON()
 		})
@@ -1306,6 +1413,7 @@ export default class Client extends EventEmitter {
 
 	async stopPoll(chatId: ChatId, messageId: number, options?: PollStopOptions) {
 		const pollData = await this.rest.request('stopPoll', {
+			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
 			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON()
@@ -1318,6 +1426,13 @@ export default class Client extends EventEmitter {
 		await this.rest.request('deleteMessage', {
 			chat_id: chatId,
 			message_id: messageId
+		})
+	}
+
+	async deleteMessages(chatId: ChatId, messageIds: number[]) {
+		await this.rest.request('deleteMessages', {
+			chat_id: chatId,
+			message_ids: messageIds
 		})
 	}
 
@@ -1572,6 +1687,24 @@ export default class Client extends EventEmitter {
 		})
 	}
 
+	async getStarTransactions(options: StarTransactionsGetOptions): Promise<StarTransactions> {
+		const starTransactionsData = await this.rest.request('getStarTransactions', {
+			offset: options.offset,
+			limit: options.limit
+		})
+
+		return {
+			transactions: new StarTransaction(this, starTransactionsData.transactions)
+		}
+	}
+
+	async refundStarPayment(userId: number, telegramPaymentChargeId: string) {
+		await this.rest.request('refundStarPayment', {
+			user_id: userId,
+			telegram_payment_charge_id: telegramPaymentChargeId
+		})
+	}
+
 	async setPassportDataErrors(userId: number, errors: PassportElementError[]) {
 		await this.rest.request('setPassportDataErrors', {
 			user_id: userId,
@@ -1633,15 +1766,12 @@ export default class Client extends EventEmitter {
 	}
 
 	// Event handlers
-	// TODO Fix event handlers type error
 
 	on<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void) {
-		// @ts-expect-error  
 		return super.on(event, listener)
 	}
 
 	once<K extends keyof ClientEvents>(event: K, listener: (...args: ClientEvents[K]) => void) {
-		// @ts-expect-error
 		return super.once(event, listener)
 	}
 }

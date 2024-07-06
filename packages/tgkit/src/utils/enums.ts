@@ -177,3 +177,21 @@ export enum ParseMode {
 	MarkdownV2 = 'MarkdownV2',
 	HTML = 'HTML'
 }
+
+export enum MessageOriginType {
+	User = 'user',
+	HiddenUser = 'hiddenUser',
+	Chat = 'chat',
+	Channel = 'channel'
+}
+
+export enum PaidMediaType {
+	Preview = 'preview',
+	Photo = 'photo',
+	Video = 'video'
+}
+
+export enum ReactionType {
+	Emoji = 'emoji',
+	CustomEmoji = 'customEmoji'
+}

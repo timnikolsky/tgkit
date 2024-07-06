@@ -4,9 +4,8 @@ import TelegramEvent from './Event'
 
 export default class ChosenInlineResultEvent extends TelegramEvent {
 	handle(data: any) {
-		if(data.message) {
-			const message = new Message(this.client, data.message)
-			this.client.emit(Events.ChosenInlineResult, message)
+		if(data.chosen_inline_result) {
+			this.client.emit(Events.ChosenInlineResult, data.chosen_inline_result)
 		}
 	}
 }

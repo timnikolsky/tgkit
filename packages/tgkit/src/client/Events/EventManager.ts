@@ -1,19 +1,25 @@
 import Client from '../Client'
-import CallbackQueryEvent from './CallbackQuery'
-import ChannelPostCreateEvent from './ChannelPostCreate'
-import ChannelPostEditEvent from './ChannelPostEdit'
-import ChatJoinRequestEvent from './ChatJoinRequest'
-import ChatMemberUpdateEvent from './ChatMemberUpdate'
-import ChatMeUpdateEvent from './ChatMeUpdate'
-import ChosenInlineResultEvent from './ChosenInlineResult'
 import TelegramEvent from './Event'
-import InlineQueryEvent from './InlineQuery'
-import MessageCreateEvent from './Message'
+import MessageEvent from './Message'
 import MessageEditEvent from './MessageEdit'
+import ChannelPostEvent from './ChannelPost'
+import ChannelPostEditEvent from './ChannelPostEdit'
+import BusinessConnectionEvent from './BusinessConnection'
+import BusinessMessageEvent from './BusinessMessageEdit'
+import BusinessMessageEditEvent from './BusinessMessageEdit'
+import BusinessMessagesDeleteEvent from './BusinessMessagesDelete'
+import InlineQueryEvent from './InlineQuery'
+import ChosenInlineResultEvent from './ChosenInlineResult'
+import CallbackQueryEvent from './CallbackQuery'
+import ShippingQueryEvent from './ShippingQuery'
+import PreCheckoutQueryEvent from './PreCheckoutQuery'
 import PollEvent from './Poll'
 import PollAnswerEvent from './PollAnswer'
-import PreCheckoutQueryEvent from './PreCheckoutQuery'
-import ShippingQueryEvent from './ShippingQuery'
+import ChatMeUpdateEvent from './ChatMeUpdate'
+import ChatMemberUpdateEvent from './ChatMemberUpdate'
+import ChatJoinRequestEvent from './ChatJoinRequest'
+import ChatBoostEvent from './ChatBoost'
+import ChatBoostRemoveEvent from './ChatBoostRemove'
 
 export default class EventManager {
 	client: Client
@@ -23,20 +29,26 @@ export default class EventManager {
 		this.client = client
 		this.events = []
         
-		this.register(CallbackQueryEvent)
-		this.register(ChannelPostCreateEvent)
-		this.register(ChannelPostEditEvent)
-		this.register(ChatJoinRequestEvent)
-		this.register(ChatMemberUpdateEvent)
-		this.register(ChatMeUpdateEvent)
-		this.register(ChosenInlineResultEvent)
-		this.register(InlineQueryEvent)
-		this.register(MessageCreateEvent)
+		this.register(MessageEvent)
 		this.register(MessageEditEvent)
+		this.register(ChannelPostEvent)
+		this.register(ChannelPostEditEvent)
+		this.register(BusinessConnectionEvent)
+		this.register(BusinessMessageEvent)
+		this.register(BusinessMessageEditEvent)
+		this.register(BusinessMessagesDeleteEvent)
+		this.register(InlineQueryEvent)
+		this.register(ChosenInlineResultEvent)
+		this.register(CallbackQueryEvent)
+		this.register(ShippingQueryEvent)
+		this.register(PreCheckoutQueryEvent)
 		this.register(PollEvent)
 		this.register(PollAnswerEvent)
-		this.register(PreCheckoutQueryEvent)
-		this.register(ShippingQueryEvent)
+		this.register(ChatMeUpdateEvent)
+		this.register(ChatMemberUpdateEvent)
+		this.register(ChatJoinRequestEvent)
+		this.register(ChatBoostEvent)
+		this.register(ChatBoostRemoveEvent)
 	}
 
 	processUpdate(data: any) {

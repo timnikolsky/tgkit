@@ -45,132 +45,159 @@ import Message from './Message'
 import MenuButton from './MenuButton'
 
 /** Represents a chat */
-export default class Chat extends Base {
+export default class Chat<Full extends boolean = false> extends Base {
 	/** Unique identifier for this chat */
 	id: number
+
 	/** Type of chat */
 	type: ChatType
+
 	/** Title, for supergroups, channels and group chats */
 	title?: string
+
 	/** Username, for private chats, supergroups and channels if available */
 	username?: string
+
 	/** First name of the other party in a private chat */
 	firstName?: string
+
 	/** Last name of the other party in a private chat */
 	lastName?: string
+
 	/** *true*, if the supergroup chat is a forum (has topics enabled) */
 	isForum?: boolean
+
 	/**
 	 * Chat photo.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	photo?: ChatPhoto
+	photo?: Full extends true ? ChatPhoto : never
+
 	/**
 	 * The list of all active chat usernames;
 	 * for private chats, supergroups and channels.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	activeUsernames?: string[]
+	activeUsernames?:  Full extends true ? string[] : never
+
 	/**
 	 * Custom emoji identifier of emoji status of the other party in a private chat.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	emojiStatusCustomEmojiId?: string
+	emojiStatusCustomEmojiId?: Full extends true ? string : never
+
 	/**
 	 * Bio of the other party in a private chat.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	bio?: string
+	bio?: Full extends true ? string : never
+
 	/**
 	 * *true*, if privacy settings of the other party in the private chat allows to use
 	 * `tg://user?id=<user_id>` links only in chats with the user.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	hasPrivateForwards?: boolean
+	hasPrivateForwards?: Full extends true ? boolean : never
+
 	/**
 	 * *true*, if the privacy settings of the other party restrict
 	 * sending voice and video note messages in the private chat.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	hasRestrictedVoiceAndVideoMessages?: boolean
+	hasRestrictedVoiceAndVideoMessages?: Full extends true ? boolean : never
+
 	/**
 	 * *true*, if users need to join the supergroup before they can send messages.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	joinToSendMessages?: boolean
+	joinToSendMessages?: Full extends true ? boolean : never
+
 	/**
 	 * *true*, if all users directly joining the supergroup need to be approved by supergroup administrators.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	joinByRequest?: boolean
+	joinByRequest?: Full extends true ? boolean : never
+
 	/**
 	 * Description, for groups, supergroups and channel chats.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	description?: string
+	description?: Full extends true ? string : never
+
 	/**
 	 * Primary invite link, for groups, supergroups and channel chats.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	inviteLink?: string
+	inviteLink?: Full extends true ? string : never
+
 	/**
 	 * The most recent pinned message (by sending date).
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	pinnedMessage?: Message
+	pinnedMessage?: Full extends true ? Message : never
+
 	/**
 	 * Default chat member permissions, for groups and supergroups.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	permissions?: ChatPermissions
+	permissions?: Full extends true ? ChatPermissions : never
+
 	/**
 	 * For supergroups, the minimum allowed delay between consecutive messages
 	 * sent by each unpriviledged user; in seconds.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	slowModeDelay?: number
+	slowModeDelay?: Full extends true ? number : never
+
 	/**
 	 * The time after which all messages sent to the chat will be automatically deleted; in seconds.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	messageAutoDeleteTime?: number
+	messageAutoDeleteTime?: Full extends true ? number : never
+
 	/**
 	 * *true*, if aggressive anti-spam checks are enabled in the supergroup.
 	 * The field is only available to chat administrators.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	hasAggresiveAntiSpamEnabled?: boolean
+	hasAggresiveAntiSpamEnabled?: Full extends true ? boolean : never
+
 	/**
 	 * *true*, if non-administrators can only get the list of bots and administrators in the chat.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	hasHiddenMembers?: boolean
+	hasHiddenMembers?: Full extends true ? boolean : never
+
 	/**
 	 * *true*, if messages from the chat can't be forwarded to other chats.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	hasProtectedContent?: boolean
+	hasProtectedContent?: Full extends true ? boolean : never
+
 	/**
 	 * For supergroups, name of group sticker set.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	stickerSetName?: string
+	stickerSetName?: Full extends true ? string : never
+
 	/**
 	 * *true*, if the bot can change the group sticker set.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	canSetStickerSet?: boolean
+	canSetStickerSet?: Full extends true ? boolean : never
+
 	/**
 	 * Unique identifier for the linked chat, i.e. the discussion group identifier
 	 * for a channel and vice versa; for supergroups and channel chats.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	linkedChatId?: number
+	linkedChatId?: Full extends true ? number : never
+	
 	/**
 	 * For supergroups, the location to which the supergroup is connected.
 	 * Returned only in `<Client>.getChat()`.
 	 */
-	location?: string
+	location?: Full extends true ? string : never
 
 	constructor(client: Client, data: any) {
 		super(client)
@@ -198,6 +225,8 @@ export default class Chat extends Base {
 		this.description = data.description
 		this.inviteLink = data.inviteLink
 		this.pinnedMessage = data.pinnedMessage && new Message(client, data.pinnedMessage)
+		// TODO
+		// @ts-expect-error
 		this.permissions = {
 			canSendMessages: data.can_send_messages,
 			canSendMediaMessages: data.can_send_media_messages,

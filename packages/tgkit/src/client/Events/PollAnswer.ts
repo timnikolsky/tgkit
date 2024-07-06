@@ -1,12 +1,12 @@
-import Message from '../../structures/Message'
+import PollAnswer from '../../structures/PollAnswer'
 import Events from '../../utils/Events'
 import TelegramEvent from './Event'
 
 export default class PollAnswerEvent extends TelegramEvent {
 	handle(data: any) {
-		if(data.message) {
-			const message = new Message(this.client, data.message)
-			this.client.emit(Events.PollAnswer, message)
+		if(data.poll_answer) {
+			const pollAnswer = new PollAnswer(this.client, data.poll_answer)
+			this.client.emit(Events.PollAnswer, pollAnswer)
 		}
 	}
 }

@@ -1,10 +1,17 @@
+// TODO: consider renaming to match telegram's event names
 export default {
 	Raw: 'raw',
 	ClientReady: 'ready',
 	Message: 'message',
 	MessageEdit: 'messageEdit',
-	ChannelPostCreate: 'channelPostCreate',
+	ChannelPost: 'channelPost',
 	ChannelPostEdit: 'channelPostEdit',
+	BusinessConnection: 'businessConnection',
+	BusinessMessage: 'businessMessage',
+	BusinessMessageEdit: 'businessMessageEdit',
+	BusinessMessagesDelete: 'BusinessMessagesDelete',
+	MessageReaction: 'messageReaction',
+	MessageReactionCount: 'messageReactionCount',
 	InlineQuery: 'inlineQuery',
 	ChosenInlineResult: 'chosenInlineResult',
 	CallbackQuery: 'callbackQuery',
@@ -14,5 +21,7 @@ export default {
 	PollAnswer: 'pollAnswer',
 	ChatMeUpdate: 'chatMeUpdate',
 	ChatMemberUpdate: 'chatMemberUpdate',
-	ChatJoinRequest: 'chatJoinRequest'
+	ChatJoinRequest: 'chatJoinRequest',
+	ChatBoost: 'chatBoost',
+	ChatBoostRemove: 'chatBoostRemove'
 }

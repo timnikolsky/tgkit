@@ -1,6 +1,8 @@
+import Giveaway from 'structures/Giveaway'
 import {
 	BotCommandScopeType,
 	CallbackQuery,
+	Chat,
 	Client,
 	ForumTopicIconColor,
 	InlineKeyboardButton,
@@ -8,6 +10,7 @@ import {
 	KeyboardButtonPollType,
 	Message,
 	MessageEntity,
+	MessageOrigin,
 	ParseMode,
 	PassportElementErrorSource,
 	PassportElementType,
@@ -17,8 +20,30 @@ import {
 	ReplyKeyboardRemove,
 	StickerFormat,
 	StickerType,
-	User
-} from '../src'
+	User,
+	Audio,
+	Document,
+	Animation,
+	Sticker,
+	Story,
+	Video,
+	VideoNote,
+	Voice,
+	Contact,
+	Dice,
+	Game,
+	Location,
+	Poll,
+	Venue,
+	ReactionType,
+	InlineQuery,
+	PollAnswer
+} from '../src/'
+import Invoice from 'structures/Invoice'
+import PaidMedia from 'structures/PaidMedia'
+import StarTransaction from 'structures/StarTransaction'
+import PreCheckoutQuery from 'structures/PreCheckoutQuery'
+import BusinessConnection from 'structures/BusinessConnection'
 
 export type ChatType = 'private' | 'group' | 'supergroup' | 'channel'
 
@@ -41,9 +66,104 @@ export type MessageEntityType =
 	| 'textMention'
 	| 'customEmoji'
 
-export type DiceEmoji = '🎲' | '🎯' |  '🏀' | '⚽' | '🎳' | '🎰'
+export type Currency =
+	| 'AED'
+	| 'AFN'
+	| 'ALL'
+	| 'AMD'
+	| 'ARS'
+	| 'AUD'
+	| 'AZN'
+	| 'BAM'
+	| 'BDT'
+	| 'BGN'
+	| 'BND'
+	| 'BOB'
+	| 'BRL'
+	| 'BYN'
+	| 'CAD'
+	| 'CHF'
+	| 'CLP'
+	| 'CNY'
+	| 'COP'
+	| 'CRC'
+	| 'CZK'
+	| 'DKK'
+	| 'DOP'
+	| 'DZD'
+	| 'EGP'
+	| 'ETB'
+	| 'EUR'
+	| 'GBP'
+	| 'GEL'
+	| 'GTQ'
+	| 'HKD'
+	| 'HNL'
+	| 'HRK'
+	| 'HUF'
+	| 'IDR'
+	| 'ILS'
+	| 'INR'
+	| 'ISK'
+	| 'JMD'
+	| 'JPY'
+	| 'KES'
+	| 'KGS'
+	| 'KRW'
+	| 'KZT'
+	| 'LBP'
+	| 'LKR'
+	| 'MAD'
+	| 'MDL'
+	| 'MMK'
+	| 'MNT'
+	| 'MOP'
+	| 'MUR'
+	| 'MVR'
+	| 'MXN'
+	| 'MYR'
+	| 'MZN'
+	| 'NGN'
+	| 'NIO'
+	| 'NOK'
+	| 'NPR'
+	| 'NZD'
+	| 'PAB'
+	| 'PEN'
+	| 'PHP'
+	| 'PKR'
+	| 'PLN'
+	| 'PYG'
+	| 'QAR'
+	| 'RON'
+	| 'RSD'
+	| 'RUB'
+	| 'SAR'
+	| 'SEK'
+	| 'SGD'
+	| 'THB'
+	| 'TJS'
+	| 'TRY'
+	| 'TTD'
+	| 'TWD'
+	| 'TZS'
+	| 'UAH'
+	| 'UGX'
+	| 'USD'
+	| 'UYU'
+	| 'UZS'
+	| 'VND'
+	| 'YER'
+	| 'ZAR'
+	| 'XTR'
+	// https://github.com/microsoft/TypeScript/issues/29729
+	| (string & {
+		TYPE_HELPER_IGNORE?: never
+	})
 
-export type ChatId = number | `@${string}`
+export type DiceEmoji = '🎲' | '🎯' | '🏀' | '⚽' | '🎳' | '🎰'
+
+export type ChatId = number | `@${string}` | `${number}`
 
 // TODO: Make it possible to send local files
 export type InputFile = string
@@ -143,6 +263,8 @@ export interface ChatPermissions {
 }
 
 export interface TextMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/**
@@ -174,6 +296,8 @@ export interface TextMessageSendOptions {
 }
 
 export interface PhotoMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Photo caption, 0-1024 characters after entities parsing */
@@ -208,6 +332,8 @@ export interface PhotoMessageSendOptions {
 }
 
 export interface AudioMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Audio caption, 0-1024 characters after entities parsing */
@@ -256,6 +382,8 @@ export interface AudioMessageSendOptions {
 }
 
 export interface DocumentMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	// TODO: fix description
@@ -300,6 +428,8 @@ export interface DocumentMessageSendOptions {
 }
 
 export interface VideoMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Duration of sent video in seconds */
@@ -350,6 +480,8 @@ export interface VideoMessageSendOptions {
 }
 
 export interface AnimationMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Duration of sent animation in seconds */
@@ -399,6 +531,8 @@ export interface AnimationMessageSendOptions {
 }
 
 export interface VoiceMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Voice caption, 0-1024 characters after entities parsing */
@@ -430,6 +564,8 @@ export interface VoiceMessageSendOptions {
 }
 
 export interface VideoNoteMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Duration of sent video in seconds */
@@ -464,6 +600,8 @@ export interface VideoNoteMessageSendOptions {
 }
 
 export interface LocationMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** The radius of uncertainty for the location, measured in meters; 0-1500 */
@@ -511,6 +649,8 @@ export interface VenueOptions {
 }
 
 export interface VenueMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Foursquare identifier of the venue */
@@ -558,6 +698,8 @@ export interface ContactOptions {
 }
 
 export interface ContactMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/**
@@ -592,6 +734,8 @@ export interface PollOptions {
 }
 
 export interface PollMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** *true*, if the poll needs to be anonymous, defaults to *true* */
@@ -647,6 +791,8 @@ export interface PollMessageSendOptions {
 }
 
 export interface DiceMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/**
@@ -670,6 +816,8 @@ export interface DiceMessageSendOptions {
 }
 
 export interface MediaGroupMessageSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 	/** Sends the message [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no sound. */
@@ -713,6 +861,8 @@ export interface MessageCopyOptions {
 }
 
 export interface ChatActionSendOptions {
+	/** Unique identifier of the business connection on behalf of which the message will be sent */
+	businessConnectionId?: string
 	/** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
 	forumTopicId?: number
 }
@@ -723,22 +873,40 @@ export interface WebAppInfo {
 }
 
 export interface ClientEvents {
-	raw: [data: any]
-	ready: [client: Client]
-	message: [message: Message]
-	messageEdit: [message: Message]
-	channelPostCreate: [message: Message]
-	channelPostEdit: [message: Message]
-	inlineQuery: []
-	chosenInlineResult: []
-	callbackQuery: [callbackQuery: CallbackQuery]
-	shippingQuery: []
-	preCheckoutQuery: []
-	poll: []
-	pollAnswer: []
-	chatMeUpdate: []
-	chatMemberUpdate: []
-	chatJoinRequest: []
+	raw: [data: any],
+	ready: [client: Client],
+	message: [message: Message],
+	messageEdit: [message: Message],
+	channelPost: [message: Message],
+	channelPostEdit: [message: Message],
+	businessConnection: [businessConnection: BusinessConnection],
+	businessMessage: [message: Message],
+	businessMessageEdit: [message: Message],
+	// TODO
+	businessMessagesDelete: [businessMessagesDelete: any],
+	// TODO
+	messageReaction: [messageReactionUpdated: any],
+	// TODO
+	messageReactionCount: [messageReactionCountUpdated: any],
+	inlineQuery: [inlineQuery: InlineQuery],
+	// TODO
+	chosenInlineResult: [chosenInlineResult: any],
+	callbackQuery: [callbackQuery: CallbackQuery],
+	// TODO
+	shippingQuery: [shippingQuery: any],
+	preCheckoutQuery: [preCheckoutQuery: PreCheckoutQuery],
+	poll: [poll: Poll],
+	pollAnswer: [pollAnswer: PollAnswer],
+	// TODO
+	chatMeUpdate: [chatMemberUpdated: any],
+	// TODO
+	chatMemberUpdate: [chatMemberUpdated: any],
+	// TODO
+	chatJoinRequest: [chatJoinRequest: any],
+	// TODO
+	chatBoost: [chatBoostUpdated: any],
+	// TODO
+	chatBoostRemove: [ChatBoostRemove: any]
 }
 
 export interface KeyboardButtonData {
@@ -1037,6 +1205,8 @@ export interface MyDefaultAdministratorRightsSetOptions {
 }
 
 export interface MessageEditTextOptions {
+	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+	businessConnectionId?: string
 	/** Mode for parsing entities in the message text */
 	parseMode: ParseMode
 	/** A list of special entities that appear in message text, which can be specified instead of parseMode */
@@ -1048,6 +1218,8 @@ export interface MessageEditTextOptions {
 }
 
 export interface MessageEditCaptionOptions {
+	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+	businessConnectionId?: string
 	/** Mode for parsing entities in the message caption */
 	parseMode?: ParseMode
 	/** A list of special entities that appear in the caption, which can be specified instead of parseMode */
@@ -1057,11 +1229,15 @@ export interface MessageEditCaptionOptions {
 }
 
 export interface MessageEditMediaOptions {
+	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+	businessConnectionId?: string
 	/** An object for an inline keyboard */
 	replyMarkup?: InlineKeyboardMarkup
 }
 
 export interface PollStopOptions {
+	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+	businessConnectionId?: string
 	/** An object for a new message inline keyboard */
 	replyMarkup?: InlineKeyboardMarkup
 }
@@ -1284,9 +1460,9 @@ export interface ShippingQueryAnswerOptions {
 }
 
 export interface ShippingOption {
-    id: string
-    title: string
-    prices: LabeledPrice[]
+	id: string
+	title: string
+	prices: LabeledPrice[]
 }
 
 export interface LabeledPrice {
@@ -1389,12 +1565,12 @@ export interface PassportElementErrorDataField {
 	source: PassportElementErrorSource.Data
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.PersonalDetails
-		| PassportElementType.Passport
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
-		| PassportElementType.InternalPassport
-		| PassportElementType.Address
+	| PassportElementType.PersonalDetails
+	| PassportElementType.Passport
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
+	| PassportElementType.InternalPassport
+	| PassportElementType.Address
 	/** Name of the data field which has the error */
 	fieldName: string
 	/** Base64-encoded data hash */
@@ -1408,10 +1584,10 @@ export interface PassportElementErrorFrontSide {
 	source: PassportElementErrorSource.FrontSide
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.Passport
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
-		| PassportElementType.InternalPassport
+	| PassportElementType.Passport
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
+	| PassportElementType.InternalPassport
 	/** Base64-encoded hash of the file with the front side of the document */
 	fileHash: string
 	/** Error message */
@@ -1423,8 +1599,8 @@ export interface PassportElementErrorReverseSide {
 	source: PassportElementErrorSource.ReverseSide
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
 	/** Base64-encoded hash of the file with the reverse side of the document */
 	fileHash: string
 	/** Error message */
@@ -1436,10 +1612,10 @@ export interface PassportElementErrorSelfie {
 	source: PassportElementErrorSource.Selfie
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.Passport
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
-		| PassportElementType.InternalPassport
+	| PassportElementType.Passport
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
+	| PassportElementType.InternalPassport
 	/** Base64-encoded hash of the file with the selfie */
 	fileHash: string
 	/** Error message */
@@ -1451,11 +1627,11 @@ export interface PassportElementErrorFile {
 	source: PassportElementErrorSource.File
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.UtilityBill
-		| PassportElementType.BankStatement
-		| PassportElementType.RentalAgreement
-		| PassportElementType.PassportRegistration
-		| PassportElementType.TemporaryRegistration
+	| PassportElementType.UtilityBill
+	| PassportElementType.BankStatement
+	| PassportElementType.RentalAgreement
+	| PassportElementType.PassportRegistration
+	| PassportElementType.TemporaryRegistration
 	/** Base64-encoded file hash */
 	fileHash: string
 	/** Error message */
@@ -1467,11 +1643,11 @@ export interface PassportElementErrorFiles {
 	source: PassportElementErrorSource.Files
 	/** The section of the user's Telegram Passport which has the error */
 	type:
-		| PassportElementType.UtilityBill
-		| PassportElementType.BankStatement
-		| PassportElementType.RentalAgreement
-		| PassportElementType.PassportRegistration
-		| PassportElementType.TemporaryRegistration
+	| PassportElementType.UtilityBill
+	| PassportElementType.BankStatement
+	| PassportElementType.RentalAgreement
+	| PassportElementType.PassportRegistration
+	| PassportElementType.TemporaryRegistration
 	/** List of base64-encoded file hashes */
 	fileHashes: string[]
 	/** Error message */
@@ -1483,15 +1659,15 @@ export interface PassportElementErrorTranslationFile {
 	source: PassportElementErrorSource.TranslationFile
 	/** Type of element of the user's Telegram Passport which has the issue */
 	type:
-		| PassportElementType.Passport
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
-		| PassportElementType.InternalPassport
-		| PassportElementType.UtilityBill
-		| PassportElementType.BankStatement
-		| PassportElementType.RentalAgreement
-		| PassportElementType.Passport
-		| PassportElementType.TemporaryRegistration
+	| PassportElementType.Passport
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
+	| PassportElementType.InternalPassport
+	| PassportElementType.UtilityBill
+	| PassportElementType.BankStatement
+	| PassportElementType.RentalAgreement
+	| PassportElementType.Passport
+	| PassportElementType.TemporaryRegistration
 	/** Base64-encoded file hash */
 	fileHash: string
 	/** Error message */
@@ -1503,15 +1679,15 @@ export interface PassportElementErrorTranslationFiles {
 	source: PassportElementErrorSource.TranslationFiles
 	/** Type of element of the user's Telegram Passport which has the issue */
 	type:
-		| PassportElementType.Passport
-		| PassportElementType.DriverLicense
-		| PassportElementType.IdentityCard
-		| PassportElementType.InternalPassport
-		| PassportElementType.UtilityBill
-		| PassportElementType.BankStatement
-		| PassportElementType.RentalAgreement
-		| PassportElementType.PassportRegistration
-		| PassportElementType.TemporaryRegistration
+	| PassportElementType.Passport
+	| PassportElementType.DriverLicense
+	| PassportElementType.IdentityCard
+	| PassportElementType.InternalPassport
+	| PassportElementType.UtilityBill
+	| PassportElementType.BankStatement
+	| PassportElementType.RentalAgreement
+	| PassportElementType.PassportRegistration
+	| PassportElementType.TemporaryRegistration
 	/** List of base64-encoded file hashes */
 	fileHashes: string[]
 	/** Error message */
@@ -1643,7 +1819,7 @@ export interface ChatMemberRestrictedPermissions {
 	canAddWebPagePreviews: boolean
 }
 
-export type PassportElementError = 
+export type PassportElementError =
 	| PassportElementErrorDataField
 	| PassportElementErrorFrontSide
 	| PassportElementErrorReverseSide
@@ -1858,7 +2034,7 @@ export interface KeyboardButtonRequestChat {
 	 * Must be unique within the message
 	 */
 	requestId: number
-	
+
 	chatIsChannel?: boolean
 
 	chatIsForum?: boolean
@@ -2078,10 +2254,10 @@ export interface MessageAutoDeleteTimerChanged {
 
 export interface SuccessfulPayment {
 	/**
-	 * Three-letter ISO 4217 currency code
+	 * Three-letter ISO 4217 currency code, or "XTR" for payments in Telegram Stars
 	 * @see {@link https://core.telegram.org/bots/payments#supported-currencies}
 	 */
-	currency: string
+	currency: Currency
 	/**
 	 * Total price in the *smallest units* of the currency (integer, **not** float/double).
 	 * For example, for a price of `US$ 1.45` pass `totalAmount: 145`.
@@ -2109,5 +2285,245 @@ export interface OrderInfo {
 	/** User email */
 	email?: string,
 	/** User shipping adress */
-	shippingAdress: ShippingAddress
+	shippingAddress: ShippingAddress
+}
+
+// TODO: move to own class
+export interface ExternalReplyInfo {
+	origin: MessageOrigin,
+	chat?: Chat,
+	messageId?: number,
+	linkPreviewOptions?: LinkPreviewOptions,
+	animation?: Animation,
+	audio?: Audio,
+	document?: Document,
+	paidMedia?: PaidMediaInfo,
+	photo?: PhotoSize[],
+	sticker?: Sticker,
+	story?: Story,
+	video?: Video,
+	videoNote?: VideoNote,
+	voice?: Voice,
+	hasMediaSpoiler?: boolean,
+	contact?: Contact,
+	dice?: Dice,
+	game?: Game,
+	giveaway?: Giveaway,
+	giveawayWinners?: GiveawayWinners,
+	invoice?: Invoice,
+	location?: Location,
+	poll?: Poll,
+	venue?: Venue
+}
+
+export interface WriteAccessAlowed {
+	/** *true*, if the access was granted after the user accepted an explicit request from a Web App */
+	fromRequest?: boolean,
+	/** Name of the Web App, if the access was granted when the Web App was launched from a link */
+	webAppName?: string,
+	/** *true*, if the access was granted when the bot was added to the attachment or side menu */
+	fromAttachmentMenu?: boolean
+}
+
+/** Represents a service message about the creation of a scheduled giveaway. Currently holds no information. */
+export interface GiveawayCreated {
+
+}
+
+export interface GiveawayWinners {
+	/** The chat that created the giveaway */
+	chat: Chat,
+	/** Identifier of the message with the giveaway in the chat */
+	giveawayMessageId: number,
+	/** Point in time when winners of the giveaway were selected */
+	winnersSelectionDate: Date,
+	/** Total number of winners in the giveaway */
+	winnerCount: number,
+	/** List of up to 100 winners of the giveaway */
+	winners: User[],
+	/** The number of other chats the user had to join in order to be eligible for the giveaway */
+	additionalChatCount?: number,
+	/** The number of months the Telegram Premium subscription won from the giveaway will be active for */
+	premiumSubscriptionMonthCount?: number,
+	/** Number of undistributed prizes */
+	unclaimedPrizeCount?: number,
+	/** *true*, if only users who had joined the chats after the giveaway started were eligible to win */
+	onlyNewMembers?: boolean,
+	/** *true*, if the giveaway was canceled because the payment for it was refunded */
+	wasRefunded?: boolean,
+	/** Description of additional giveaway prize */
+	prizeDescription?: string
+}
+
+export interface GiveawayCompleted {
+	/** Number of winners in the giveaway */
+	winnerCount: number,
+	/** Number of undistributed prizes */
+	unclaimedPrizeCount?: number,
+	/** Message with the giveaway that was completed, if it wasn't deleted */
+	giveawayMessage?: Message
+}
+
+export interface LinkPreviewOptions {
+	/** *true*, if the link preview is disabled */
+	isDisabled?: boolean
+	/** URL to use for the link preview. If empty, then the first URL found in the message text will be used */
+	url?: string,
+	/**
+	 * *true*, if the media in the link preview is supposed to be shrunk;
+	 * ignored if the URL isn't explicitly specified or media size change isn't supported for the preview
+	 */
+	preferSmallMedia?: boolean,
+	/**
+	 * *true*, if the media in the link preview is supposed to be enlarged;
+	 * ignored if the URL isn't explicitly specified or media size change isn't supported for the preview
+	 */
+	preferLargeMedia?: boolean,
+	/**
+	 * *true*, if the link preview must be shown above the message text;
+	 * otherwise, the link preview will be shown below the message text
+	 */
+	showAboveText?: boolean
+}
+
+export interface PaidMediaInfo {
+	/** The number of Telegram Stars that must be paid to buy access to the media */
+	starCount: number,
+	/** Information about the paid media */
+	paidMedia: PaidMedia
+}
+
+// export interface PassportData {
+// 	/** Array with information about documents and other Telegram Passport elements that was shared with the bot */
+// 	data: EncryptedPassportElement[],
+// 	/** Encrypted credentials required to decrypt the data */
+// 	credentials: EncryptedCredentials
+// }
+
+export interface PassportFile {
+	/** Identifier for this file, which can be used to download or reuse the file */
+	fileId: string,
+	/**
+	 * Unique identifier for this file, which is supposed to be the same over time and for different bots.
+	 * Can't be used to download or reuse the file.
+	 */
+	fileUniqueId: string,
+	/** File size in bytes */
+	fileSize: number,
+	/** Time when the file was uploaded */
+	fileDate: Date
+}
+
+export interface ProximityAlertTriggered {
+	/** User that triggered the alert */
+	traveler: User,
+	/** User that set the alert */
+	watcher: User,
+	/** The distance between the users */
+	distance: number
+}
+
+export interface ChatBoostAdded {
+	/** Number of boosts added by the user */
+	boostCount: number
+}
+
+export interface ForumTopicCreated {
+	/** Name of the topic */
+	name: string,
+	/** Color of the topic icon in RGB format */
+	iconColor: number,
+	/** Unique identifier of the custom emoji shown as the topic icon */
+	iconCustomEmojiId?: string
+}
+
+export interface ForumTopicEdited {
+	/** New name of the topic, if it was edited */
+	name: string,
+	/**
+	 * New identifier of the custom emoji shown as the topic icon, if it was edited;
+	 * an empty string if the icon was removed
+	 */
+	iconCustomEmojiId?: string
+}
+
+export interface ForumTopicClosed {
+
+}
+
+export interface ForumTopicReopened {
+
+}
+
+export interface GeneralForumTopicHidden {
+
+}
+
+export interface GeneralForumTopicUnhidden {
+
+}
+
+export interface VideoChatScheduled {
+	/** Point in time when the video chat is supposed to be started by a chat administrator */
+	startDate: Date
+}
+
+export interface VideoChatStarted {
+
+}
+
+export interface VideoChatEnded {
+	/** Video chat duration in seconds */
+	duration: number
+}
+
+export interface VideoChatParticipantsInvited {
+	/** New members that were invited to the video chat */
+	users: User[]
+}
+
+export type Reaction = EmojiReaction | CustomEmojiReaction
+
+export interface EmojiReaction {
+	type: ReactionType.Emoji
+	emoji: string
+}
+
+export interface CustomEmojiReaction {
+	type: ReactionType.CustomEmoji
+	customEmojiId: string
+}
+
+export interface MessageReactionSetOptons {
+	isBig?: boolean
+}
+
+export interface UserChatBoosts {
+	/** The list of boosts added to the chat by the user */
+	boosts: ChatBoost[]
+}
+
+// TODO move to class
+export interface ChatBoost {
+	/** Unique identifier of the boost */
+	boostId: string,
+	addDate: Date,
+	expirationDate: Date,
+	source: any
+}
+
+export interface StarTransactions {
+	transactions: StarTransaction
+}
+
+export interface StarTransactionsGetOptions {
+	/** Number of transactions to skip in the response */
+	offset: number
+	/** The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100. */
+	limit: number
+}
+
+export interface MessageEditReplyMarkupOptions {
+	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+	businessConnectionId?: string
 }

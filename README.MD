@@ -13,15 +13,16 @@
   <a aria-label="Bot API version">
     <img
 		alt="Telegram Bot API version"
-		src="https://img.shields.io/badge/Bot%20API-6.6-1d98dc?labelColor=%231A1A1A&logo=telegram&logoColor=%23FFF&style=for-the-badge"
+		src="https://img.shields.io/badge/Bot%20API-7.6-1d98dc?labelColor=%231A1A1A&logo=telegram&logoColor=%23FFF&style=for-the-badge"
 	>
   </a>
 </p>
 
 ## About
 
-> **Warning**
-> **This library is under development!** It doesn't yet cover Telegram Bot API 100% and may contain bugs. Library API may change at any time. Use it in production at your own risk.
+> [!WARNING]  
+> **This library is under development!** It doesn't yet cover Telegram Bot API 100% and may contain bugs. Library API may change at any time. Use it in production at your own risk.  
+> **None of the code is generated**. Every type and structure is hand-written, hence there can be some mistakes. Please open an issue if you find any!
 
 TgKit is library for interacting with [Telegram Bot API](https://core.telegram.org/bots/api)
 
@@ -37,7 +38,7 @@ import { Client } from 'tgkit'
 
 const client = new Client({
     // Create bot and get token via @botfather
-    token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-sDzP'
+    token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-tMnK'
 })
 
 client.on('message', async (message) => {
