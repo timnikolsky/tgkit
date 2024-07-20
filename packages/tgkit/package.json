@@ -14,13 +14,13 @@
     "/types"
   ],
   "type": "module",
-  "repository": "sadnesszephyr/tgkit",
-  "homepage": "https://github.com/sadnesszephyr/tgkit#readme",
-  "author": "sandesszephyr",
+  "repository": "timnikolsky/tgkit",
+  "homepage": "https://github.com/timnikolsky/tgkit#readme",
+  "author": "timnikolsky",
   "license": "MIT",
-  "bugs": "https://github.com/sadnesszephyr/tgkit/issues",
+  "bugs": "https://github.com/timnikolsky/tgkit/issues",
   "devDependencies": {
-    "@tgkit/eslint-config": "workspace:*",
+    "@tgkit/eslint-config": "workspace:^1.0.0",
     "@types/node": "^18.13.0",
     "eslint": "^8.56.0",
     "tsup": "^6.6.3",
