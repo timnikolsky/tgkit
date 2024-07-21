@@ -1,0 +1,13 @@
+@import "./variables.scss";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+	background: var(--background);
+	font-family: var(--font);
+	color: var(--foreground);
+}
