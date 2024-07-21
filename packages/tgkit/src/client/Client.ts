@@ -102,9 +102,9 @@ import MenuButtonDefault from '../structures/MenuButtonDefault'
 import MenuButtonWebApp from '../structures/MenuButtonWebApp'
 import MenuButtonCommands from '../structures/MenuButtonCommands'
 import ChatInviteLink from '../structures/ChatInviteLink'
-import BusinessConnection from 'structures/BusinessConnection'
-import StarTransaction from 'structures/StarTransaction'
-import ChatFull from 'structures/ChatFull'
+import BusinessConnection from '../structures/BusinessConnection'
+import StarTransaction from '../structures/StarTransaction'
+import ChatFull from '../structures/ChatFull'
 
 export default class Client extends EventEmitter {
 	options: ClientOptions

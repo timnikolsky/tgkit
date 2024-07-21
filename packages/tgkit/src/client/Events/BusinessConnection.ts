@@ -1,4 +1,4 @@
-import BusinessConnection from 'structures/BusinessConnection'
+import BusinessConnection from '../../structures/BusinessConnection'
 import CallbackQuery from '../../structures/CallbackQuery'
 import Events from '../../utils/Events'
 import TelegramEvent from './Event'

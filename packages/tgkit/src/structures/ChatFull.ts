@@ -3,8 +3,8 @@ import { Birthdate, BusinessIntro, BusinessLocation, BusinessOpeningHours, ChatL
 import Client from '../client/Client'
 import Chat from './Chat'
 import { ReactionType } from '../utils/enums'
-import Sticker from 'structures/Sticker'
-import Location from 'structures/Location'
+import Sticker from '../structures/Sticker'
+import Location from '../structures/Location'
 import { unixToDate } from 'utils/converters'
 
 export default class ChatFull extends Chat {

@@ -1,4 +1,3 @@
-import Giveaway from 'structures/Giveaway'
 import {
 	BotCommandScopeType,
 	CallbackQuery,
@@ -37,13 +36,14 @@ import {
 	Venue,
 	ReactionType,
 	InlineQuery,
-	PollAnswer
+	PollAnswer,
+	Invoice,
+	PaidMedia,
+	StarTransaction,
+	PreCheckoutQuery,
+	BusinessConnection,
+	Giveaway
 } from '../src/'
-import Invoice from 'structures/Invoice'
-import PaidMedia from 'structures/PaidMedia'
-import StarTransaction from 'structures/StarTransaction'
-import PreCheckoutQuery from 'structures/PreCheckoutQuery'
-import BusinessConnection from 'structures/BusinessConnection'
 
 export type ChatType = 'private' | 'group' | 'supergroup' | 'channel'
 

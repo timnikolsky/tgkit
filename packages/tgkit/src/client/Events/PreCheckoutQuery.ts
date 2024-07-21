@@ -1,4 +1,4 @@
-import PreCheckoutQuery from 'structures/PreCheckoutQuery'
+import PreCheckoutQuery from '../../structures/PreCheckoutQuery'
 import Events from '../../utils/Events'
 import TelegramEvent from './Event'
 

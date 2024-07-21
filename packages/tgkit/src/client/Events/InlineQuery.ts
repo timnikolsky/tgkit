@@ -1,4 +1,4 @@
-import InlineQuery from 'structures/InlineQuery'
+import InlineQuery from '../../structures/InlineQuery'
 import Events from '../../utils/Events'
 import TelegramEvent from './Event'
 

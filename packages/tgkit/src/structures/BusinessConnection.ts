@@ -1,4 +1,4 @@
-import User from 'structures/User'
+import User from '../structures/User'
 import Client from '../client/Client'
 import Base from './Base'
 import Chat from './Chat'

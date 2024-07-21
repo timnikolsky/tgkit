@@ -3,7 +3,7 @@ import Base from './Base'
 import Client from '../client/Client'
 import PaidMedia from './PaidMedia'
 import { toCamelCase } from 'utils/converters'
-import PhotoSize from 'structures/PhotoSize'
+import PhotoSize from '../structures/PhotoSize'
 
 export default class PaidMediaPhoto extends Base implements PaidMedia {
 	/** Type of the paid media */
