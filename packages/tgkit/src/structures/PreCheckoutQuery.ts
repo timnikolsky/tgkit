@@ -1,7 +1,7 @@
 import User from './User'
 import Client from '../client/Client'
 import Base from './Base'
-import type { Currency, OrderInfo } from '../../types'
+import type { Currency, OrderInfo } from '../types'
 
 /** Contains information about an incoming pre-checkout query. */
 export default class PreCheckoutQuery extends Base {

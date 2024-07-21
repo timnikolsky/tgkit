@@ -1,5 +1,5 @@
 import Client from '../client/Client'
-import { MessageEntityType } from '../../types'
+import { MessageEntityType } from '../types'
 import { toCamelCase } from '../utils/converters'
 import User from './User'
 import Base from './Base'

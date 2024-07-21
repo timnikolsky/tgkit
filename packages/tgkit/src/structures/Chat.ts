@@ -36,7 +36,7 @@ import {
 	VenueMessageSendOptions,
 	VenueOptions,
 	VideoMessageSendOptions
-} from '../../types'
+} from '../types'
 import { BotCommandScopeType, ChatAction } from '../utils/enums'
 import Client from '../client/Client'
 import Base from './Base'

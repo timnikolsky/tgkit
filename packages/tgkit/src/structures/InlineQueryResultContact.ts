@@ -1,4 +1,4 @@
-// import { InlineQueryResultContactOptions, InputMessageContent } from '../../types'
+// import { InlineQueryResultContactOptions, InputMessageContent } from '../types'
 // import { InlineQueryResultType } from '../utils/enums'
 // import InlineKeyboardMarkup from './InlineKeyboardMarkup'
 // import InlineQueryResult from './InlineQueryResult'

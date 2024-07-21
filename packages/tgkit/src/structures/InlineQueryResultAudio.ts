@@ -1,4 +1,4 @@
-import { InlineQueryResultAudioOptions, InputMessageContent } from '../../types'
+import { InlineQueryResultAudioOptions, InputMessageContent } from '../types'
 import { InlineQueryResultType, ParseMode } from '../utils/enums'
 import InlineKeyboardMarkup from './InlineKeyboardMarkup'
 import InlineQueryResult from './InlineQueryResult'

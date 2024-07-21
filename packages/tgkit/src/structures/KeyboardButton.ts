@@ -1,4 +1,4 @@
-import { KeyboardButtonData, KeyboardButtonRequestChat, KeyboardButtonRequestUser, WebAppInfo } from '../../types'
+import { KeyboardButtonData, KeyboardButtonRequestChat, KeyboardButtonRequestUser, WebAppInfo } from '../types'
 import { KeyboardButtonPollType } from '../utils/enums'
 
 /**

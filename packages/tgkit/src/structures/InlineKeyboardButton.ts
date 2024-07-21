@@ -1,4 +1,4 @@
-import { InlineKeyboardButtonData, WebAppInfo, LoginUrl } from '../../types'
+import { InlineKeyboardButtonData, WebAppInfo, LoginUrl } from '../types'
 import CallbackGame from './CallbackGame'
 
 /** Represents one button of an inline keyboard. You must use exactly one of the optional fields. */

@@ -1,4 +1,4 @@
-import { ChatType } from '../../types'
+import { ChatType } from '../types'
 import Client from '../client/Client'
 import Base from './Base'
 import Location from './Location'

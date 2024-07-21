@@ -1,4 +1,4 @@
-import { ChatMemberRestrictedPermissions } from '../../types'
+import { ChatMemberRestrictedPermissions } from '../types'
 import { unixToDate } from '../utils/converters'
 import Client from '../client/Client'
 import ChatMember from './ChatMember'

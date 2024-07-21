@@ -1,4 +1,4 @@
-import { InlineKeyboardMarkupData } from '../../types'
+import { InlineKeyboardMarkupData } from '../types'
 import InlineKeyboardButton from './InlineKeyboardButton'
 
 /** 

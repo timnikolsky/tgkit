@@ -68,3 +68,4 @@ export { default as Voice } from './structures/Voice'
 export { default as WebAppData } from './structures/WebAppData'
 
 export * from './utils/enums'
+export * from './types'

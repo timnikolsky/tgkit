@@ -1,4 +1,4 @@
-import { ReplyKeyboardMarkupData } from '../../types'
+import { ReplyKeyboardMarkupData } from '../types'
 import KeyboardButton from './KeyboardButton'
 
 /** 

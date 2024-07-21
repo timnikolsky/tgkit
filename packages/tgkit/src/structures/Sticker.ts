@@ -3,7 +3,7 @@ import Base from './Base'
 import File from './File'
 import PhotoSize from './PhotoSize'
 import { toCamelCase } from '../utils/converters'
-import { MaskPosition } from '../../types'
+import { MaskPosition } from '../types'
 import { StickerType } from '../utils/enums'
 
 export default class Sticker extends Base {

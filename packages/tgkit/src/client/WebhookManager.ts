@@ -1,4 +1,4 @@
-import { WebhookOptions } from '../../types'
+import { WebhookOptions } from '../types'
 import Client from './Client'
 
 export default class WebhookManager {

@@ -1,4 +1,4 @@
-import { DiceEmoji } from '../../types'
+import { DiceEmoji } from '../types'
 import Client from '../client/Client'
 import Base from './Base'
 

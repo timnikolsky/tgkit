@@ -71,7 +71,7 @@ import {
 	VideoMessageSendOptions,
 	VideoNoteMessageSendOptions,
 	VoiceMessageSendOptions
-} from '../../types'
+} from '../types'
 import RestManager from '../rest/RestManager'
 import EventManager from './Events/EventManager'
 import PollingManager from './PollingManager'

@@ -1,4 +1,4 @@
-import { CallbackQueryAnswerOptions } from '../../types'
+import { CallbackQueryAnswerOptions } from '../types'
 import Client from '../client/Client'
 import Base from './Base'
 import Message from './Message'

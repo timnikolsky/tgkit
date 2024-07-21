@@ -1,4 +1,4 @@
-import { Currency } from '../../types'
+import { Currency } from '../types'
 import Client from '../client/Client'
 import Base from './Base'
 

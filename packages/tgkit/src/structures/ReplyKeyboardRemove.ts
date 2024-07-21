@@ -1,4 +1,4 @@
-import { ReplyKeyboardRemoveData } from '../../types'
+import { ReplyKeyboardRemoveData } from '../types'
 
 /** 
  * Upon receiving a message with this object,Telegram clients will remove

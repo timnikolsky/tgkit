@@ -1,4 +1,4 @@
-import { PollingOptions } from '../../types'
+import { PollingOptions } from '../types'
 import Client from './Client'
 
 export default class PollingManager {

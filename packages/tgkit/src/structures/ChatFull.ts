@@ -1,5 +1,5 @@
 import Message from './Message'
-import { Birthdate, BusinessIntro, BusinessLocation, BusinessOpeningHours, ChatLocation, ChatPermissions, ChatPhoto } from '../../types'
+import { Birthdate, BusinessIntro, BusinessLocation, BusinessOpeningHours, ChatLocation, ChatPermissions, ChatPhoto } from '../types'
 import Client from '../client/Client'
 import Chat from './Chat'
 import { ReactionType } from '../utils/enums'
