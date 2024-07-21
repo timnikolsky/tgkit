@@ -1,5 +1,10 @@
 @import "./variables.scss";
 
+@font-face {
+	font-family: "Geist Mono";
+	src: url("/fonts/GeistMonoVF.woff2");
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -10,4 +15,8 @@ body {
 	background: var(--background);
 	font-family: var(--font);
 	color: var(--foreground);
+}
+
+pre, code {
+	font-family: var(--font-mono);
 }
