@@ -2527,3 +2527,57 @@ export interface MessageEditReplyMarkupOptions {
 	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
 	businessConnectionId?: string
 }
+
+export interface ChatLocation {
+	/** The location to which the supergroup is connected. Can't be a live location. */
+	location: Location,
+	/** Location address; 1-64 characters, as defined by the chat owner */
+	address: string
+}
+
+export interface Birthdate {
+	/** Day of the user's birth; 1-31 */
+	day: number
+	/**	Month of the user's birth; 1-12 */
+	month: number
+	/** Year of the user's birth */
+	year: number
+}
+
+export interface BusinessIntro {
+	/** Title text of the business intro */
+	title?: string
+	/** Message text of the business intro */
+	message?: string
+	/** Sticker of the business intro */
+	sticker?: Sticker
+}
+
+export interface BusinessLocation {
+	/** Address of the business */
+	address: string
+	/** Location of the business */
+	location?: Location,
+}
+
+export interface BusinessOpeningHoursInterval {
+	/** 
+	 * The minute's sequence number in a week, starting on Monday,
+	 * marking the start of the time interval during which the business is open;
+	 * From 0 to 7 * 24 * 60
+	 */
+	openingMinute: number
+	/**
+	 * The minute's sequence number in a week, starting on Monday,
+	 * marking the end of the time interval during which the business is open;
+	 * From 0 to 8 * 24 * 60
+	 */
+	closingMinute: number
+}
+
+export interface BusinessOpeningHours {
+	/** Unique name of the time zone for which the opening hours are defined */
+	timeZoneName: string
+	/** List of time intervals describing business opening hours */
+	openingHours: BusinessOpeningHoursInterval[]
+}

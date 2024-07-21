@@ -91,7 +91,6 @@ import ChatMemberMember from '../structures/ChatMemberMember'
 import ChatMemberRestricted from '../structures/ChatMemberRestricted'
 import ChatMemberLeft from '../structures/ChatMemberLeft'
 import ChatMemberBanned from '../structures/ChatMemberBanned'
-import TelegramBotAPIError from '../errors/TgKitError'
 import WebhookManager from './WebhookManager'
 import ForumTopic from '../structures/ForumTopic'
 import InlineQueryResult from '../structures/InlineQueryResult'
@@ -105,6 +104,7 @@ import MenuButtonCommands from '../structures/MenuButtonCommands'
 import ChatInviteLink from '../structures/ChatInviteLink'
 import BusinessConnection from 'structures/BusinessConnection'
 import StarTransaction from 'structures/StarTransaction'
+import ChatFull from 'structures/ChatFull'
 
 export default class Client extends EventEmitter {
 	options: ClientOptions
@@ -862,12 +862,12 @@ export default class Client extends EventEmitter {
 		})
 	}
 
-	async getChat(chatId: ChatId): Promise<Chat<true>> {
+	async getChat(chatId: ChatId): Promise<ChatFull> {
 		const chatData = await this.rest.request('getChat', {
 			chat_id: chatId
 		})
 
-		return new Chat(this, chatData)
+		return new ChatFull(this, chatData)
 	}
 
 	async getChatAdministrators(chatId: ChatId) {

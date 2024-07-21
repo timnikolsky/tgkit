@@ -45,7 +45,7 @@ import Message from './Message'
 import MenuButton from './MenuButton'
 
 /** Represents a chat */
-export default class Chat<Full extends boolean = false> extends Base {
+export default class Chat extends Base {
 	/** Unique identifier for this chat */
 	id: number
 
@@ -67,138 +67,6 @@ export default class Chat<Full extends boolean = false> extends Base {
 	/** *true*, if the supergroup chat is a forum (has topics enabled) */
 	isForum?: boolean
 
-	/**
-	 * Chat photo.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	photo?: Full extends true ? ChatPhoto : never
-
-	/**
-	 * The list of all active chat usernames;
-	 * for private chats, supergroups and channels.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	activeUsernames?:  Full extends true ? string[] : never
-
-	/**
-	 * Custom emoji identifier of emoji status of the other party in a private chat.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	emojiStatusCustomEmojiId?: Full extends true ? string : never
-
-	/**
-	 * Bio of the other party in a private chat.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	bio?: Full extends true ? string : never
-
-	/**
-	 * *true*, if privacy settings of the other party in the private chat allows to use
-	 * `tg://user?id=<user_id>` links only in chats with the user.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	hasPrivateForwards?: Full extends true ? boolean : never
-
-	/**
-	 * *true*, if the privacy settings of the other party restrict
-	 * sending voice and video note messages in the private chat.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	hasRestrictedVoiceAndVideoMessages?: Full extends true ? boolean : never
-
-	/**
-	 * *true*, if users need to join the supergroup before they can send messages.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	joinToSendMessages?: Full extends true ? boolean : never
-
-	/**
-	 * *true*, if all users directly joining the supergroup need to be approved by supergroup administrators.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	joinByRequest?: Full extends true ? boolean : never
-
-	/**
-	 * Description, for groups, supergroups and channel chats.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	description?: Full extends true ? string : never
-
-	/**
-	 * Primary invite link, for groups, supergroups and channel chats.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	inviteLink?: Full extends true ? string : never
-
-	/**
-	 * The most recent pinned message (by sending date).
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	pinnedMessage?: Full extends true ? Message : never
-
-	/**
-	 * Default chat member permissions, for groups and supergroups.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	permissions?: Full extends true ? ChatPermissions : never
-
-	/**
-	 * For supergroups, the minimum allowed delay between consecutive messages
-	 * sent by each unpriviledged user; in seconds.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	slowModeDelay?: Full extends true ? number : never
-
-	/**
-	 * The time after which all messages sent to the chat will be automatically deleted; in seconds.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	messageAutoDeleteTime?: Full extends true ? number : never
-
-	/**
-	 * *true*, if aggressive anti-spam checks are enabled in the supergroup.
-	 * The field is only available to chat administrators.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	hasAggresiveAntiSpamEnabled?: Full extends true ? boolean : never
-
-	/**
-	 * *true*, if non-administrators can only get the list of bots and administrators in the chat.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	hasHiddenMembers?: Full extends true ? boolean : never
-
-	/**
-	 * *true*, if messages from the chat can't be forwarded to other chats.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	hasProtectedContent?: Full extends true ? boolean : never
-
-	/**
-	 * For supergroups, name of group sticker set.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	stickerSetName?: Full extends true ? string : never
-
-	/**
-	 * *true*, if the bot can change the group sticker set.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	canSetStickerSet?: Full extends true ? boolean : never
-
-	/**
-	 * Unique identifier for the linked chat, i.e. the discussion group identifier
-	 * for a channel and vice versa; for supergroups and channel chats.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	linkedChatId?: Full extends true ? number : never
-	
-	/**
-	 * For supergroups, the location to which the supergroup is connected.
-	 * Returned only in `<Client>.getChat()`.
-	 */
-	location?: Full extends true ? string : never
-
 	constructor(client: Client, data: any) {
 		super(client)
 
@@ -209,43 +77,6 @@ export default class Chat<Full extends boolean = false> extends Base {
 		this.firstName = data.first_name
 		this.lastName = data.last_name
 		this.isForum = data.is_forum
-		this.photo = data.photo && {
-			smallFileId: data.photo.small_file_id,
-			smallFileUniqueId: data.photo.small_file_unique_id,
-			bigFileId: data.photo.big_file_id,
-			bigFileUniqueId: data.photo.big_file_unique_id
-		}
-		this.activeUsernames = data.active_usernames
-		this.emojiStatusCustomEmojiId = data.emoji_status_custom_emoji_id
-		this.bio = data.bio
-		this.hasPrivateForwards = data.has_private_forwards
-		this.hasRestrictedVoiceAndVideoMessages = data.has_restricted_voice_and_video_messages
-		this.joinToSendMessages = data.join_to_send_messages
-		this.joinByRequest = data.join_by_request
-		this.description = data.description
-		this.inviteLink = data.inviteLink
-		this.pinnedMessage = data.pinnedMessage && new Message(client, data.pinnedMessage)
-		// TODO
-		// @ts-expect-error
-		this.permissions = {
-			canSendMessages: data.can_send_messages,
-			canSendMediaMessages: data.can_send_media_messages,
-			canSendPolls: data.can_send_polls,
-			canSendOtherMessages: data.can_send_other_messages,
-			canAddWebPagePreviews: data.can_add_web_page_previews,
-			canChangeInfo: data.can_change_info,
-			canInviteUsers: data.can_invite_users,
-			canPinMessages: data.can_pin_messages
-		}
-		this.slowModeDelay = data.slow_mode_delay
-		this.messageAutoDeleteTime = data.message_auto_delete_time
-		this.hasAggresiveAntiSpamEnabled = data.has_aggressive_anti_spam_enabled
-		this.hasHiddenMembers = data.has_hidden_members
-		this.hasProtectedContent = data.has_protected_content
-		this.stickerSetName = data.sticker_set_name
-		this.canSetStickerSet = data.can_set_sticker_set
-		this.linkedChatId = data.linked_chat_id
-		this.location = data.location
 	}
 
 	async sendMessage(text: string, options?: TextMessageSendOptions) {
