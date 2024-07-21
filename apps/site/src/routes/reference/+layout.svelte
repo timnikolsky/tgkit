@@ -12,7 +12,7 @@
 <div class="docs">
 	<aside class="sidebar">
 		{#each data.children as child}
-			<a href={`/api/${child.name}`}>
+			<a href={`/reference/${child.name}`}>
 				{child.name} ({getKind(child.kind)})
 			</a>
 		{/each}
