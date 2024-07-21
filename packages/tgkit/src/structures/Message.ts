@@ -27,9 +27,9 @@ import Story from '../structures/Story'
 import Invoice from '../structures/Invoice'
 import Giveaway from '../structures/Giveaway'
 import WebAppData from '../structures/WebAppData'
-import { dateToUnix, toSnakeCase, unixToDate } from 'utils/converters'
+import { dateToUnix, toSnakeCase, unixToDate } from '../utils/converters'
 import PaidMedia from '../structures/PaidMedia'
-import { ReactionType } from 'utils/enums'
+import { ReactionType } from '../utils/enums'
 
 /** Represents a message */
 export default class Message extends Base {
@@ -431,7 +431,7 @@ export default class Message extends Base {
 			giveawayWinners: data.external_reply.giveaway_winners && {
 				chat: new Chat(client, data.external_reply.giveaway_winners.chat),
 				giveawayMessageId: data.external_reply.giveaway_winners.giveaway_message_id,
-				winnersSelectionDate: dateToUnix(data.external_reply.giveaway_winners.winners_selection_date),
+				winnersSelectionDate: unixToDate(data.external_reply.giveaway_winners.winners_selection_date),
 				winnerCount: data.external_reply.giveaway_winners.winner_count,
 				winners: data.external_reply.giveaway_winners.winners.map((winnerData: any) => new User(client, winnerData)),
 				additionalChatCount: data.external_reply.giveaway_winners.additional_chat_count,

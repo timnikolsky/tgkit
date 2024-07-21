@@ -1,4 +1,4 @@
-import { unixToDate } from 'utils/converters'
+import { unixToDate } from '../utils/converters'
 import Client from '../client/Client'
 import Base from './Base'
 

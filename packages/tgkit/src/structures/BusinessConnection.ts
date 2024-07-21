@@ -2,7 +2,7 @@ import User from '../structures/User'
 import Client from '../client/Client'
 import Base from './Base'
 import Chat from './Chat'
-import { unixToDate } from 'utils/converters'
+import { unixToDate } from '../utils/converters'
 
 /** Represents a message about a scheduled giveaway */
 export default class BusinessConnection extends Base {

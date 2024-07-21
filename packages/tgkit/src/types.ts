@@ -2100,7 +2100,7 @@ export interface InputVenueMessageContent {
 	/** Name of the venue */
 	title: string
 	/** Address of the venue */
-	adress: string
+	address: string
 	/** Foursquare identifier of the venue, if known */
 	foursquareId?: string
 	/**
@@ -2284,7 +2284,7 @@ export interface OrderInfo {
 	phoneNumber?: string,
 	/** User email */
 	email?: string,
-	/** User shipping adress */
+	/** User shipping address */
 	shippingAddress: ShippingAddress
 }
 

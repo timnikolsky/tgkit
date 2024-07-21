@@ -1,6 +1,6 @@
-import { toCamelCase, unixToDate } from 'utils/converters'
+import { toCamelCase, unixToDate } from '../utils/converters'
 import MessageOrigin from './MessageOrigin'
-import { MessageOriginType } from 'utils/enums'
+import { MessageOriginType } from '../utils/enums'
 import Chat from './Chat'
 import Base from './Base'
 import Client from '../client/Client'

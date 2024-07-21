@@ -5,7 +5,7 @@ import Chat from './Chat'
 import { ReactionType } from '../utils/enums'
 import Sticker from '../structures/Sticker'
 import Location from '../structures/Location'
-import { unixToDate } from 'utils/converters'
+import { unixToDate } from '../utils/converters'
 
 export default class ChatFull extends Chat {
 	/**

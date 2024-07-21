@@ -11,7 +11,7 @@ export default class Venue extends Base {
 	title: string
 
 	/** Address of the venue */
-	adress: string
+	address: string
 
 	/** Foursquare identifier of the venue */
 	foursquareId?: string
@@ -36,7 +36,7 @@ export default class Venue extends Base {
 
 		this.location = new Location(client, data.location)
 		this.title = data.title
-		this.adress = data.adress
+		this.address = data.address
 		this.foursquareId = data.foursquare_id
 		this.foursquareType = data.foursquare_type
 		this.googlePlaceId = data.google_place_id

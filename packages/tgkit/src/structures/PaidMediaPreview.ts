@@ -1,8 +1,8 @@
-import { PaidMediaType } from 'utils/enums'
+import { PaidMediaType } from '../utils/enums'
 import Base from './Base'
 import Client from '../client/Client'
 import PaidMedia from './PaidMedia'
-import { toCamelCase } from 'utils/converters'
+import { toCamelCase } from '../utils/converters'
 
 export default class PaidMediaPreview extends Base implements PaidMedia {
 	/** Type of the paid media */

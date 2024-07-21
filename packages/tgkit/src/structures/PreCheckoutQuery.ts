@@ -47,7 +47,7 @@ export default class PreCheckoutQuery extends Base {
 			name: data.order_info.name,
 			phoneNumber: data.order_info.phone_number,
 			email: data.order_info.email,
-			shippingAdress: data.order_info.shipping_adress
+			shippingAddress: data.order_info.shipping_address
 		}
 	}
 }
