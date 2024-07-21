@@ -5,7 +5,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
-		"lint": "turbo run lint"
+		"lint": "turbo run lint",
+		"gen-api-ref": "typedoc packages/tgkit/src/index.ts --json .temp/api-ref.json --tsconfig packages/tgkit/tsconfig.json"
 	},
 	"main": "index.js",
 	"keywords": [],
@@ -14,6 +15,7 @@
 	"devDependencies": {
 		"@tgkit/eslint-config": "workspace:*",
 		"eslint": "^8.56.0",
-		"turbo": "^1.11.3"
+		"turbo": "^1.11.3",
+		"typedoc": "^0.26.4"
 	}
 }
