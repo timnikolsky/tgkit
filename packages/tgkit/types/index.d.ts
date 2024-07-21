@@ -2513,7 +2513,7 @@ export interface ChatBoost {
 }
 
 export interface StarTransactions {
-	transactions: StarTransaction
+	transactions: StarTransaction[]
 }
 
 export interface StarTransactionsGetOptions {
