@@ -26,7 +26,7 @@ export default class MenuButtonCommands extends MenuButton {
 		return {
 			type: toSnakeCase(this.type),
 			text: this.text,
-			webApp: this.webApp
+			web_app: this.webApp
 		}
 	}
 }
