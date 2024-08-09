@@ -1,3 +1,4 @@
+import Client from '../client/Client'
 import { InlineQueryResultArticleOptions, InputMessageContent } from '../types'
 import { InlineQueryResultType } from '../utils/enums'
 import InlineKeyboardMarkup from './InlineKeyboardMarkup'
@@ -32,8 +33,8 @@ export default class InlineQueryResultArticle extends InlineQueryResult {
 	/** Thumbnail height */
 	thumbnailHeight?: number
 
-	constructor(id: string, options: InlineQueryResultArticleOptions) {
-		super(InlineQueryResultType.Article, id)
+	constructor(client: Client, id: string, options: InlineQueryResultArticleOptions) {
+		super(client, InlineQueryResultType.Article, id)
 
 		this.title = options.title
 		this.inputMessageContent = options.inputMessageContent
@@ -55,7 +56,7 @@ export default class InlineQueryResultArticle extends InlineQueryResult {
 						: undefined,
 				parse_mode:
 					'parseMode' in this.inputMessageContent 
-						? this.inputMessageContent.parseMode
+						? this.inputMessageContent.parseMode ?? this.client.options.defaultParseMode
 						: undefined,
 				entity:
 					'entities' in this.inputMessageContent

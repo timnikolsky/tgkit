@@ -172,7 +172,8 @@ export interface ClientOptions {
 	token?: string
 	polling?: PollingOptions
 	webhook?: WebhookOptions
-	baseApiUrl?: string
+	baseApiUrl?: string,
+	defaultParseMode?: ParseMode
 }
 
 export interface PollingOptions {

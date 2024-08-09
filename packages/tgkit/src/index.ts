@@ -1,4 +1,7 @@
 export { default as Client } from './client/Client'
+
+export { default as Base } from './structures/Base'
+
 export { default as Animation } from './structures/Animation'
 export { default as Audio } from './structures/Audio'
 export { default as BotCommand } from './structures/BotCommand'

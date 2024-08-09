@@ -51,13 +51,13 @@ export default class CallbackQuery extends Base {
 		this.gameShortName = data.game_short_name
 	}
 
-	async answer(options: CallbackQueryAnswerOptions) {
+	async answer(options?: CallbackQueryAnswerOptions) {
 		await this.client.rest.request('answerCallbackQuery', {
 			callback_query_id: this.id,
-			text: options.text,
-			showAlert: options.showAlert,
-			url: options.url,
-			cacheTime: options.cacheTime
+			text: options?.text,
+			show_alert: options?.showAlert,
+			url: options?.url,
+			cache_time: options?.cacheTime
 		})
 	}
 }

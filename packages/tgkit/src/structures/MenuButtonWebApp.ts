@@ -3,7 +3,7 @@ import { toSnakeCase } from '../utils/converters'
 import { MenuButtonWebAppOptions, WebAppInfo } from '../types'
 import { MenuButtonType } from '../utils/enums'
 
-export default class MenuButtonCommands extends MenuButton {
+export default class MenuButtonWebApp extends MenuButton {
 	/** Text on the button */
 	text: string
     

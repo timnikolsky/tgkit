@@ -15,8 +15,16 @@ body {
 	background: var(--background);
 	font-family: var(--font);
 	color: var(--foreground);
+	min-height: 100vh;
+	overflow-y: scroll;
 }
 
 pre, code {
 	font-family: var(--font-mono);
+}
+
+:root {
+	@media (prefers-color-scheme: dark) {
+		color-scheme: dark;
+	}
 }

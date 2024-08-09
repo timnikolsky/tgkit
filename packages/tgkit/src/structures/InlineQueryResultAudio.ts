@@ -1,3 +1,4 @@
+import Client from '../client/Client'
 import { InlineQueryResultAudioOptions, InputMessageContent } from '../types'
 import { InlineQueryResultType, ParseMode } from '../utils/enums'
 import InlineKeyboardMarkup from './InlineKeyboardMarkup'
@@ -40,8 +41,8 @@ export default class InlineQueryResultAudio extends InlineQueryResult {
 	/** Content of the message to be sent */
 	inputMessageContent?: InputMessageContent
 
-	constructor(id: string, options: InlineQueryResultAudioOptions) {
-		super(InlineQueryResultType.Article, id)
+	constructor(client: Client, id: string, options: InlineQueryResultAudioOptions) {
+		super(client, InlineQueryResultType.Article, id)
 
 		this.audioUrl = options.audioUrl
 		this.title = options.title
@@ -61,7 +62,7 @@ export default class InlineQueryResultAudio extends InlineQueryResult {
 			audio_url: this.audioUrl,
 			title: this.title,
 			caption: this.caption,
-			parse_mode: this.parseMode,
+			parse_mode: this.parseMode ?? this.client.options.defaultParseMode,
 			caption_entities: this.captionEntities?.map((e) => e.toJSON()),
 			performer: this.performer,
 			audio_duration: this.audioDuration,

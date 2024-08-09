@@ -106,7 +106,7 @@
 
 	.sidebar-link {
 		display: flex;
-		color: var(--text);
+		color: var(--foreground-secondary);
 		text-decoration: none;
 		height: 2rem;
 		align-items: center;

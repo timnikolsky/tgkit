@@ -5,6 +5,6 @@ export const prerender = true
 
 export const entries: EntryGenerator = async () => {
 	return docsModel.children.map((child: any) => ({
-		slug: child.name
+		node: child.name
 	}))
 }
