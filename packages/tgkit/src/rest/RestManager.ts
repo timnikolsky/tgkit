@@ -21,23 +21,19 @@ export default class RestManager {
 		// 	console.log(params[param])
 		// }
 
-		try {
-			const res = await fetch(`https://api.telegram.org/bot${this.client.token}/${method}`, {
-				method: 'POST',
-				body: JSON.stringify(params),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-			const data = await res.json()
-
-			if(!data.ok) {
-				throw new TelegramBotAPIError(data.description)
+		const res = await fetch(`https://api.telegram.org/bot${this.client.token}/${method}`, {
+			method: 'POST',
+			body: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
 			}
+		})
+		const data = await res.json()
 
-			return data.result
-		} catch (error: any) {
-			throw new Error(error.response.data.description)
+		if(!data.ok) {
+			throw new TelegramBotAPIError(data.description)
 		}
+
+		return data.result
 	}
 }
