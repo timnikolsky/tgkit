@@ -4,7 +4,7 @@ import Base from './Base'
 /** Represents a point on the map */
 export default class Location extends Base {
 	/** Longitude as defined by sender */
-	longtitude: number
+	longitude: number
 
 	/** Latitude as defined by sender */
 	latitude: number
@@ -30,7 +30,7 @@ export default class Location extends Base {
 	constructor(client: Client, data: any) {
 		super(client)
 
-		this.longtitude = data.longtitude
+		this.longitude = data.longitude
 		this.latitude = data.latitude
 		this.horizontalAccuracy = data.horizontal_accuracy
 		this.livePeriod = data.live_period
