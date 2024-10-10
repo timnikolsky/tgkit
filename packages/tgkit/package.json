@@ -1,6 +1,6 @@
 {
   "name": "tgkit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A JavaScript library for interacting with Telegram Bot API",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
