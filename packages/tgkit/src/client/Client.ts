@@ -30,6 +30,8 @@ import {
 	GameScoreSetOptions,
 	GameSendOptions,
 	GeneralForumTopicEditOptions,
+	Gifts,
+	GiftSendOptions,
 	InputFile,
 	InputMedia,
 	InputMediaAnimation,
@@ -105,6 +107,7 @@ import ChatInviteLink from '../structures/ChatInviteLink'
 import BusinessConnection from '../structures/BusinessConnection'
 import StarTransaction from '../structures/StarTransaction'
 import ChatFull from '../structures/ChatFull'
+import Gift from 'structures/Gift'
 
 export default class Client extends EventEmitter {
 	options: ClientOptions
@@ -1584,6 +1587,18 @@ export default class Client extends EventEmitter {
 		await this.rest.request('deleteStickerSet', {
 			name
 		})
+	}
+
+	async getAvailableGifts(): Promise<Gifts> {
+		const giftsData = await this.rest.request('getAvailableGifts')
+
+		return {
+			gifts: giftsData.map((giftData: any) => new Gift(this, giftData))
+		}
+	}
+
+	async sendGift(userId: number, giftId: string, options?: GiftSendOptions) {
+		
 	}
 
 	// TODO

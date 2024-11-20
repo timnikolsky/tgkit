@@ -42,7 +42,8 @@ import {
 	StarTransaction,
 	PreCheckoutQuery,
 	BusinessConnection,
-	Giveaway
+	Giveaway,
+	Gift
 } from '../src/'
 
 export type ChatType = 'private' | 'group' | 'supergroup' | 'channel'
@@ -2581,4 +2582,26 @@ export interface BusinessOpeningHours {
 	timeZoneName: string
 	/** List of time intervals describing business opening hours */
 	openingHours: BusinessOpeningHoursInterval[]
+}
+
+export interface Gifts {
+	/** The list of gifts */
+	gifts: Gift[]
+}
+
+export interface GiftSendOptions {
+	/** Text that will be shown along with the gift; 0-255 characters */
+	text: string
+	/**
+	 * Mode for parsing entities in the document caption.
+	 * @see {@link https://core.telegram.org/bots/api#formatting-options}
+	 */
+	textParseMode?: ParseMode
+	/**
+	 * List of special entities that appear in the gift text.
+	 * It can be specified instead of *textParseMode*.
+	 * 
+	 * Entities other than *bold*, *italic*, *underline* and *strikethrough*, *spoiler* and *customEmoji* are ignored.
+	 */
+	textEntities?: MessageEntity[]
 }
