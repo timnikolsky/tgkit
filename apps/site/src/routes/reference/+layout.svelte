@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { NodeKind } from '$lib/docsModel';
+	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	let { data, children } = $props()
+	let { data, children }: { data: LayoutData, children: Snippet } = $props()
 	let searchText = $state('')
 	let filteredNodes = $derived(data.children.filter((n: any) => n.name.toLowerCase().includes(searchText.toLowerCase())))
 </script>

@@ -52,10 +52,9 @@
 				<div class="nodes-category-node" id={property.name}>
 					<h3 class="nodes-category-node-name">
 						{property.name}
-						{#if property.type.type === 'reference'}
+						{#if property.type.type === 'reference' && data.children.includes((child: any) => child.name === property.type.name)}
 							<a href={`/reference/${property.type.name}`} class="nodes-category-node-type">{property.type.name}</a>
-						{/if}
-						{#if property.type.type === 'intrinsic'}
+						{:else}
 							<span class="nodes-category-node-type">{property.type.name}</span>
 						{/if}
 					</h3>
@@ -63,6 +62,23 @@
 						<p>{property.comment?.summary[0].text}</p>
 					{/if}
 					<a href={property.sources[0].url}>See the code</a>
+				</div>
+			{/each}
+		</section>
+	{/if}
+	{#if methods.length}
+		<section class="nodes-category">
+			<h2>Methods</h2>
+
+			{#each methods as method}
+				<div class="nodes-category-node" id={method.name}>
+					<h3 class="nodes-category-node-name">
+						{method.name}({method.signatures[0].parameters?.map((p: any) => `${p.name}: ${p.type.name}`).join(', ')}): {method.signatures[0].type.name}
+					</h3>
+					{#if method.comment}
+						<p>{method.comment?.summary[0].text}</p>
+					{/if}
+					<a href={method.sources[0].url}>See the code</a>
 				</div>
 			{/each}
 		</section>
@@ -82,9 +98,9 @@
 {/if}
 
 {#if itemData.kind === NodeKind.Interface}
-	{@const properties = itemData.children.filter((c: any) => c.kind === 1024)}
+	{@const properties = itemData.children?.filter((c: any) => c.kind === 1024)}
 	<section class="contents">
-		{#if properties.length}
+		{#if properties?.length}
 			<div class="contents-column">
 				<h3>Properties</h3>
 				{#each properties as property}
@@ -94,7 +110,7 @@
 		{/if}
 	</section>
 
-	{#if properties.length}
+	{#if properties?.length}
 		<section class="nodes-category">
 			<h2>Properties</h2>
 
@@ -102,10 +118,9 @@
 				<div class="nodes-category-node" id={property.name}>
 					<h3 class="nodes-category-node-name">
 						{property.name}
-						{#if property.type.type === 'reference'}
+						{#if property.type.type === 'reference' && data.children.includes((child: any) => child.name === property.type.name)}
 							<a href={`/reference/${property.type.name}`} class="nodes-category-node-type">{property.type.name}</a>
-						{/if}
-						{#if property.type.type === 'intrinsic'}
+						{:else}
 							<span class="nodes-category-node-type">{property.type.name}</span>
 						{/if}
 					</h3>
