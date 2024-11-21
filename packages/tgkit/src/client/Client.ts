@@ -1708,7 +1708,7 @@ export default class Client extends EventEmitter {
 			limit: options.limit
 		})
 
-		const starTransactions = starTransactionsData.map((transaction: any) => new StarTransaction(this, transaction))
+		const starTransactions = starTransactionsData.transactions.map((transaction: any) => new StarTransaction(this, transaction))
 
 		return {
 			transactions: starTransactions
