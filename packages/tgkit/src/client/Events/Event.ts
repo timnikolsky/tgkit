@@ -1,13 +1,13 @@
-import Client from '../Client'
+import Client from '../Client';
 
 export default class TelegramEvent {
-	client: Client
+	client: Client;
 
 	constructor(client: Client) {
-		this.client = client
+		this.client = client;
 	}
 
 	handle(data: any) {
-		return data
+		return data;
 	}
 }

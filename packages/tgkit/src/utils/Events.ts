@@ -23,5 +23,5 @@ export default {
 	ChatMemberUpdate: 'chatMemberUpdate',
 	ChatJoinRequest: 'chatJoinRequest',
 	ChatBoost: 'chatBoost',
-	ChatBoostRemove: 'chatBoostRemove'
-}
+	ChatBoostRemove: 'chatBoostRemove',
+};

@@ -1,29 +1,29 @@
 {
-  "name": "tgkit",
-  "version": "0.1.3",
-  "description": "A JavaScript library for interacting with Telegram Bot API",
-  "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "lint": "eslint ./src/**"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "/dist",
-    "/types"
-  ],
-  "type": "module",
-  "repository": "timnikolsky/tgkit",
-  "homepage": "https://github.com/timnikolsky/tgkit#readme",
-  "author": "timnikolsky",
-  "license": "MIT",
-  "bugs": "https://github.com/timnikolsky/tgkit/issues",
-  "devDependencies": {
-    "@tgkit/eslint-config": "workspace:^1.0.0",
-    "@types/node": "^18.13.0",
-    "eslint": "^8.56.0",
-    "tsup": "^6.6.3",
-    "typescript": "^5.5.3"
-  }
+	"name": "tgkit",
+	"version": "0.1.3",
+	"description": "A JavaScript library for interacting with Telegram Bot API",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"lint": "eslint ./src/**"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"/dist",
+		"/types"
+	],
+	"type": "module",
+	"repository": "timnikolsky/tgkit",
+	"homepage": "https://github.com/timnikolsky/tgkit#readme",
+	"author": "timnikolsky",
+	"license": "MIT",
+	"bugs": "https://github.com/timnikolsky/tgkit/issues",
+	"devDependencies": {
+		"@tgkit/eslint-config": "workspace:^1.0.0",
+		"@types/node": "^18.13.0",
+		"eslint": "^8.56.0",
+		"tsup": "^6.6.3",
+		"typescript": "^5.5.3"
+	}
 }

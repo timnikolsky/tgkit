@@ -1,8 +1,8 @@
-@import "./variables.scss";
+@import './variables.scss';
 
 @font-face {
-	font-family: "Geist Mono";
-	src: url("/fonts/GeistMonoVF.woff2");
+	font-family: 'Geist Mono';
+	src: url('/fonts/GeistMonoVF.woff2');
 }
 
 * {
@@ -19,7 +19,8 @@ body {
 	overflow-y: scroll;
 }
 
-pre, code {
+pre,
+code {
 	font-family: var(--font-mono);
 }
 

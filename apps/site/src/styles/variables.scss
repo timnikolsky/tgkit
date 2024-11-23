@@ -1,36 +1,36 @@
 :root {
-	--accent: #0098EA;
-	--accent-hover: #00A6FF;
-	--background: #FFFFFF;
-	--background-hover: #F3F2F8;
-	--background-secondary: #F7F9FB;
-	--border: #E9EEF1;
-	--foreground: #04060B;
-	--foreground-secondary: #191F2F;
+	--accent: #0098ea;
+	--accent-hover: #00a6ff;
+	--background: #ffffff;
+	--background-hover: #f3f2f8;
+	--background-secondary: #f7f9fb;
+	--border: #e9eef1;
+	--foreground: #04060b;
+	--foreground-secondary: #191f2f;
 	--foreground-subtle: #728a96;
-	--font: "Inter", sans-serif;
-	--font-mono: "Geist Mono", consolas, monospace;
-	--warning: #E6A700;
+	--font: 'Inter', sans-serif;
+	--font-mono: 'Geist Mono', consolas, monospace;
+	--warning: #e6a700;
 
-	--node-enum-color: #0098EA;
+	--node-enum-color: #0098ea;
 	--node-class-color: #8f55eb;
-	--node-interface-color: #28C281;
+	--node-interface-color: #28c281;
 	--node-type-color: #eb8555;
 
 	@media (prefers-color-scheme: dark) {
-		--accent: #07ACFF;
-		--accent-hover: #2DB9FF;
-		--background: #11131F;
+		--accent: #07acff;
+		--accent-hover: #2db9ff;
+		--background: #11131f;
 		--background-hover: #181b2b;
 		--background-secondary: #151724;
-		--border: #1D202F;
-		--foreground: #FFFFFF;
-		--foreground-secondary: #E0E0E3;
-		--foreground-subtle: #C0C1C7;
-	
-		--node-enum-color: #0098EA;
+		--border: #1d202f;
+		--foreground: #ffffff;
+		--foreground-secondary: #e0e0e3;
+		--foreground-subtle: #c0c1c7;
+
+		--node-enum-color: #0098ea;
 		--node-class-color: #a97cf1;
-		--node-interface-color: #28C281;
+		--node-interface-color: #28c281;
 		--node-type-color: #eb8555;
 	}
 }

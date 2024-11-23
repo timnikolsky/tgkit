@@ -1,21 +1,21 @@
 {
-    "compilerOptions": {
-        "declaration": true,
-        "target": "ES2015",
-        "module": "ESNext",
-        "rootDir": "./src",
-        "outDir": "./dist",
-        "removeComments": false,
-        "esModuleInterop": true,
-        "strict": true,
-        "noImplicitAny": true,
-        "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "node",
-        "baseUrl": "./src",
-        "typeRoots": ["./types", "./node_modules/@types"],
+	"compilerOptions": {
+		"declaration": true,
+		"target": "ES2015",
+		"module": "ESNext",
+		"rootDir": "./src",
+		"outDir": "./dist",
+		"removeComments": false,
+		"esModuleInterop": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"baseUrl": "./src",
+		"typeRoots": ["./types", "./node_modules/@types"],
 		"noUncheckedIndexedAccess": true,
 		"noEmit": true // Using tsc as linter
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "test"]
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "test"]
 }

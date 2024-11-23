@@ -1,0 +1,11 @@
+**/node_modules
+**/.svelte-kit
+**/.vercel
+.prettierignore
+.changeset
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.temp
+packages/**/dist/*
+.turbo
+.vscode

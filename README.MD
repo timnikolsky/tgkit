@@ -28,25 +28,25 @@ TgKit is library for interacting with [Telegram Bot API](https://core.telegram.o
 
 ### Features
 
-* Lightweight
-* Object-oriented, has predictable abstractions and [Typescript](https://typescriptlang.org/) type defentitions included
+-   Lightweight
+-   Object-oriented, has predictable abstractions and [Typescript](https://typescriptlang.org/) type defentitions included
 
 ## Example
 
 ```ts
-import { Client } from 'tgkit'
+import { Client } from 'tgkit';
 
 const client = new Client({
-    // Create bot and get token via @botfather
-    token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-tMnK'
-})
+	// Create bot and get token via @botfather
+	token: '0123456789:PUtY0uR0WNT37egR4m8oTtOk3NHer3-tMnK',
+});
 
 client.on('message', async (message) => {
-    if (message.text.startsWith('/start')) {
-        await message.chat.sendMessage('Hello World! I\'m a brand new TgKit bot')
-        await message.chat.sendMessage('✌️')
-    }
-})
+	if (message.text.startsWith('/start')) {
+		await message.chat.sendMessage("Hello World! I'm a brand new TgKit bot");
+		await message.chat.sendMessage('✌️');
+	}
+});
 
-client.polling.start()
+client.polling.start();
 ```

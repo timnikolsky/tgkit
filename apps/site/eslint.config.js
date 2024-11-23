@@ -12,22 +12,22 @@ export default [
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...globals.node
-			}
+				...globals.node,
+			},
 		},
 		rules: {
-			'@typescript-eslint/no-explicit-any': false
-		}
+			'@typescript-eslint/no-explicit-any': false,
+		},
 	},
 	{
 		files: ['**/*.svelte'],
 		languageOptions: {
 			parserOptions: {
-				parser: ts.parser
-			}
-		}
+				parser: ts.parser,
+			},
+		},
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/']
-	}
+		ignores: ['build/', '.svelte-kit/', 'dist/'],
+	},
 ];

@@ -1,8 +1,8 @@
-import { CallbackQueryAnswerOptions } from '../types'
-import Client from '../client/Client'
-import Base from './Base'
-import Message from './Message'
-import User from './User'
+import { CallbackQueryAnswerOptions } from '../types';
+import Client from '../client/Client';
+import Base from './Base';
+import Message from './Message';
+import User from './User';
 
 /**
  * This object represents an incoming callback query from a callback button in an inline keyboard.
@@ -12,43 +12,42 @@ import User from './User'
  */
 export default class CallbackQuery extends Base {
 	/** Unique identifier for this query */
-	id: string
+	id: string;
 
 	/** Sender */
-	from: User
+	from: User;
 
 	/**
 	 * Message with the callback button that originated the query.
 	 * Note that message content and message date will not be available if the message is too old.
 	 */
-	message?: Message
+	message?: Message;
 
 	/** Identifier of the message sent via the bot in inline mode, that originated the query. */
-	inlineMessageId?: string
-    
+	inlineMessageId?: string;
+
 	/**
 	 * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent.
 	 * Useful for high scores in games.
 	 */
-	chatInstance?: string
+	chatInstance?: string;
 
 	/** Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field. */
-	data?: string
+	data?: string;
 
 	/** Short name of a Game to be returned, serves as the unique identifier for the game */
-	gameShortName?: string
+	gameShortName?: string;
 
-    
 	constructor(client: Client, data: any) {
-		super(client)
+		super(client);
 
-		this.id = data.id
-		this.from = new User(client, data.from)
-		this.message = data.message && new Message(client, data.message)
-		this.inlineMessageId = data.inline_message_id
-		this.chatInstance = data.chat_instance
-		this.data = data.data
-		this.gameShortName = data.game_short_name
+		this.id = data.id;
+		this.from = new User(client, data.from);
+		this.message = data.message && new Message(client, data.message);
+		this.inlineMessageId = data.inline_message_id;
+		this.chatInstance = data.chat_instance;
+		this.data = data.data;
+		this.gameShortName = data.game_short_name;
 	}
 
 	async answer(options?: CallbackQueryAnswerOptions) {
@@ -57,7 +56,7 @@ export default class CallbackQuery extends Base {
 			text: options?.text,
 			show_alert: options?.showAlert,
 			url: options?.url,
-			cache_time: options?.cacheTime
-		})
+			cache_time: options?.cacheTime,
+		});
 	}
 }

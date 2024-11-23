@@ -1,55 +1,55 @@
-import Client from '../client/Client'
-import Base from './Base'
+import Client from '../client/Client';
+import Base from './Base';
 
 /** Represents a Telegram user or bot. */
 export default class User extends Base {
 	/** Unique identifier for this user or bot */
-	id: number
+	id: number;
 
 	/** *true*, if this user is a bot */
-	isBot: boolean
+	isBot: boolean;
 
 	/** User's or bot's first name */
-	firstName: string
+	firstName: string;
 
 	/** User's or bot's last name */
-	lastName?: string
+	lastName?: string;
 
 	/** User's or bot's username */
-	username?: string
+	username?: string;
 
 	/**
-     * IETF language tag of the user's language
-     * @see {@link https://en.wikipedia.org/wiki/IETF_language_tag}
-     */
-	languageCode?: string
+	 * IETF language tag of the user's language
+	 * @see {@link https://en.wikipedia.org/wiki/IETF_language_tag}
+	 */
+	languageCode?: string;
 
 	/** *true*, if this user is a Telegram Premium user */
-	isPremium?: boolean
+	isPremium?: boolean;
 
 	/** *true*, if this user added the bot to the attachment menu */
-	addedToAttachmentMenu?: boolean
+	addedToAttachmentMenu?: boolean;
 
 	constructor(client: Client, data: any) {
-		super(client)
+		super(client);
 
-		this.id = data.id
-		this.isBot = data.is_bot
-		this.firstName = data.first_name
-		this.lastName = data.last_name
-		this.username = data.username
-		this.languageCode = data.language_code
-		this.isPremium = data.is_premium
-		this.addedToAttachmentMenu = data.added_to_attachment_menu
+		this.id = data.id;
+		this.isBot = data.is_bot;
+		this.firstName = data.first_name;
+		this.lastName = data.last_name;
+		this.username = data.username;
+		this.languageCode = data.language_code;
+		this.isPremium = data.is_premium;
+		this.addedToAttachmentMenu = data.added_to_attachment_menu;
 	}
 
 	toString() {
-		return '@' + this.username
+		return '@' + this.username;
 	}
 
 	toJSON() {
 		return {
-			id: this.id
-		}
+			id: this.id,
+		};
 	}
 }

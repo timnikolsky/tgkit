@@ -2,30 +2,35 @@
 module.exports = {
 	env: {
 		es2021: true,
-		node: true
+		node: true,
 	},
-	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'eslint-config-turbo'],
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'eslint-config-turbo',
+		'prettier',
+	],
 	overrides: [],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
-		sourceType: 'module'
+		sourceType: 'module',
 	},
 	ignorePatterns: ['./node_modules/**', './dist/**'],
 	plugins: ['@typescript-eslint', 'turbo'],
 	rules: {
-		'indent': [
+		indent: [
 			'error',
 			'tab',
 			{
-				SwitchCase: 1
-			}
+				SwitchCase: 1,
+			},
 		],
 		'linebreak-style': ['error', 'windows'],
-		'quotes': ['error', 'single'],
-		'semi': ['error', 'never'],
+		quotes: ['error', 'single'],
+		semi: ['error', 'never'],
 		'no-unused-vars': 'off',
-		'curly': 'warn',
+		curly: 'warn',
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
@@ -38,8 +43,8 @@ module.exports = {
 				ignoreStrings: true,
 				ignoreTemplateLiterals: true,
 				ignoreRegExpLiterals: true,
-				tabWidth: 4
-			}
+				tabWidth: 4,
+			},
 		],
 		'comma-dangle': 'error',
 		'comma-style': ['error', 'last'],
@@ -47,16 +52,19 @@ module.exports = {
 			'error',
 			{
 				before: false,
-				after: true
-			}
+				after: true,
+			},
 		],
 		'object-curly-spacing': ['error', 'always'],
 		'object-curly-newline': ['error', { consistent: true }],
 		'array-bracket-spacing': ['error', 'never'],
 		'array-bracket-newline': ['error', 'consistent'],
 		'quote-props': ['error', 'consistent-as-needed'],
-		'turbo/no-undeclared-env-vars': ['error', {
-			allowList: ['TELEGRAM_TOKEN']
-		}]
-	}
-}
+		'turbo/no-undeclared-env-vars': [
+			'error',
+			{
+				allowList: ['TELEGRAM_TOKEN'],
+			},
+		],
+	},
+};

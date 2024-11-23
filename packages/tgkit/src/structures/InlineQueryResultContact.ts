@@ -3,7 +3,7 @@
 // import InlineKeyboardMarkup from './InlineKeyboardMarkup'
 // import InlineQueryResult from './InlineQueryResult'
 
-// /** 
+// /**
 //  * Represents a contact with a phone number.
 //  * By default, this audio file will be sent by the user.
 //  * Alternatively, you can use *inputMessageContent*
@@ -39,7 +39,6 @@
 
 // 	/** Thumbnail height */
 // 	thumbnailHeight?: number
-
 
 // 	constructor(id: string, options: InlineQueryResultContactOptions) {
 // 		super(InlineQueryResultType.Article, id)

@@ -1,6 +1,6 @@
-import { unixToDate } from '../utils/converters'
-import Client from '../client/Client'
-import Base from './Base'
+import { unixToDate } from '../utils/converters';
+import Client from '../client/Client';
+import Base from './Base';
 
 export default class StarTransaction extends Base {
 	/**
@@ -8,23 +8,23 @@ export default class StarTransaction extends Base {
 	 * for refund transactions. Coincides with <SuccessfulPayment>.telegramPaymentChargeId
 	 * for successful incoming payments from users.
 	 */
-	id: string
+	id: string;
 
 	/** Number of Telegram Stars transferred by the transaction */
-	amount: number
+	amount: number;
 
 	/** Date the transaction was created */
-	date: Date
+	date: Date;
 
 	// TODO
-	source: any
+	source: any;
 
 	constructor(client: Client, data: any) {
-		super(client)
+		super(client);
 
-		this.id = data.id
-		this.amount = data.amount
-		this.date = unixToDate(data.date)
-		this.source = data.source
+		this.id = data.id;
+		this.amount = data.amount;
+		this.date = unixToDate(data.date);
+		this.source = data.source;
 	}
 }

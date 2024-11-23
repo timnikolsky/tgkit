@@ -1,104 +1,104 @@
 export enum BotCommandScopeType {
-    /**
+	/**
 	 * Represents the default scope of bot commands.
 	 * Default commands are used if no commands with a narrower scope are specified for the user.
 	 */
-    Default = 'default',
-    /** Represents the scope of bot commands, covering all private chats. */
-    AllPrivateChats = 'allPrivateChats',
-    /** Represents the scope of bot commands, covering all group and supergroup chats. */
-    AllGroupChats = 'allGroupChats',
-    /** Represents the scope of bot commands, covering all group and supergroup chat administrators. */
-    AllChatAdministrators = 'allChatAdministrators',
-    /** Represents the scope of bot commands, covering a specific chat. */
-    Chat = 'chat',
-    /** Represents the scope of bot commands, covering all administrators of a specific group or supergroup chat. */
-    ChatAdministrators = 'chatAdministrators',
-    /** Represents the scope of bot commands, covering a specific member of a group or supergroup chat. */
-    ChatMember = 'chatMember'
+	Default = 'default',
+	/** Represents the scope of bot commands, covering all private chats. */
+	AllPrivateChats = 'allPrivateChats',
+	/** Represents the scope of bot commands, covering all group and supergroup chats. */
+	AllGroupChats = 'allGroupChats',
+	/** Represents the scope of bot commands, covering all group and supergroup chat administrators. */
+	AllChatAdministrators = 'allChatAdministrators',
+	/** Represents the scope of bot commands, covering a specific chat. */
+	Chat = 'chat',
+	/** Represents the scope of bot commands, covering all administrators of a specific group or supergroup chat. */
+	ChatAdministrators = 'chatAdministrators',
+	/** Represents the scope of bot commands, covering a specific member of a group or supergroup chat. */
+	ChatMember = 'chatMember',
 }
 
 export enum MenuButtonType {
-    /** Represents a menu button, which opens the bot's list of commands */
-    Commands = 'commands',
-    /** Represents a menu button, which launches a Web App */
-    WebApp = 'webApp',
-    /** Describes that no specific value for the menu button was set. */
-    Default = 'default'
+	/** Represents a menu button, which opens the bot's list of commands */
+	Commands = 'commands',
+	/** Represents a menu button, which launches a Web App */
+	WebApp = 'webApp',
+	/** Describes that no specific value for the menu button was set. */
+	Default = 'default',
 }
 
 export enum PassportElementErrorSource {
-    /**
+	/**
 	 * Represents an issue in one of the data fields that was provided by the user.
 	 * The error is considered resolved when the field's value changes
 	 */
-    Data = 'data',
-    /**
+	Data = 'data',
+	/**
 	 * Represents an issue with the front side of a document.
 	 * The error is considered resolved when the file with the front side of the document changes.
 	 */
-    FrontSide = 'frontSide',
-    /**
+	FrontSide = 'frontSide',
+	/**
 	 * Represents an issue with the reverse side of a document.
 	 * The error is considered resolved when the file with reverse side of the document changes.
 	 */
-    ReverseSide = 'reverseSide',
-    /**
+	ReverseSide = 'reverseSide',
+	/**
 	 * Represents an issue with the selfie with a document.
 	 * The error is considered resolved when the file with the selfie changes.
 	 */
-    Selfie = 'selfie',
-    /**
+	Selfie = 'selfie',
+	/**
 	 * Represents an issue with a document scan.
 	 * The error is considered resolved when the file with the document scan changes.
 	 */
-    File = 'file',
-    /**
+	File = 'file',
+	/**
 	 * Represents an issue with a list of scans.
 	 * The error is considered resolved when the list of files containing the scans changes.
 	 */
-    Files = 'files',
-    /**
-	 * Represents an issue with one of the files that constitute the translation of a document. 
+	Files = 'files',
+	/**
+	 * Represents an issue with one of the files that constitute the translation of a document.
 	 * The error is considered resolved when the file changes.
 	 */
-    TranslationFile = 'translationFile',
-    /**
+	TranslationFile = 'translationFile',
+	/**
 	 * Represents an issue with the translated version of a document.
 	 * The error is considered resolved when a file with the document translation change.
 	 */
-    TranslationFiles = 'translationFiles',
-    /** Represents an issue in an unspecified place. The error is considered resolved when new data is added. */
-    Unspecified = 'unspecified'
+	TranslationFiles = 'translationFiles',
+	/** Represents an issue in an unspecified place. The error is considered resolved when new data is added. */
+	Unspecified = 'unspecified',
 }
 
 export enum PassportElementType {
-    PersonalDetails = 'personalDetails',
-    Passport = 'passport',
-    DriverLicense = 'driverLicense',
-    IdentityCard = 'identityCard',
-    InternalPassport = 'internalPassport',
-    Address = 'address',
-    UtilityBill = 'utilityBill',
-    BankStatement = 'bankStatement',
-    RentalAgreement = 'rentalAgreement',
-    PassportRegistration = 'passportRegistration',
-    TemporaryRegistration = 'temporaryRegistration'
+	PersonalDetails = 'personalDetails',
+	Passport = 'passport',
+	DriverLicense = 'driverLicense',
+	IdentityCard = 'identityCard',
+	InternalPassport = 'internalPassport',
+	Address = 'address',
+	UtilityBill = 'utilityBill',
+	BankStatement = 'bankStatement',
+	RentalAgreement = 'rentalAgreement',
+	PassportRegistration = 'passportRegistration',
+	TemporaryRegistration = 'temporaryRegistration',
 }
 
 export enum ChatMemberStatus {
-    /** Represents a chat member that owns the chat and has all administrator privileges. */
-    Owner = 'owner',
-    /** Represents a chat member that has some additional privileges. */
-    Administrator = 'administrator',
-    /** Represents a chat member that has no additional privileges or restrictions. */
-    Member = 'member',
-    /** Represents a chat member that is under certain restrictions in the chat. Supergroups only. */
-    Restricted = 'restricted',
-    /** Represents a chat member that isn't currently a member of the chat, but may join it themselves. */
-    Left = 'left',
-    /** Represents a chat member that was banned in the chat and can't return to the chat or view chat messages. */
-    Banned = 'banned'
+	/** Represents a chat member that owns the chat and has all administrator privileges. */
+	Owner = 'owner',
+	/** Represents a chat member that has some additional privileges. */
+	Administrator = 'administrator',
+	/** Represents a chat member that has no additional privileges or restrictions. */
+	Member = 'member',
+	/** Represents a chat member that is under certain restrictions in the chat. Supergroups only. */
+	Restricted = 'restricted',
+	/** Represents a chat member that isn't currently a member of the chat, but may join it themselves. */
+	Left = 'left',
+	/** Represents a chat member that was banned in the chat and can't return to the chat or view chat messages. */
+	Banned = 'banned',
 }
 
 /** Type of action to broadcast. */
@@ -113,7 +113,7 @@ export enum ChatAction {
 	ChooseSticker = 'chooseSticker',
 	FindLocation = 'findLocation',
 	RecordVideoNote = 'recordVideoNote',
-	UploadVideoNote = 'uploadVideoNote'
+	UploadVideoNote = 'uploadVideoNote',
 }
 
 /** Represents one result of an inline query. */
@@ -137,61 +137,61 @@ export enum InlineQueryResultType {
 	CachedDocument = 'cachedDocument',
 	CachedVideo = 'cachedVideo',
 	CachedVoice = 'cachedVoice',
-	CachedAudio = 'cachedAudio'
+	CachedAudio = 'cachedAudio',
 }
 
 /** Color of the topic icon in RGB format. Currently only six colors are supported. */
 export enum ForumTopicIconColor {
-	Blue = 0x6FB9F0,
-	Yellow = 0xFFD67E,
-	Purple = 0xCB86DB,
-	Green = 0x8EEE98,
-	Pink = 0xFF93B2,
-	Red = 0xFB6F5F
+	Blue = 0x6fb9f0,
+	Yellow = 0xffd67e,
+	Purple = 0xcb86db,
+	Green = 0x8eee98,
+	Pink = 0xff93b2,
+	Red = 0xfb6f5f,
 }
 
 export enum PollType {
 	Regular = 'regular',
-	Quiz = 'quiz'
+	Quiz = 'quiz',
 }
 
 export enum KeyboardButtonPollType {
 	Regular = 'regular',
-	Quiz = 'quiz'
+	Quiz = 'quiz',
 }
 
 export enum StickerFormat {
 	Regular = 'static',
 	Mask = 'animated',
-	CustomEmoji = 'video'
+	CustomEmoji = 'video',
 }
 
 export enum StickerType {
 	Regular = 'regular',
 	Mask = 'mask',
-	CustomEmoji = 'customEmoji'
+	CustomEmoji = 'customEmoji',
 }
 
 export enum ParseMode {
 	Markdown = 'Markdown',
 	MarkdownV2 = 'MarkdownV2',
-	HTML = 'HTML'
+	HTML = 'HTML',
 }
 
 export enum MessageOriginType {
 	User = 'user',
 	HiddenUser = 'hiddenUser',
 	Chat = 'chat',
-	Channel = 'channel'
+	Channel = 'channel',
 }
 
 export enum PaidMediaType {
 	Preview = 'preview',
 	Photo = 'photo',
-	Video = 'video'
+	Video = 'video',
 }
 
 export enum ReactionType {
 	Emoji = 'emoji',
-	CustomEmoji = 'customEmoji'
+	CustomEmoji = 'customEmoji',
 }

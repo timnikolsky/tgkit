@@ -1,11 +1,11 @@
-import Client from '../client/Client'
-import TelegramBotAPIError from '../errors/TgKitError'
+import Client from '../client/Client';
+import TelegramBotAPIError from '../errors/TgKitError';
 
 export default class RestManager {
-	client: Client
+	client: Client;
 
 	constructor(client: Client) {
-		this.client = client
+		this.client = client;
 	}
 
 	async request(method: string, params?: Record<string, any>): Promise<any> {
@@ -25,15 +25,15 @@ export default class RestManager {
 			method: 'POST',
 			body: JSON.stringify(params),
 			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		const data = await res.json()
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await res.json();
 
-		if(!data.ok) {
-			throw new TelegramBotAPIError(data.description)
+		if (!data.ok) {
+			throw new TelegramBotAPIError(data.description);
 		}
 
-		return data.result
+		return data.result;
 	}
 }
