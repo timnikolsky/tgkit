@@ -107,7 +107,7 @@ import ChatInviteLink from '../structures/ChatInviteLink';
 import BusinessConnection from '../structures/BusinessConnection';
 import StarTransaction from '../structures/StarTransaction';
 import ChatFull from '../structures/ChatFull';
-import Gift from 'structures/Gift';
+import Gift from '../structures/Gift';
 
 export default class Client extends EventEmitter {
 	options: ClientOptions;

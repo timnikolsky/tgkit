@@ -1,6 +1,6 @@
-import Client from 'client/Client';
-import Base from 'structures/Base';
-import Sticker from 'structures/Sticker';
+import Client from '../client/Client';
+import Base from '../structures/Base';
+import Sticker from '../structures/Sticker';
 
 export default class Gift extends Base {
 	/** Unique identifier of the gift */
