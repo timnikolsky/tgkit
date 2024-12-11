@@ -4,6 +4,7 @@
 	"description": "A JavaScript library for interacting with Telegram Bot API",
 	"scripts": {
 		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"test": "vitest",
 		"lint": "eslint ./src/**"
 	},
 	"main": "./dist/index.cjs",
@@ -22,8 +23,10 @@
 	"devDependencies": {
 		"@tgkit/eslint-config": "workspace:^1.0.0",
 		"@types/node": "^18.13.0",
+		"@vitest/coverage-v8": "2.1.8",
 		"eslint": "^8.56.0",
 		"tsup": "^6.6.3",
-		"typescript": "^5.5.3"
+		"typescript": "^5.5.3",
+		"vitest": "^2.1.8"
 	}
 }
