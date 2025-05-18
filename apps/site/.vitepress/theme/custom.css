@@ -1,0 +1,37 @@
+:root {
+	--vp-nav-logo-height: 2rem;
+}
+
+:root:not(.dark) {
+	--vp-c-brand-1: #0098ea;
+	--vp-c-brand-2: #00a6ff;
+	--vp-c-brand-3: #1d98dc;
+
+	--vp-c-bg-alt: #f7f9fb;
+	--vp-c-bg-soft: #f7f9fb;
+}
+
+.dark {
+	--vp-c-brand-1: #439BDE;
+	--vp-c-brand-2: #439BDE;
+	--vp-c-brand-3: #50A7EA;
+	--vp-c-bg: #0E0E0E;
+	--vp-c-bg-soft: #181819;
+	--vp-c-bg-alt: #181819;
+	--vp-c-gutter: #181819;
+}
+
+.vp-doc h1 > .VPBadge {
+    vertical-align: middle;
+	font-size: 1rem;
+	margin-top: 0;
+	padding: 0 0.75rem;
+	height: 2rem;
+	line-height: 1.9625rem;
+	border-radius: 1rem;
+	margin-left: 0.5rem;
+}
+
+.vp-doc .extends {
+	margin-top: 0;
+}
