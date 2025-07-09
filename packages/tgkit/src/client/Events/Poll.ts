@@ -1,4 +1,4 @@
-import Poll from '../../structures/Poll';
+import Poll from '../../structures/poll/Poll';
 import Events from '../../utils/Events';
 import TelegramEvent from './Event';
 

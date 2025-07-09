@@ -1,8 +1,8 @@
 import { CallbackQueryAnswerOptions } from '../types';
 import Client from '../client/Client';
 import Base from './Base';
-import Message from './Message';
-import User from './User';
+import Message from './message/Message';
+import User from './user/User';
 
 /**
  * This object represents an incoming callback query from a callback button in an inline keyboard.

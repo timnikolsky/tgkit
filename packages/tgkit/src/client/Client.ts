@@ -1,6 +1,6 @@
 import Chat from '../structures/Chat';
-import ClientUser from '../structures/ClientUser';
-import Message from '../structures/Message';
+import ClientUser from '../structures/user/ClientUser';
+import Message from '../structures/message/Message';
 import {
 	AnimationMessageSendOptions,
 	AudioMessageSendOptions,
@@ -80,33 +80,33 @@ import PollingManager from './PollingManager';
 import PhotoSize from '../structures/PhotoSize';
 import File from '../structures/File';
 import { dateToUnix, toCamelCase, unixToDate } from '../utils/converters';
-import BotCommand from '../structures/BotCommand';
+import BotCommand from '../structures/bot/BotCommand';
 import InlineKeyboardMarkup from '../structures/InlineKeyboardMarkup';
-import Poll from '../structures/Poll';
-import Sticker from '../structures/Sticker';
-import StickerSet from '../structures/StickerSet';
+import Poll from '../structures/poll/Poll';
+import Sticker from '../structures/sticker/Sticker';
+import StickerSet from '../structures/sticker/StickerSet';
 import User from '../structures/User';
-import ChatMember from '../structures/ChatMember';
-import ChatMemberOwner from '../structures/ChatMemberOwner';
-import ChatMemberAdministrator from '../structures/ChatMemberAdministrator';
-import ChatMemberMember from '../structures/ChatMemberMember';
-import ChatMemberRestricted from '../structures/ChatMemberRestricted';
-import ChatMemberLeft from '../structures/ChatMemberLeft';
-import ChatMemberBanned from '../structures/ChatMemberBanned';
+import ChatMember from '../structures/chat/member/ChatMember';
+import ChatMemberOwner from '../structures/chat/member/ChatMemberOwner';
+import ChatMemberAdministrator from '../structures/chat/member/ChatMemberAdministrator';
+import ChatMemberMember from '../structures/chat/member/ChatMemberMember';
+import ChatMemberRestricted from '../structures/chat/member/ChatMemberRestricted';
+import ChatMemberLeft from '../structures/chat/member/ChatMemberLeft';
+import ChatMemberBanned from '../structures/chat/member/ChatMemberBanned';
 import WebhookManager from './WebhookManager';
-import ForumTopic from '../structures/ForumTopic';
-import InlineQueryResult from '../structures/InlineQueryResult';
+import ForumTopic from '../structures/chat/ForumTopic';
+import InlineQueryResult from '../structures/inline/InlineQueryResult';
 import { toSnakeCase } from '../utils/converters';
 import { EventEmitter } from 'events';
 import { ChatAction, ReactionType, StickerFormat } from '../utils/enums';
-import MenuButton from '../structures/MenuButton';
-import MenuButtonDefault from '../structures/MenuButtonDefault';
-import MenuButtonWebApp from '../structures/MenuButtonWebApp';
-import MenuButtonCommands from '../structures/MenuButtonCommands';
+import MenuButton from '../structures/bot/menuButton/MenuButton';
+import MenuButtonDefault from '../structures/bot/menuButton/MenuButtonDefault';
+import MenuButtonWebApp from '../structures/bot/menuButton/MenuButtonWebApp';
+import MenuButtonCommands from '../structures/bot/menuButton/MenuButtonCommands';
 import ChatInviteLink from '../structures/ChatInviteLink';
-import BusinessConnection from '../structures/BusinessConnection';
-import StarTransaction from '../structures/StarTransaction';
-import ChatFull from '../structures/ChatFull';
+import BusinessConnection from '../structures/bot/BusinessConnection';
+import StarTransaction from '../structures/payment/StarTransaction';
+import ChatFull from '../structures/chat/ChatFull';
 import Gift from '../structures/Gift';
 
 export default class Client extends EventEmitter {
