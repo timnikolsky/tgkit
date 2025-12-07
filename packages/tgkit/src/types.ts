@@ -1,3 +1,4 @@
+import SharedUser from 'structures/markup/SharedUser';
 import {
 	BotCommandScopeType,
 	CallbackQuery,
@@ -45,6 +46,11 @@ import {
 	Giveaway,
 	Gift,
 } from '../src/';
+import type { ReadStream } from 'fs';
+
+export interface MethodParams extends Record<string, any> {}
+
+export type MethodParamsValue = string | number | InputFile | null | undefined | boolean;
 
 export type ChatType = 'private' | 'group' | 'supergroup' | 'channel';
 
@@ -166,15 +172,15 @@ export type DiceEmoji = '🎲' | '🎯' | '🏀' | '⚽' | '🎳' | '🎰';
 
 export type ChatId = number | `@${string}` | `${number}`;
 
-// TODO: Make it possible to send local files
-export type InputFile = string;
+export type InputFile = string | Blob | Buffer;
 
 export interface ClientOptions {
 	token?: string;
 	polling?: PollingOptions;
 	webhook?: WebhookOptions;
 	baseApiUrl?: string;
-	defaultParseMode?: ParseMode;
+	defaultParseMode?: `${ParseMode}` | ParseMode; // TODO
+	escapeText?: boolean;
 }
 
 export interface PollingOptions {
@@ -311,6 +317,8 @@ export interface PhotoMessageSendOptions {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in message text, which can be specified instead of parse_mode */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Pass *true* if the photo needs to be covered with a spoiler animation */
 	hasSpoiler?: boolean;
 	/** Disables link previews for links in this message */
@@ -459,6 +467,8 @@ export interface VideoMessageSendOptions {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in message text, which can be specified instead of parse_mode */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Pass *true* if the video needs to be covered with a spoiler animation */
 	hasSpoiler?: boolean;
 	/** Pass true if the uploaded video is suitable for streaming */
@@ -511,6 +521,8 @@ export interface AnimationMessageSendOptions {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in message text, which can be specified instead of parse_mode */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Pass *true* if the animation needs to be covered with a spoiler animation */
 	hasSpoiler?: boolean;
 	/**
@@ -854,6 +866,7 @@ export interface MessageCopyOptions {
 	caption?: string;
 	parseMode?: ParseMode;
 	captionEntities?: MessageEntity[];
+	showCaptionAboveMedia?: boolean;
 	disableNotification?: boolean;
 	protectContent?: boolean;
 	replyToMessageId?: number;
@@ -918,7 +931,7 @@ export interface KeyboardButtonData {
 	 */
 	text: string;
 	/** If specified, pressing the button will open a list of suitable users */
-	requestUser?: KeyboardButtonRequestUser;
+	requestUsers?: KeyboardButtonRequestUsers;
 	/** If specified, pressing the button will open a list of suitable chats */
 	requestChat?: KeyboardButtonRequestChat;
 	/**
@@ -943,9 +956,47 @@ export interface KeyboardButtonData {
 	webApp?: WebAppInfo;
 }
 
+export interface KeyboardButtonRequestUsers {
+	/**
+	 * Identifier of the request that will be received back in the *UsersShared* object.
+	 * Must be unique within the message
+	 */
+	requestId: number;
+	/**
+	 * If *true*, requests bots.
+	 * If *false*, requests regular users.
+	 * If not specified, no additional restrictions are applied.
+	 **/
+	userIsBot?: boolean;
+	/**
+	 * If *true*, requests premium users.
+	 * If *false*, requests non-premium users.
+	 * If not specified, no additional restrictions are applied.
+	 **/
+	userIsPremium?: boolean;
+	/** The maximum number of users to be selected; 1-10. Defaults to 1. */
+	maxQuantity?: number;
+	/** Request the users' first and last names */
+	requestName?: boolean;
+	/** Request the users' usernames */
+	requestUsername?: boolean;
+	/** Request the users' photos */
+	requestPhoto?: boolean;
+}
+
+export interface UsersShared {
+	/** Identifier of the request. */
+	requestId: number;
+
+	/**
+	 * Information about users shared with the bot.
+	 */
+	users: SharedUser[];
+}
+
 export interface ReplyKeyboardMarkupData {
-	/** Array of button rows, each represented by an Array of {@link KeyboardButton} */
-	keyboard?: KeyboardButtonData[][];
+	// /** Array of button rows, each represented by an Array of {@link KeyboardButton} */
+	// keyboard?: KeyboardButtonData[][];
 	/**
 	 * Requests clients to always show the keyboard when the regular keyboard is hidden.
 	 * Defaults to false, in which case the custom keyboard can be hidden and opened with a keyboard icon.
@@ -1018,6 +1069,7 @@ export interface InlineKeyboardButtonData {
 	switchInlineQuery?: string;
 	switchInlineQueryCurrentChat?: string;
 	// callbackGame?: CallbackGame,
+	copyText?: string;
 	pay?: boolean;
 }
 
@@ -1210,7 +1262,7 @@ export interface MessageEditTextOptions {
 	/** Unique identifier of the business connection on behalf of which the message to be edited was sent */
 	businessConnectionId?: string;
 	/** Mode for parsing entities in the message text */
-	parseMode: ParseMode;
+	parseMode?: ParseMode;
 	/** A list of special entities that appear in message text, which can be specified instead of parseMode */
 	entities?: MessageEntity[];
 	/** Disables link previews for links in this message */
@@ -1226,6 +1278,8 @@ export interface MessageEditCaptionOptions {
 	parseMode?: ParseMode;
 	/** A list of special entities that appear in the caption, which can be specified instead of parseMode */
 	entities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** An object for an inline keyboard */
 	replyMarkup?: InlineKeyboardMarkup;
 }
@@ -1738,14 +1792,14 @@ export interface GameHighScoreGetOptions {
 	inlineMessageId?: string;
 }
 
-export interface GameHighScore {
-	/** Position in high score table for the game */
-	position: number;
-	/** User */
-	user: User;
-	/** Score */
-	score: number;
-}
+// export interface GameHighScore {
+// 	/** Position in high score table for the game */
+// 	position: number;
+// 	/** User */
+// 	user: User;
+// 	/** Score */
+// 	score: number;
+// }
 
 export interface PassportElementErrorUnspecified {
 	/** Error source */
@@ -1863,6 +1917,8 @@ export interface InputMediaPhoto {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in the caption, which can be specified instead of `parseMode` */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Pass *true* if the photo needs to be covered with a spoiler animation */
 	hasSpoiler?: boolean;
 }
@@ -1890,6 +1946,8 @@ export interface InputMediaVideo {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in the caption, which can be specified instead of `parseMode` */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Video width */
 	width?: number;
 	/** Video height */
@@ -1925,6 +1983,8 @@ export interface InputMediaAnimation {
 	parseMode?: ParseMode;
 	/** List of special entities that appear in the caption, which can be specified instead of `parseMode` */
 	captionEntities?: MessageEntity[];
+	/** Pass *true* if the caption must be shown above the message media */
+	showCaptionAboveMedia?: boolean;
 	/** Animation width */
 	width?: number;
 	/** Animation height */
@@ -1994,25 +2054,6 @@ export interface InputMediaDocument {
 	 * Always *true*, if the document is sent as part of an album.
 	 */
 	disableContentTypeDetection?: boolean;
-}
-
-export interface KeyboardButtonRequestUser {
-	// TODO: fix description if needed
-	/**
-	 * Identifier of the request, which will be received back in the UserShared object.
-	 * Must be unique within the message
-	 */
-	requestId: number;
-	/**
-	 * Pass *true* to request a bot, pass False to request a regular user.
-	 * If not specified, no additional restrictions are applied.
-	 */
-	userIsBot?: boolean;
-	/**
-	 * Pass *true* to request a premium user, pass False to request a non-premium user.
-	 * If not specified, no additional restrictions are applied.
-	 */
-	userIsPremium?: boolean;
 }
 
 export interface MenuButtonWebAppOptions {
@@ -2589,3 +2630,4 @@ export interface GiftSendOptions {
 	 */
 	textEntities?: MessageEntity[];
 }
+

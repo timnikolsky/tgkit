@@ -1,7 +1,7 @@
 import {
 	KeyboardButtonData,
 	KeyboardButtonRequestChat,
-	KeyboardButtonRequestUser,
+	KeyboardButtonRequestUsers,
 	WebAppInfo,
 } from '../../types';
 import { KeyboardButtonPollType } from '../../utils/enums';
@@ -19,7 +19,7 @@ export default class KeyboardButton {
 	text?: string;
 
 	/** If specified, pressing the button will open a list of suitable users */
-	requestUser?: KeyboardButtonRequestUser;
+	requestUsers?: KeyboardButtonRequestUsers;
 
 	/** If specified, pressing the button will open a list of suitable chats */
 	requestChat?: KeyboardButtonRequestChat;
@@ -49,7 +49,8 @@ export default class KeyboardButton {
 	webApp?: WebAppInfo;
 
 	constructor(data: KeyboardButtonData) {
-		(this.text = data.text), (this.requestUser = data.requestUser);
+		this.text = data.text;
+		this.requestUsers = data.requestUsers;
 		this.requestChat = data.requestChat;
 		this.requestContact = data.requestContact;
 		this.requestLocation = data.requestLocation;
@@ -62,8 +63,8 @@ export default class KeyboardButton {
 		return this;
 	}
 
-	setRequestUser(requestUser: KeyboardButtonRequestUser) {
-		this.requestUser = requestUser;
+	setRequestUsers(requestUsers: KeyboardButtonRequestUsers) {
+		this.requestUsers = requestUsers;
 		return this;
 	}
 
@@ -95,81 +96,85 @@ export default class KeyboardButton {
 	toJSON(): object {
 		return {
 			text: this.text,
-			request_user: this.requestUser
+			request_user: this.requestUsers
 				? {
-						request_id: this.requestUser.requestId,
-						user_is_bot: this.requestUser.userIsBot,
-						user_is_premium: this.requestUser.userIsPremium,
-					}
+					request_id: this.requestUsers.requestId,
+					user_is_bot: this.requestUsers.userIsBot,
+					user_is_premium: this.requestUsers.userIsPremium,
+					max_quantity: this.requestUsers.maxQuantity,
+					request_name: this.requestUsers.requestName,
+					request_username: this.requestUsers.requestUsername,
+					request_photo: this.requestUsers.requestPhoto,
+				}
 				: undefined,
 			request_chat: this.requestChat
 				? {
-						request_id: this.requestChat.requestId,
-						chat_is_channel: this.requestChat.chatIsChannel,
-						chat_is_forum: this.requestChat.chatIsForum,
-						chat_has_username: this.requestChat.chatHasUsername,
-						chat_is_created: this.requestChat.chatIsCreated,
-						// TODO: refactor
-						user_administator_rights: this.requestChat.userAdministratorRights
-							? {
-									is_anonymous:
-										this.requestChat.userAdministratorRights.isAnonymous,
-									can_manage_chat:
-										this.requestChat.userAdministratorRights.canManageChat,
-									can_delete_messages:
-										this.requestChat.userAdministratorRights.canDeleteMessages,
-									can_manage_video_chats:
-										this.requestChat.userAdministratorRights
-											.canManageVideoChats,
-									can_restrict_members:
-										this.requestChat.userAdministratorRights.canRestrictMembers,
-									can_promote_members:
-										this.requestChat.userAdministratorRights.canPromoteMembers,
-									can_change_info:
-										this.requestChat.userAdministratorRights.canChangeInfo,
-									can_invite_users:
-										this.requestChat.userAdministratorRights.canInviteUsers,
-									can_post_messages:
-										this.requestChat.userAdministratorRights.canPostMessages,
-									can_edit_messages:
-										this.requestChat.userAdministratorRights.canEditMessages,
-									can_pin_messages:
-										this.requestChat.userAdministratorRights.canPinMessages,
-									can_manage_topics:
-										this.requestChat.userAdministratorRights.canManageTopics,
-								}
-							: undefined,
-						bot_administator_rights: this.requestChat.userAdministratorRights
-							? {
-									is_anonymous:
-										this.requestChat.userAdministratorRights.isAnonymous,
-									can_manage_chat:
-										this.requestChat.userAdministratorRights.canManageChat,
-									can_delete_messages:
-										this.requestChat.userAdministratorRights.canDeleteMessages,
-									can_manage_video_chats:
-										this.requestChat.userAdministratorRights
-											.canManageVideoChats,
-									can_restrict_members:
-										this.requestChat.userAdministratorRights.canRestrictMembers,
-									can_promote_members:
-										this.requestChat.userAdministratorRights.canPromoteMembers,
-									can_change_info:
-										this.requestChat.userAdministratorRights.canChangeInfo,
-									can_invite_users:
-										this.requestChat.userAdministratorRights.canInviteUsers,
-									can_post_messages:
-										this.requestChat.userAdministratorRights.canPostMessages,
-									can_edit_messages:
-										this.requestChat.userAdministratorRights.canEditMessages,
-									can_pin_messages:
-										this.requestChat.userAdministratorRights.canPinMessages,
-									can_manage_topics:
-										this.requestChat.userAdministratorRights.canManageTopics,
-								}
-							: undefined,
-						bot_is_member: this.requestChat.botIsMember,
-					}
+					request_id: this.requestChat.requestId,
+					chat_is_channel: this.requestChat.chatIsChannel,
+					chat_is_forum: this.requestChat.chatIsForum,
+					chat_has_username: this.requestChat.chatHasUsername,
+					chat_is_created: this.requestChat.chatIsCreated,
+					// TODO: refactor
+					user_administator_rights: this.requestChat.userAdministratorRights
+						? {
+							is_anonymous:
+								this.requestChat.userAdministratorRights.isAnonymous,
+							can_manage_chat:
+								this.requestChat.userAdministratorRights.canManageChat,
+							can_delete_messages:
+								this.requestChat.userAdministratorRights.canDeleteMessages,
+							can_manage_video_chats:
+								this.requestChat.userAdministratorRights
+									.canManageVideoChats,
+							can_restrict_members:
+								this.requestChat.userAdministratorRights.canRestrictMembers,
+							can_promote_members:
+								this.requestChat.userAdministratorRights.canPromoteMembers,
+							can_change_info:
+								this.requestChat.userAdministratorRights.canChangeInfo,
+							can_invite_users:
+								this.requestChat.userAdministratorRights.canInviteUsers,
+							can_post_messages:
+								this.requestChat.userAdministratorRights.canPostMessages,
+							can_edit_messages:
+								this.requestChat.userAdministratorRights.canEditMessages,
+							can_pin_messages:
+								this.requestChat.userAdministratorRights.canPinMessages,
+							can_manage_topics:
+								this.requestChat.userAdministratorRights.canManageTopics,
+						}
+						: undefined,
+					bot_administator_rights: this.requestChat.userAdministratorRights
+						? {
+							is_anonymous:
+								this.requestChat.userAdministratorRights.isAnonymous,
+							can_manage_chat:
+								this.requestChat.userAdministratorRights.canManageChat,
+							can_delete_messages:
+								this.requestChat.userAdministratorRights.canDeleteMessages,
+							can_manage_video_chats:
+								this.requestChat.userAdministratorRights
+									.canManageVideoChats,
+							can_restrict_members:
+								this.requestChat.userAdministratorRights.canRestrictMembers,
+							can_promote_members:
+								this.requestChat.userAdministratorRights.canPromoteMembers,
+							can_change_info:
+								this.requestChat.userAdministratorRights.canChangeInfo,
+							can_invite_users:
+								this.requestChat.userAdministratorRights.canInviteUsers,
+							can_post_messages:
+								this.requestChat.userAdministratorRights.canPostMessages,
+							can_edit_messages:
+								this.requestChat.userAdministratorRights.canEditMessages,
+							can_pin_messages:
+								this.requestChat.userAdministratorRights.canPinMessages,
+							can_manage_topics:
+								this.requestChat.userAdministratorRights.canManageTopics,
+						}
+						: undefined,
+					bot_is_member: this.requestChat.botIsMember,
+				}
 				: undefined,
 			request_contact: this.requestContact,
 			request_location: this.requestLocation,

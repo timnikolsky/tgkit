@@ -1,3 +1,4 @@
+import Base from '../Base';
 import Client from '../../client/Client';
 import {
 	ChatBoostAdded,
@@ -27,42 +28,44 @@ import {
 	ProximityAlertTriggered,
 	Reaction,
 	SuccessfulPayment,
+	UsersShared,
 	VideoChatEnded,
 	VideoChatParticipantsInvited,
 	VideoChatScheduled,
 	VideoChatStarted,
 	WriteAccessAlowed,
 } from '../../types';
-import Animation from '../Animation';
-import Audio from '../Audio';
-import Base from '../Base';
-import Chat from '../Chat';
-import Contact from '../Contact';
-import Dice from './Dice';
-import Document from './Document';
-import Game from '../Game';
-import InlineKeyboardMarkup from './InlineKeyboardMarkup';
-import Location from '../Location';
-import MessageEntity from './MessageEntity';
-import PhotoSize from '../PhotoSize';
-import Poll from '../poll/Poll';
-import Sticker from '../sticker/Sticker';
-import User from '../User';
-import Venue from '../Venue';
-import Video from './Video';
-import VideoNote from './VideoNote';
-import Voice from './Voice';
-import UserShared from '../markup/UserShared';
-import ChatShared from '../markup/ChatShared';
-import TextQuote from './TextQuote';
-import MessageOrigin from './origin/MessageOrigin';
-import Story from '../Story';
-import Invoice from '../payment/Invoice';
-import Giveaway from './Giveaway';
-import WebAppData from './WebAppData';
-import { dateToUnix, toSnakeCase, unixToDate } from '../../utils/converters';
-import PaidMedia from '../payment/PaidMedia';
-import { ReactionType } from '../../utils/enums';
+
+import {
+	Animation,
+	Audio,
+	Chat,
+	ChatShared,
+	Contact,
+	Dice,
+	Document,
+	Game,
+	Giveaway,
+	InlineKeyboardMarkup,
+	Invoice,
+	Location,
+	MessageEntity,
+	MessageOrigin,
+	PaidMedia,
+	PhotoSize,
+	Poll,
+	SharedUser,
+	Sticker,
+	Story,
+	TextQuote,
+	User,
+	Venue,
+	Video,
+	VideoNote,
+	Voice,
+	WebAppData,
+} from '../../structures';
+import { unixToDate } from '../../utils/converters';
 
 /** Represents a message */
 export default class Message extends Base {
@@ -323,7 +326,7 @@ export default class Message extends Base {
 
 	successfulPayment?: SuccessfulPayment;
 
-	userShared?: UserShared;
+	usersShared?: UsersShared;
 
 	chatShared?: ChatShared;
 
@@ -395,7 +398,7 @@ export default class Message extends Base {
 				this.migrateFromChatId ||
 				this.pinnedMessage ||
 				this.successfulPayment ||
-				this.userShared ||
+				this.usersShared ||
 				this.chatShared ||
 				this.connectedWebsite ||
 				this.writeAccessAllowed ||
@@ -424,7 +427,7 @@ export default class Message extends Base {
 		super(client);
 
 		this.id = data.message_id;
-		this.threadId = data.thread_id;
+		this.threadId = data.message_thread_id;
 		this.sender = data.from && new User(client, data.from);
 		this.senderChat = data.sender_chat && new Chat(client, data.sender_chat);
 		this.senderBoostCount = data.sender_boost_count;
@@ -494,7 +497,7 @@ export default class Message extends Base {
 		this.quote = data.quote && new TextQuote(client, data.quote);
 		this.replyToStory = data.reply_to_story && new Story(client, data.reply_to_story);
 		this.viaBot = data.via_bot && new User(client, data.via_bot);
-		this.editDate = unixToDate(data.edit_date);
+		this.editDate = data.edit_date && unixToDate(data.edit_date);
 		this.hasProtectedContent = data.has_protected_content;
 		this.mediaGroupId = data.media_group_id;
 		this.authorSignature = data.author_signature;
@@ -541,9 +544,7 @@ export default class Message extends Base {
 		this.newChatMembers =
 			data.new_chat_members &&
 			data.new_chat_members.map((memberData: any) => new User(this.client, memberData));
-		this.leftChatMember =
-			data.left_chat_member &&
-			data.left_chat_member.map((memberData: any) => new User(this.client, memberData));
+		this.leftChatMember = data.left_chat_member && new User(this.client, data.left_chat_member);
 		this.newChatTitle = data.new_chat_title;
 		this.newChatPhoto =
 			data.new_chat_photo &&
@@ -580,7 +581,12 @@ export default class Message extends Base {
 			telegramPaymentChargeId: data.successful_payment.telegram_payment_charge_id,
 			providerPaymentChargeId: data.successful_payment.provider_payment_charge_id,
 		};
-		this.userShared = data.user_shared && new UserShared(this.client, data.user_shared);
+		this.usersShared = data.users_shared && {
+			requestId: data.users_shared.request_id,
+			users: data.users_shared.users.map(
+				(userData: any) => new SharedUser(this.client, userData),
+			),
+		};
 		this.chatShared = data.chat_shared && new ChatShared(this.client, data.chat_shared);
 		this.connectedWebsite = data.connected_website;
 		this.writeAccessAllowed = data.write_access_allowed && {
@@ -654,7 +660,8 @@ export default class Message extends Base {
 			),
 		};
 		this.webAppData = data.web_app_data && new WebAppData(this.client, data.web_app_data);
-		this.replyMarkup = data.reply_markup && new InlineKeyboardMarkup(data.reply_markup);
+		this.replyMarkup =
+			data.reply_markup && new InlineKeyboardMarkup(data.reply_markup.inline_keyboard);
 	}
 
 	async forward(chatId: ChatId, options?: MessageForwardOptions) {

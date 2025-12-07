@@ -1,4 +1,3 @@
-import Chat from '../structures/Chat';
 import ClientUser from '../structures/user/ClientUser';
 import Message from '../structures/message/Message';
 import {
@@ -25,7 +24,6 @@ import {
 	DocumentMessageSendOptions,
 	ForumTopicCreateOptions,
 	ForumTopicEditOptions,
-	GameHighScore,
 	GameHighScoreGetOptions,
 	GameScoreSetOptions,
 	GameSendOptions,
@@ -77,37 +75,41 @@ import {
 import RestManager from '../rest/RestManager';
 import EventManager from './Events/EventManager';
 import PollingManager from './PollingManager';
-import PhotoSize from '../structures/PhotoSize';
-import File from '../structures/File';
-import { dateToUnix, toCamelCase, unixToDate } from '../utils/converters';
-import BotCommand from '../structures/bot/BotCommand';
-import InlineKeyboardMarkup from '../structures/InlineKeyboardMarkup';
-import Poll from '../structures/poll/Poll';
-import Sticker from '../structures/sticker/Sticker';
-import StickerSet from '../structures/sticker/StickerSet';
-import User from '../structures/User';
-import ChatMember from '../structures/chat/member/ChatMember';
-import ChatMemberOwner from '../structures/chat/member/ChatMemberOwner';
-import ChatMemberAdministrator from '../structures/chat/member/ChatMemberAdministrator';
-import ChatMemberMember from '../structures/chat/member/ChatMemberMember';
-import ChatMemberRestricted from '../structures/chat/member/ChatMemberRestricted';
-import ChatMemberLeft from '../structures/chat/member/ChatMemberLeft';
-import ChatMemberBanned from '../structures/chat/member/ChatMemberBanned';
+import {
+	PhotoSize,
+	File,
+	InlineKeyboardMarkup,
+	User,
+	BotCommand,
+	Poll,
+	Sticker,
+	StickerSet,
+	ChatMember,
+	ChatMemberOwner,
+	ChatMemberAdministrator,
+	ChatMemberMember,
+	ChatMemberRestricted,
+	ChatMemberLeft,
+	ChatMemberBanned,
+	ForumTopic,
+	InlineQueryResult,
+	MenuButton,
+	MenuButtonDefault,
+	MenuButtonWebApp,
+	MenuButtonCommands,
+	ChatInviteLink,
+	BusinessConnection,
+	StarTransaction,
+	ChatFull,
+	Gift,
+	GameHighScore,
+} from '../structures';
+import { dateToUnix, unixToDate } from '../utils/converters';
 import WebhookManager from './WebhookManager';
-import ForumTopic from '../structures/chat/ForumTopic';
-import InlineQueryResult from '../structures/inline/InlineQueryResult';
 import { toSnakeCase } from '../utils/converters';
 import { EventEmitter } from 'events';
 import { ChatAction, ReactionType, StickerFormat } from '../utils/enums';
-import MenuButton from '../structures/bot/menuButton/MenuButton';
-import MenuButtonDefault from '../structures/bot/menuButton/MenuButtonDefault';
-import MenuButtonWebApp from '../structures/bot/menuButton/MenuButtonWebApp';
-import MenuButtonCommands from '../structures/bot/menuButton/MenuButtonCommands';
-import ChatInviteLink from '../structures/ChatInviteLink';
-import BusinessConnection from '../structures/bot/BusinessConnection';
-import StarTransaction from '../structures/payment/StarTransaction';
-import ChatFull from '../structures/chat/ChatFull';
-import Gift from '../structures/Gift';
+import { escape } from '../utils/escape';
 
 export default class Client extends EventEmitter {
 	options: ClientOptions;
@@ -117,11 +119,11 @@ export default class Client extends EventEmitter {
 	eventManager: EventManager;
 	webhook: WebhookManager;
 
-	constructor(options: ClientOptions = {}) {
+	constructor(token: string, options: ClientOptions = {}) {
 		super();
 
 		this.options = options;
-		this.token = options.token ?? process.env.TELEGRAM_TOKEN;
+		this.token = token;
 		this.rest = new RestManager(this);
 		this.polling = new PollingManager(this, options.polling);
 		this.eventManager = new EventManager(this);
@@ -186,12 +188,13 @@ export default class Client extends EventEmitter {
 		text: string,
 		options?: TextMessageSendOptions,
 	): Promise<Message> {
+		const parseMode = options?.parseMode ?? this.options.defaultParseMode;
 		const messageData = await this.rest.request('sendMessage', {
 			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_thread_id: options?.forumTopicId,
-			text,
-			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
+			text: this.options.escapeText && parseMode ? escape(text, parseMode) : text,
+			parse_mode: parseMode,
 			entities: options?.entities?.map((entity) => entity.toJSON()),
 			disable_web_page_preview: options?.disableWebPagePreview,
 			disable_notification: options?.disableNotification,
@@ -254,6 +257,7 @@ export default class Client extends EventEmitter {
 			caption: options?.caption,
 			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
 			caption_entities: options?.captionEntities,
+			show_caption_above_media: options?.showCaptionAboveMedia,
 			disable_notification: options?.disableNotification,
 			protect_content: options?.protectContent,
 			reply_to_message_id: options?.replyToMessageId,
@@ -272,6 +276,7 @@ export default class Client extends EventEmitter {
 			photo,
 			caption: options?.caption,
 			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
+			show_caption_above_media: options?.showCaptionAboveMedia,
 			has_spoiler: options?.hasSpoiler,
 			caption_entities: options?.captionEntities?.map((entity) => entity.toJSON()),
 			disable_web_page_preview: options?.disableWebPagePreview,
@@ -343,6 +348,7 @@ export default class Client extends EventEmitter {
 			caption: options?.caption,
 			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
 			caption_entities: options?.captionEntities?.map((entity) => entity.toJSON()),
+			show_caption_above_media: options?.showCaptionAboveMedia,
 			has_spoiler: options?.hasSpoiler,
 			supports_streaming: options?.supportsStreaming,
 			disable_notification: options?.disableNotification,
@@ -372,6 +378,7 @@ export default class Client extends EventEmitter {
 			caption: options?.caption,
 			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
 			caption_entities: options?.captionEntities?.map((entity) => entity.toJSON()),
+			show_caption_above_mesia: options?.showCaptionAboveMedia,
 			has_spoiler: options?.hasSpoiler,
 			disable_notification: options?.disableNotification,
 			protect_content: options?.protectContent,
@@ -427,7 +434,7 @@ export default class Client extends EventEmitter {
 		chatId: ChatId,
 		media: Exclude<InputMedia, InputMediaAnimation>[],
 		options?: MediaGroupMessageSendOptions,
-	) {
+	): Promise<Message[]> {
 		const messagesData = await this.rest.request('sendMediaGroup', {
 			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
@@ -706,7 +713,7 @@ export default class Client extends EventEmitter {
 		await this.rest.request('banChatMember', {
 			chat_id: chatId,
 			user_id: userId,
-			until_date: options?.untilDate,
+			until_date: options?.untilDate?.getTime(),
 			revoke_messages: options?.revokeMessages,
 		});
 	}
@@ -733,7 +740,7 @@ export default class Client extends EventEmitter {
 					[toSnakeCase(key)]: permissions[key as keyof ChatPermissions],
 				})),
 			},
-			until_date: options?.untilDate,
+			until_date: options?.untilDate?.getTime(),
 		});
 	}
 
@@ -1193,8 +1200,8 @@ export default class Client extends EventEmitter {
 	 * Change the bot's short description, which is shown on the bot's profile page
 	 * and is sent together with the link when users share the bot
 	 *
-	 * @param description New short description for the bot; 0-120 characters.
-	 *                    Pass an empty string to remove the dedicated short description for the given language.
+	 * @param shortDescription New short description for the bot; 0-120 characters.
+	 *                         Pass an empty string to remove the dedicated short description for the given language.
 	 * @param languageCode A two-letter ISO 639-1 language code. If empty, the short description
 	 *                     will be applied to all users for whose language there is no dedicated short description.
 	 */
@@ -1325,12 +1332,13 @@ export default class Client extends EventEmitter {
 		text: string,
 		options?: MessageEditTextOptions,
 	) {
+		const parseMode = options?.parseMode ?? this.options.defaultParseMode;
 		const messageData = await this.rest.request('editMessageText', {
 			business_connection_id: options?.businessConnectionId,
 			chat_id: chatId,
 			message_id: messageId,
-			text,
-			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
+			text: this.options.escapeText && parseMode ? escape(text, parseMode) : text,
+			parse_mode: parseMode,
 			disable_web_page_preview: options?.disableWebPagePreview,
 			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON(),
 		});
@@ -1343,11 +1351,12 @@ export default class Client extends EventEmitter {
 		text: string,
 		options?: MessageEditTextOptions,
 	) {
+		const parseMode = options?.parseMode ?? this.options.defaultParseMode;
 		await this.rest.request('editMessageText', {
 			business_connection_id: options?.businessConnectionId,
 			inline_message_id: inlineMessageId,
-			text,
-			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
+			text: this.options.escapeText && parseMode ? escape(text, parseMode) : text,
+			parse_mode: parseMode,
 			disable_web_page_preview: options?.disableWebPagePreview,
 			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON(),
 		});
@@ -1365,6 +1374,7 @@ export default class Client extends EventEmitter {
 			message_id: messageId,
 			caption: caption ?? undefined,
 			parse_mode: options?.parseMode ?? this.options.defaultParseMode,
+			show_caption_above_media: options?.showCaptionAboveMedia,
 			reply_markup: options?.replyMarkup && options.replyMarkup.toJSON(),
 		});
 
@@ -1855,11 +1865,9 @@ export default class Client extends EventEmitter {
 			inline_message_id: options?.inlineMessageId,
 		})) as any[];
 
-		const highScores = highScoresData.map((highScoreData: any) => ({
-			position: highScoreData.position,
-			user: new User(this, highScoreData.user),
-			score: highScoreData.score,
-		}));
+		const highScores = highScoresData.map(
+			(highScoreData: any) => new GameHighScore(this, highScoreData),
+		);
 
 		return highScores;
 	}

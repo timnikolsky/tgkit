@@ -1,5 +1,6 @@
-import { ReplyKeyboardMarkupData } from '../../types';
+import { KeyboardButtonData, ReplyKeyboardMarkupData } from '../../types';
 import KeyboardButton from './KeyboardButton';
+import InlineKeyboardButton from './InlineKeyboardButton';
 
 /**
  * Represents a custom keyboard with reply options.
@@ -40,16 +41,30 @@ export default class ReplyKeyboardMarkup {
 	 */
 	selective?: boolean;
 
-	constructor(data: ReplyKeyboardMarkupData = {}) {
-		// TODO
-		(this.keyboard = data.keyboard
-			? data.keyboard.map((row) => row.map((button) => new KeyboardButton(button)))
-			: []),
-			(this.isPersistent = data.isPersistent),
-			(this.resizeKeyboard = data.resizeKeyboard);
-		this.oneTimeKeyboard = data.oneTimeKeyboard;
-		this.inputFieldPlaceholder = data.inputFieldPlaceholder;
-		this.selective = data.selective;
+	// TODO !!!!!
+	constructor(
+		keyboard: (KeyboardButton[] | KeyboardButton)[] | KeyboardButton,
+		options?: ReplyKeyboardMarkupData,
+	) {
+		if (keyboard instanceof KeyboardButton) {
+			this.keyboard = [[keyboard]];
+		} else {
+			const keyboardTransformed: KeyboardButton[][] = [];
+			for (const row of keyboard) {
+				if (row instanceof KeyboardButton) {
+					keyboardTransformed.push([row]);
+				} else {
+					keyboardTransformed.push(row);
+				}
+			}
+			this.keyboard = keyboardTransformed;
+		}
+
+		this.isPersistent = options?.isPersistent;
+		this.resizeKeyboard = options?.resizeKeyboard;
+		this.oneTimeKeyboard = options?.oneTimeKeyboard;
+		this.inputFieldPlaceholder = options?.inputFieldPlaceholder;
+		this.selective = options?.selective;
 	}
 
 	setKeyboard(keyboard: KeyboardButton[][]) {

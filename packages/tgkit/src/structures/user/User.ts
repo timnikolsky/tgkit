@@ -1,8 +1,11 @@
-import Client from '../client/Client';
-import Base from './Base';
+import Client from '../../client/Client';
+import Base from '../Base';
 
 /** Represents a Telegram user or bot. */
 export default class User extends Base {
+	/** Raw Telegram Bot API data */
+	rawData: any;
+	
 	/** Unique identifier for this user or bot */
 	id: number;
 
@@ -32,6 +35,7 @@ export default class User extends Base {
 
 	constructor(client: Client, data: any) {
 		super(client);
+		this.rawData = data;
 
 		this.id = data.id;
 		this.isBot = data.is_bot;

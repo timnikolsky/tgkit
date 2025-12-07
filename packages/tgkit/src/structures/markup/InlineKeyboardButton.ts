@@ -40,6 +40,9 @@ export default class InlineKeyboardButton {
 
 	/** Description of the game that will be launched when the user presses the button. */
 	callbackGame?: CallbackGame;
+	
+	/** Description of the button that copies the specified text to the clipboard. */
+	copyText?: string;
 
 	/**
 	 * Specify *true*, to send a Pay button. NOTE: This type of button must always be the first button in the first row
@@ -48,12 +51,14 @@ export default class InlineKeyboardButton {
 	pay?: boolean;
 
 	constructor(data: InlineKeyboardButtonData) {
-		(this.text = data.text), (this.url = data.url);
+		this.text = data.text;
+		this.url = data.url;
 		this.loginUrl = data.loginUrl;
 		this.callbackData = data.callbackData;
 		this.webApp = data.webApp;
 		this.switchInlineQuery = data.switchInlineQuery;
 		this.switchInlineQueryCurrentChat = data.switchInlineQueryCurrentChat;
+		this.copyText = data.copyText;
 		this.pay = data.pay;
 	}
 
@@ -116,6 +121,9 @@ export default class InlineKeyboardButton {
 			switch_inline_query: this.switchInlineQuery,
 			switch_inline_query_current_chat: this.switchInlineQueryCurrentChat,
 			// callback_game: this.callbackGame,
+			copy_text: {
+				text: this.copyText,	
+			},
 			pay: this.pay,
 			web_app: this.webApp,
 		};

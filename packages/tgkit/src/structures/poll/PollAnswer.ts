@@ -1,6 +1,6 @@
 import Client from '../../client/Client';
 import Base from '../Base';
-import User from '../User';
+import { User } from '..';
 
 /** Represents an answer of a user in a non-anonymous poll */
 export default class PollAnswer extends Base {

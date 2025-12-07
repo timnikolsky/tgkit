@@ -1,9 +1,8 @@
-import { toCamelCase, unixToDate } from '../../../utils/converters';
-import MessageOrigin from './MessageOrigin';
-import { MessageOriginType } from '../../../utils/enums';
-import Chat from './Chat';
 import Base from '../../Base';
 import Client from '../../../client/Client';
+import { Chat, MessageOrigin } from '../..';
+import { MessageOriginType } from '../../../utils/enums';
+import { toCamelCase, unixToDate } from '../../../utils/converters';
 
 export default class MessageOriginChat extends Base implements MessageOrigin {
 	/** Type of the message origin */

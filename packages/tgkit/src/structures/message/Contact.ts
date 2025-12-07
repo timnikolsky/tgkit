@@ -1,5 +1,5 @@
-import Client from '../client/Client';
-import Base from './Base';
+import Base from '../Base';
+import Client from '../../client/Client';
 
 /** Represents a phone contact */
 export default class Contact extends Base {

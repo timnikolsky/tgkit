@@ -1,3 +1,5 @@
+import Base from '../Base';
+import Client from '../../client/Client';
 import {
 	AnimationMessageSendOptions,
 	AudioMessageSendOptions,
@@ -9,7 +11,6 @@ import {
 	ChatMemberUnbanOptions,
 	ChatMessagePinOptions,
 	ChatPermissions,
-	ChatPhoto,
 	ChatType,
 	ContactMessageSendOptions,
 	ContactOptions,
@@ -36,13 +37,9 @@ import {
 	VenueMessageSendOptions,
 	VenueOptions,
 	VideoMessageSendOptions,
-} from '../types';
-import { BotCommandScopeType, ChatAction } from '../utils/enums';
-import Client from '../client/Client';
-import Base from './Base';
-import BotCommand from './BotCommand';
-import Message from './message/Message';
-import MenuButton from './MenuButton';
+} from '../../types';
+import { BotCommandScopeType, ChatAction } from '../../utils/enums';
+import { BotCommand, MenuButton } from '..';
 
 /** Represents a chat */
 export default class Chat extends Base {

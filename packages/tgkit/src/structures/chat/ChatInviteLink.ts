@@ -1,7 +1,7 @@
-import { dateToUnix, unixToDate } from '../utils/converters';
-import Client from '../client/Client';
-import Base from './Base';
-import User from './User';
+import Base from '../Base';
+import Client from '../../client/Client';
+import { User } from '..';
+import { dateToUnix, unixToDate } from '../../utils/converters';
 
 export default class ChatInviteLink extends Base {
 	/** Invite link */

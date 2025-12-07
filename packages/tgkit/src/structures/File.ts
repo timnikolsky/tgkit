@@ -27,3 +27,4 @@ export default class File extends Base {
 		this.filePath = data.file_path;
 	}
 }
+

@@ -1,4 +1,4 @@
-import { InlineKeyboardMarkupData } from '../types';
+import type { InlineKeyboardMarkupData } from '../../types';
 import InlineKeyboardButton from './InlineKeyboardButton';
 
 /**
@@ -9,13 +9,22 @@ export default class InlineKeyboardMarkup {
 	/** Array of button rows, each represented by an Array of InlineKeyboardButton objects */
 	inlineKeyboard: InlineKeyboardButton[][];
 
-	constructor(data: InlineKeyboardMarkupData = {}) {
-		this.inlineKeyboard = data.inlineKeyboard ?? [];
-	}
+	constructor(data: InlineKeyboardButton | (InlineKeyboardButton | InlineKeyboardButton[])[]) {
+		if (data instanceof InlineKeyboardButton) {
+			this.inlineKeyboard = [[data]];
+			return;
+		}
 
-	setKeyboard(inlineKeyboard: InlineKeyboardButton[][]) {
+		const inlineKeyboard: InlineKeyboardButton[][] = [];
+		for (const row of data) {
+			if (row instanceof InlineKeyboardButton) {
+				inlineKeyboard.push([row]);
+			} else {
+				inlineKeyboard.push(row);
+			}
+		}
+
 		this.inlineKeyboard = inlineKeyboard;
-		return this;
 	}
 
 	toJSON(): object {

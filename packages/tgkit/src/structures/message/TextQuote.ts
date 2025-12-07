@@ -26,7 +26,7 @@ export default class TextQuote extends Base {
 
 		this.text = data.text;
 		this.position = data.position;
-		this.entities = data.entities.map(
+		this.entities = data.entities?.map(
 			(entityData: any) => new MessageEntity(client, entityData),
 		);
 		this.isManual = data.is_manual;
