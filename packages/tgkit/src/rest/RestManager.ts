@@ -25,28 +25,29 @@ export default class RestManager {
 	}
 }
 
-function objectToFormData(obj: MethodParams | undefined): FormData | undefined {
-	if (obj === undefined) return obj;
+function objectToFormData(obj: Record<string, any> | undefined): FormData | undefined {
+	if (obj === undefined) return undefined;
+
 	const formData = new FormData();
 
-	for (const key in obj) {
-		if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
-
-		const value = obj[key];
-
+	const appendValue = (key: string, value: any) => {
 		if (value instanceof Blob) {
 			formData.append(key, value);
 		} else if (value instanceof Buffer) {
 			formData.append(key, new Blob([new Uint8Array(value)]));
 		} else if (Array.isArray(value)) {
-			value.forEach((v) => formData.append(key + '[]', v));
+			value.forEach((v) => appendValue(key + '[]', v));
 		} else if (typeof value === 'object' && value !== null) {
 			formData.append(key, JSON.stringify(value));
 		} else if (value !== undefined && value !== null) {
 			formData.append(key, String(value));
 		}
+	};
+
+	for (const key in obj) {
+		if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+		appendValue(key, obj[key]);
 	}
 
 	return formData;
 }
-
