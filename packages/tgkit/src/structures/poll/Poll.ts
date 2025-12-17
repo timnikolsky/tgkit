@@ -65,10 +65,10 @@ export default class Poll extends Base {
 		this.allowsMultipleAnswers = data.allows_multiple_answers;
 		this.correctOptionId = data.correct_option_id;
 		this.explanation = data.explanation;
-		this.explanationEntities = data.explanation_entities.map(
+		this.explanationEntities = data.explanation_entities?.map(
 			(entityData: any) => new MessageEntity(client, entityData),
 		);
 		this.openPeriod = data.open_period;
-		this.closeDate = new Date(data.close_date * 1000);
+		this.closeDate = data.close_date && new Date(data.close_date * 1000);
 	}
 }
