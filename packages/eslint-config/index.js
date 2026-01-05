@@ -63,7 +63,7 @@ module.exports = {
 		'turbo/no-undeclared-env-vars': [
 			'error',
 			{
-				allowList: ['TELEGRAM_TOKEN'],
+				allowList: ['TELEGRAM_TOKEN', 'TELEGRAM_BOT_TOKEN', 'TELEGRAM_BOT_API_TOKEN'],
 			},
 		],
 	},

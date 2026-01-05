@@ -1,4 +1,4 @@
-import Chat from './Chat';
+import Chat from './chat/Chat';
 import Client from '../client/Client';
 import Base from './Base';
 
